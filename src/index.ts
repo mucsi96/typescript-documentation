@@ -1,9 +1,3 @@
-class A {
-  public a = 3;
+export function createDocumentation(entry: string): string {
+  return entry;
 }
-
-const b = {};
-export const hello = { ...b };
-
-const a = new A();
-console.log(a.a);
