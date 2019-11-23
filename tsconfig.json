@@ -3,7 +3,8 @@
     "lib": ["esnext"],
     "esModuleInterop": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "module": "commonjs"
   },
   "include": ["src", "test"]
 }
