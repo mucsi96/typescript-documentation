@@ -1,6 +1,5 @@
 import { Application, DeclarationReflection } from 'typedoc';
 import { resolve, sep } from 'path';
-import json2md, { DataObject } from 'json2md';
 import slugify from '@sindresorhus/slugify';
 
 function getDependentReflections(reflection: DeclarationReflection): DeclarationReflection[] {
@@ -30,22 +29,23 @@ function getDependentReflections(reflection: DeclarationReflection): Declaration
   }
 }
 
-function renderHeading(title: string, level = 1): DataObject {
-  return {
-    [`h${level}`]: ({
-      link: {
-        source: `#${slugify(title)}`,
-        title
-      }
-    } as unknown) as string
-  };
+function renderHeading(title: string, level = 1): string {
+  return `${Array(level).fill('#')} [${title}](#${slugify(title)})`;
 }
 
-function renderVariable(reflection: DeclarationReflection): DataObject[] {
-  return [renderHeading(reflection.name)];
+function renderVariable(reflection: DeclarationReflection): string[] {
+  const result = [renderHeading(reflection.name)];
+
+  if (reflection.comment) {
+    result.push(reflection.comment.shortText);
+  }
+
+  result.push(`##### Type`);
+
+  return result;
 }
 
-function renderReflection(reflection: DeclarationReflection): DataObject[] {
+function renderReflection(reflection: DeclarationReflection): string[] {
   switch (reflection.kindString) {
     case 'Variable':
       return renderVariable(reflection);
@@ -78,10 +78,7 @@ export function createDocumentation(entry: string): string {
 
   console.log(reflections);
 
-  return json2md(
-    reflections.reduce<DataObject[]>(
-      (acc, reflection) => [...acc, renderReflection(reflection)],
-      []
-    )
-  );
+  return reflections
+    .reduce<string[]>((acc, reflection) => [...acc, ...renderReflection(reflection)], [])
+    .join('\n');
 }
