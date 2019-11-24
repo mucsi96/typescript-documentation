@@ -1,4 +1,4 @@
-import { Application, Reflection, DeclarationReflection } from 'typedoc';
+import { Application, DeclarationReflection } from 'typedoc';
 import { resolve, sep } from 'path';
 import json2md, { DataObject } from 'json2md';
 import slugify from '@sindresorhus/slugify';
@@ -30,18 +30,19 @@ function getDependentReflections(reflection: DeclarationReflection): Declaration
   }
 }
 
+function renderHeading(title: string, level = 1): DataObject {
+  return {
+    [`h${level}`]: ({
+      link: {
+        source: `#${slugify(title)}`,
+        title
+      }
+    } as unknown) as string
+  };
+}
+
 function renderVariable(reflection: DeclarationReflection): DataObject[] {
-  const id = slugify(reflection.name);
-  return [
-    {
-      h1: ({
-        link: {
-          source: `#${id}`,
-          title: reflection.name
-        }
-      } as unknown) as string
-    }
-  ];
+  return [renderHeading(reflection.name)];
 }
 
 function renderReflection(reflection: DeclarationReflection): DataObject[] {
