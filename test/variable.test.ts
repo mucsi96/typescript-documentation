@@ -9,7 +9,7 @@ describe('variables', () => {
  * Simple variable description
  * line 2
  */
-export const simpleVariable = 1;
+export const simpleVariable: number = 1;
         `
       },
       `
@@ -17,6 +17,7 @@ export const simpleVariable = 1;
 Simple variable description
 line 2
 ##### Type
+\`number\`
       `
     );
   });

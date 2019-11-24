@@ -1,6 +1,7 @@
 import { Application, DeclarationReflection } from 'typedoc';
 import { resolve, sep } from 'path';
 import slugify from '@sindresorhus/slugify';
+import { IntrinsicType } from 'typedoc/dist/lib/models';
 
 function getDependentReflections(reflection: DeclarationReflection): DeclarationReflection[] {
   if (!reflection.children) {
@@ -41,6 +42,10 @@ function renderVariable(reflection: DeclarationReflection): string[] {
   }
 
   result.push(`##### Type`);
+
+  if (reflection.type instanceof IntrinsicType) {
+    result.push(`\`${reflection.type.name}\``);
+  }
 
   return result;
 }
