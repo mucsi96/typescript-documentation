@@ -1,5 +1,57 @@
-import { Application } from 'typedoc';
+import { Application, Reflection, DeclarationReflection } from 'typedoc';
 import { resolve, sep } from 'path';
+import json2md, { DataObject } from 'json2md';
+import slugify from '@sindresorhus/slugify';
+
+function getDependentReflections(reflection: DeclarationReflection): DeclarationReflection[] {
+  if (!reflection.children) {
+    return [];
+  }
+
+  switch (reflection.kindString) {
+    case 'External module': {
+      const moduleItems = reflection.children.filter(item => item.flags.isExported);
+
+      moduleItems.sort((a, b) => {
+        if (!a.sources || !b.sources) {
+          return 0;
+        }
+
+        return a.sources[0].line - b.sources[0].line;
+      });
+
+      return moduleItems.reduce(
+        (dependencies, child) => [...dependencies, ...getDependentReflections(child)],
+        moduleItems
+      );
+    }
+    default:
+      return [];
+  }
+}
+
+function renderVariable(reflection: DeclarationReflection): DataObject[] {
+  const id = slugify(reflection.name);
+  return [
+    {
+      h1: ({
+        link: {
+          source: `#${id}`,
+          title: reflection.name
+        }
+      } as unknown) as string
+    }
+  ];
+}
+
+function renderReflection(reflection: DeclarationReflection): DataObject[] {
+  switch (reflection.kindString) {
+    case 'Variable':
+      return renderVariable(reflection);
+    default:
+      return [];
+  }
+}
 
 export function createDocumentation(entry: string): string {
   const app = new Application({
@@ -13,15 +65,22 @@ export function createDocumentation(entry: string): string {
     });
   }
 
-  const entryModule = Object.values(project.reflections).find(
+  const entryReflection = Object.values(project.reflections).find(
     reflection => reflection.originalName.replace(/\//g, sep) === entry
-  );
+  ) as DeclarationReflection;
 
-  if (!entryModule) {
+  if (!entryReflection) {
     throw new Error('Entry module not found');
   }
 
-  console.log(entryModule);
+  const reflections = getDependentReflections(entryReflection);
 
-  return entry;
+  console.log(reflections);
+
+  return json2md(
+    reflections.reduce<DataObject[]>(
+      (acc, reflection) => [...acc, renderReflection(reflection)],
+      []
+    )
+  );
 }
