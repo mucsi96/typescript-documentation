@@ -1,6 +1,6 @@
-import { DeclarationReflection } from 'typedoc';
+import { Reflection } from 'typedoc';
 
-export function renderDescription(reflection: DeclarationReflection): string[] {
+export function renderDescription(reflection: Reflection): string[] {
   if (reflection.comment) {
     return [reflection.comment.shortText];
   }

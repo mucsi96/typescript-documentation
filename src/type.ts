@@ -1,10 +1,9 @@
-import { DeclarationReflection } from 'typedoc';
-import { IntrinsicType } from 'typedoc/dist/lib/models';
+import { IntrinsicType, Type } from 'typedoc/dist/lib/models';
 
-export function renderType(reflection: DeclarationReflection): string[] {
-  if (reflection.type instanceof IntrinsicType) {
-    return [`\`${reflection.type.name}\``];
+export function renderType(type?: Type): string {
+  if (type instanceof IntrinsicType) {
+    return type.name;
   }
 
-  return [];
+  return '';
 }

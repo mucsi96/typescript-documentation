@@ -1,10 +1,11 @@
-import { DeclarationReflection } from 'typedoc';
+import { Reflection } from 'typedoc';
+import { renderSubSection } from './subSection';
 
 function isLink(value?: RegExpExecArray | null | undefined): value is RegExpExecArray {
   return !!value;
 }
 
-function getAddtionalLinks(reflection: DeclarationReflection): { href: string; text: string }[] {
+function getAddtionalLinks(reflection: Reflection): { href: string; text: string }[] {
   if (!reflection.comment || !reflection.comment.tags) {
     return [];
   }
@@ -16,12 +17,15 @@ function getAddtionalLinks(reflection: DeclarationReflection): { href: string; t
     .map(([, href, text]) => ({ href, text }));
 }
 
-export function renderAdditionalLinks(reflection: DeclarationReflection): string[] {
+export function renderAdditionalLinks(reflection: Reflection): string[] {
   const additionalLinks = getAddtionalLinks(reflection);
 
   if (!additionalLinks.length) {
     return [];
   }
 
-  return ['*SEE ALSO*', ...additionalLinks.map(({ href, text }) => `- [${text}](${href})`)];
+  return [
+    ...renderSubSection('See also'),
+    ...additionalLinks.map(({ href, text }) => `- [${text}](${href})`)
+  ];
 }

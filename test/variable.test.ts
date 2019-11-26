@@ -22,9 +22,13 @@ describe('variables', () => {
         # [simpleVariable](#simple-variable)
         Simple variable description
         line 2
-        *TYPE*
+
+        **TYPE**
+
         \`number\`
-        *EXAMPLES*
+
+        **EXAMPLES**
+
         \`\`\`
         example 1 line 1
         example 1 line 2
@@ -33,7 +37,9 @@ describe('variables', () => {
         example 2 line 1
         example 2 line 2
         \`\`\`
-        *SEE ALSO*
+
+        **SEE ALSO**
+
         - [Example url 1](https://test.url.1)
         - [Example url 2](https://test.url.2)
       `

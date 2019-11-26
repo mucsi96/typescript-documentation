@@ -1,7 +1,7 @@
-import { DeclarationReflection } from 'typedoc';
-import { CommentTag } from 'typedoc/dist/lib/models';
+import { CommentTag, Reflection } from 'typedoc/dist/lib/models';
+import { renderSubSection } from './subSection';
 
-function getExamples(reflection: DeclarationReflection): CommentTag[] {
+function getExamples(reflection: Reflection): CommentTag[] {
   if (!reflection.comment || !reflection.comment.tags) {
     return [];
   }
@@ -9,12 +9,15 @@ function getExamples(reflection: DeclarationReflection): CommentTag[] {
   return reflection.comment.tags.filter(tag => tag.tagName === 'example');
 }
 
-export function renderExamples(reflection: DeclarationReflection): string[] {
+export function renderExamples(reflection: Reflection): string[] {
   const examples = getExamples(reflection);
 
   if (!examples.length) {
     return [];
   }
 
-  return ['*EXAMPLES*', ...examples.map(example => `\`\`\`\n${example.text.trim()}\n\`\`\``)];
+  return [
+    ...renderSubSection('Examples'),
+    ...examples.map(example => `\`\`\`\n${example.text.trim()}\n\`\`\``)
+  ];
 }
