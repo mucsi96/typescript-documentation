@@ -1,7 +1,7 @@
 import { testDocumentation } from './utils';
 
 describe('functions', () => {
-  it('renders exported functions', () => {
+  it('documents exported functions', () => {
     testDocumentation({
       'index.ts': `
         /**
@@ -53,7 +53,7 @@ describe('functions', () => {
     });
   });
 
-  it('doesn`t render not exported functions', () => {
+  it('doesn`t document not exported functions', () => {
     testDocumentation({
       'index.ts': `
         function simpleFunction(a: string, b: number): string {

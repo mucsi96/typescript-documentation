@@ -1,7 +1,7 @@
 import { testDocumentation } from './utils';
 
 describe('variables', () => {
-  it('renders exported variables', () => {
+  it('documents exported variables', () => {
     testDocumentation({
       'index.ts': `
         /**
@@ -46,7 +46,7 @@ describe('variables', () => {
     });
   });
 
-  it('doesn`t render not exported variables', () => {
+  it('doesn`t document not exported variables', () => {
     testDocumentation({
       'index.ts': `
         const simpleVariable = 1;
