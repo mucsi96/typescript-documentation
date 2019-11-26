@@ -11,9 +11,10 @@ function getExamples(reflection: DeclarationReflection): CommentTag[] {
 
 export function renderExamples(reflection: DeclarationReflection): string[] {
   const examples = getExamples(reflection);
+
   if (!examples.length) {
     return [];
   }
 
-  return ['##### Examples', ...examples.map(example => `\`\`\`\n${example.text.trim()}\n\`\`\``)];
+  return ['*EXAMPLES*', ...examples.map(example => `\`\`\`\n${example.text.trim()}\n\`\`\``)];
 }
