@@ -16,7 +16,7 @@
   "scripts": {
     "lint": "eslint src/**",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "test": "ts-mocha test/**/*.test.ts --timeout 5000",
+    "test": "ts-mocha test/**/*.test.ts --timeout 10000",
     "test:debug": "npm run test -- --inspect",
     "clean": "del-cli lib",
     "build:declarations": "tsc --declaration --emitDeclarationOnly --outDir lib --project tsconfig.build.json",
