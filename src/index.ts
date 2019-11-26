@@ -1,63 +1,7 @@
 import { Application, DeclarationReflection } from 'typedoc';
 import { resolve, sep } from 'path';
-import slugify from '@sindresorhus/slugify';
-import { IntrinsicType } from 'typedoc/dist/lib/models';
-
-function getDependentReflections(reflection: DeclarationReflection): DeclarationReflection[] {
-  if (!reflection.children) {
-    return [];
-  }
-
-  switch (reflection.kindString) {
-    case 'External module': {
-      const moduleItems = reflection.children.filter(item => item.flags.isExported);
-
-      moduleItems.sort((a, b) => {
-        if (!a.sources || !b.sources) {
-          return 0;
-        }
-
-        return a.sources[0].line - b.sources[0].line;
-      });
-
-      return moduleItems.reduce(
-        (dependencies, child) => [...dependencies, ...getDependentReflections(child)],
-        moduleItems
-      );
-    }
-    default:
-      return [];
-  }
-}
-
-function renderHeading(title: string, level = 1): string {
-  return `${Array(level).fill('#')} [${title}](#${slugify(title)})`;
-}
-
-function renderVariable(reflection: DeclarationReflection): string[] {
-  const result = [renderHeading(reflection.name)];
-
-  if (reflection.comment) {
-    result.push(reflection.comment.shortText);
-  }
-
-  result.push(`##### Type`);
-
-  if (reflection.type instanceof IntrinsicType) {
-    result.push(`\`${reflection.type.name}\``);
-  }
-
-  return result;
-}
-
-function renderReflection(reflection: DeclarationReflection): string[] {
-  switch (reflection.kindString) {
-    case 'Variable':
-      return renderVariable(reflection);
-    default:
-      return [];
-  }
-}
+import { getDependentReflections } from './dependencies';
+import { renderReflection } from './reflection';
 
 export function createDocumentation(entry: string): string {
   const app = new Application({
