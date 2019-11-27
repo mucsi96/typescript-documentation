@@ -48,7 +48,6 @@
     "@types/rimraf": "^2.0.3",
     "@typescript-eslint/eslint-plugin": "^2.8.0",
     "@typescript-eslint/parser": "^2.8.0",
-    "core-js": "^3.4.4",
     "cpy-cli": "^2.0.0",
     "del-cli": "^3.0.0",
     "eslint": "^6.7.0",

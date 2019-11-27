@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["esnext", "esnext.array"],
+    "lib": ["esnext"],
     "esModuleInterop": true,
     "strict": true,
     "skipLibCheck": true,

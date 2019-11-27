@@ -11,11 +11,12 @@ export function renderFunction(reflection: DeclarationReflection): string[] {
     return [];
   }
 
-  return reflection.signatures.flatMap((signature): string[] => {
+  return reflection.signatures.reduce<string[]>((output, signature): string[] => {
     const { name, parameters = [], type } = signature;
     const title = `${name}(${parameters.map(({ name }) => name).join(', ')})`;
 
     return [
+      ...output,
       ...renderHeading(title, name),
       ...renderDescription(signature),
       ...renderSubSection('Parameters'),
@@ -28,5 +29,5 @@ export function renderFunction(reflection: DeclarationReflection): string[] {
       ...renderExamples(signature),
       ...renderAdditionalLinks(signature)
     ];
-  });
+  }, []);
 }
