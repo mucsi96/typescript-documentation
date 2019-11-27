@@ -1,4 +1,4 @@
-import { DeclarationReflection } from 'typedoc';
+import { DeclarationReflection, ReflectionKind } from 'typedoc';
 
 export function getDependentReflections(
   reflection: DeclarationReflection
@@ -7,8 +7,8 @@ export function getDependentReflections(
     return [];
   }
 
-  switch (reflection.kindString) {
-    case 'External module': {
+  switch (reflection.kind) {
+    case ReflectionKind.ExternalModule: {
       const moduleItems = reflection.children.filter(item => item.flags.isExported);
 
       moduleItems.sort((a, b) => {
