@@ -3,6 +3,7 @@ import { renderVariable } from './variable';
 import { renderFunction } from './function';
 import { renderClass } from './class';
 import { renderType } from './type';
+import { renderEnumeration } from './enumeration';
 
 export function renderReflection(reflection: DeclarationReflection): string[] {
   switch (reflection.kind) {
@@ -14,6 +15,8 @@ export function renderReflection(reflection: DeclarationReflection): string[] {
       return renderVariable(reflection);
     case ReflectionKind.TypeAlias:
       return renderType(reflection);
+    case ReflectionKind.Enum:
+      return renderEnumeration(reflection);
     default:
       return [];
   }
