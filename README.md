@@ -5,7 +5,7 @@
 [![npm](https://img.shields.io/npm/dw/@mucsi96/typescript-documentation)](https://www.npmjs.com/package/@mucsi96/typescript-documentation)
 [![github](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://github.com/mucsi96/typescript-documentation)
 
-Generate markdown documentation for TypeScript projects
+Generate markdown API documentation directly from TypeScript source code.
 
 # Documenting variables
 
