@@ -9,9 +9,13 @@ import { renderTypeInfo } from './typeInfo';
 
 function renderTypeDefinition(type?: Type): string[] {
   if (type instanceof ReflectionType) {
+    if (!type.declaration.children) {
+      return [];
+    }
+
     return [
       ...renderSubSection('Properties'),
-      ...(type.declaration.children || []).map(
+      ...type.declaration.children.map(
         ({ name, flags, type }) =>
           `- \`${name}${flags && flags.isOptional ? '?' : ''}: ${renderTypeInfo(type)}\``
       )

@@ -18,6 +18,6 @@ export function renderExamples(reflection: Reflection): string[] {
 
   return [
     ...renderSubSection('Examples'),
-    ...examples.map(example => `\`\`\`\n${example.text.trim()}\n\`\`\``)
+    ...examples.map(example => `\`\`\`typescript\n${example.text.trim()}\n\`\`\``)
   ];
 }

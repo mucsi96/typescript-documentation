@@ -22,6 +22,7 @@ export function renderEnumeration(reflection: DeclarationReflection): string[] {
     ...renderDescription(reflection),
     ...renderEnumerationItems(reflection),
     ...renderExamples(reflection),
-    ...renderAdditionalLinks(reflection)
+    ...renderAdditionalLinks(reflection),
+    ''
   ];
 }
