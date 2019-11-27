@@ -49,11 +49,11 @@ describe('classes', () => {
 
       **EXAMPLES**
 
-      \`\`\`
+      \`\`\`typescript
       example 1 line 1
       example 1 line 2
       \`\`\`
-      \`\`\`
+      \`\`\`typescript
       example 2 line 1
       example 2 line 2
       \`\`\`
@@ -73,11 +73,11 @@ describe('classes', () => {
 
       **EXAMPLES**
 
-      \`\`\`
+      \`\`\`typescript
       example 3 line 1
       example 3 line 2
       \`\`\`
-      \`\`\`
+      \`\`\`typescript
       example 4 line 1
       example 4 line 2
       \`\`\`

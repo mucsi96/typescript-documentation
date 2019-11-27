@@ -33,11 +33,11 @@ describe('types', () => {
 
         **EXAMPLES**
 
-        \`\`\`
+        \`\`\`typescript
         example 1 line 1
         example 1 line 2
         \`\`\`
-        \`\`\`
+        \`\`\`typescript
         example 2 line 1
         example 2 line 2
         \`\`\`
