@@ -1,14 +1,12 @@
 {
   "name": "@mucsi96/typescript-documentation",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Generate markdown documentation for TypeScript projects",
   "license": "MIT",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [
-    "lib",
-    "LICENSE",
-    "README.md"
+    "lib"
   ],
   "engines": {
     "node": ">= 10.0.0"
