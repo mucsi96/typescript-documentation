@@ -2,9 +2,9 @@
 
 Generate markdown documentation for TypeScript projects
 
-# Variables
+# Documenting variables
 
-Example input:
+_Example input:_
 
 ```typescript
 /**
@@ -22,7 +22,7 @@ Example input:
 export const simpleVariable: number = 1;
 ```
 
-Example output:
+_Example output:_
 
 ## simpleVariable
 
@@ -50,9 +50,9 @@ example 2 line 2
 - [Example url 1](https://test.url.1)
 - [Example url 2](https://test.url.2)
 
-# Functions
+# Documenting functions
 
-Example input:
+_Example input:_
 
 ```typescript
 /**
@@ -72,7 +72,7 @@ export function simpleFunction(a: string, b: number): string {
 }
 ```
 
-Example output:
+_Example output:_
 
 ## simpleFunction(a, b)
 
@@ -105,9 +105,9 @@ example 2 line 2
 - [Example url 1](https://test.url.1)
 - [Example url 2](https://test.url.2)
 
-# Classes
+# Documenting classes
 
-Example input:
+_Example input:_
 
 ```typescript
 /**
@@ -149,7 +149,7 @@ export class SimpleClass {
 }
 ```
 
-Example output:
+_Example output:_
 
 ## SimpleClass
 
@@ -213,9 +213,9 @@ line 2
 
 `string`
 
-# Types
+# Documenting types
 
-Example input:
+_Example input:_
 
 ```typescript
 /**
@@ -236,7 +236,7 @@ export type SimpleType = {
 };
 ```
 
-Example output:
+_Example output:_
 
 ## SimpleType
 
@@ -265,9 +265,9 @@ example 2 line 2
 - [Example url 1](https://test.url.1)
 - [Example url 2](https://test.url.2)
 
-# Enumerations
+# Documenting enumerations
 
-Example input:
+_Example input:_
 
 ```typescript
 /**
@@ -288,7 +288,7 @@ export enum SimpleEnum {
 }
 ```
 
-Example output:
+_Example output:_
 
 ## SimpleEnum
 
