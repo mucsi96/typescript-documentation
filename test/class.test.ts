@@ -43,7 +43,7 @@ describe('classes', () => {
         }
       `,
       markdown: `
-      ## [SimpleClass](#simple-class)
+      ## SimpleClass
       Simple class description
       line 2
 
@@ -63,7 +63,7 @@ describe('classes', () => {
       - [Example url 1](https://test.url.1)
       - [Example url 2](https://test.url.2)
 
-      ## [simpleClass.simpleMethod1()](#simple-class-simple-method1)
+      ## simpleClass.simpleMethod1()
       simpleMethod1 description
       line 2
 
@@ -87,7 +87,7 @@ describe('classes', () => {
       - [Example url 3](https://test.url.3)
       - [Example url 4](https://test.url.4)
 
-      ## [simpleClass.simpleMethod2(a, b)](#simple-class-simple-method2)
+      ## simpleClass.simpleMethod2(a, b)
       simpleMethod2 description
       line 2
 

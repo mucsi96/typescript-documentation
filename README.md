@@ -24,7 +24,7 @@ export const simpleVariable: number = 1;
 
 Example output:
 
-## [simpleVariable](#simple-variable)
+## simpleVariable
 
 Simple variable description
 line 2
@@ -74,7 +74,7 @@ export function simpleFunction(a: string, b: number): string {
 
 Example output:
 
-## [simpleFunction(a, b)](#simple-function)
+## simpleFunction(a, b)
 
 Simple function description
 line 2
@@ -151,7 +151,7 @@ export class SimpleClass {
 
 Example output:
 
-## [SimpleClass](#simple-class)
+## SimpleClass
 
 Simple class description
 line 2
@@ -173,7 +173,7 @@ example 2 line 2
 - [Example url 1](https://test.url.1)
 - [Example url 2](https://test.url.2)
 
-## [simpleClass.simpleMethod1()](#simple-class-simple-method1)
+## simpleClass.simpleMethod1()
 
 simpleMethod1 description
 line 2
@@ -199,7 +199,7 @@ example 4 line 2
 - [Example url 3](https://test.url.3)
 - [Example url 4](https://test.url.4)
 
-## [simpleClass.simpleMethod2(a, b)](#simple-class-simple-method2)
+## simpleClass.simpleMethod2(a, b)
 
 simpleMethod2 description
 line 2
@@ -238,7 +238,7 @@ export type SimpleType = {
 
 Example output:
 
-## [SimpleType](#simple-type)
+## SimpleType
 
 Simple type description
 line 2
@@ -282,7 +282,7 @@ Example input:
  * example 2 line 1
  * example 2 line 2
  */
-export enum simpleEnum {
+export enum SimpleEnum {
   ONE,
   TWO
 }
@@ -290,7 +290,7 @@ export enum simpleEnum {
 
 Example output:
 
-## [simpleEnum](#simple-enum)
+## SimpleEnum
 
 Simple enumeration description
 line 2

@@ -16,10 +16,10 @@ describe('enumerations', () => {
          * example 2 line 1
          * example 2 line 2
          */
-        export enum simpleEnum { ONE, TWO };
+        export enum SimpleEnum { ONE, TWO };
       `,
       markdown: `
-        ## [simpleEnum](#simple-enum)
+        ## SimpleEnum
         Simple enumeration description
         line 2
 
@@ -50,7 +50,7 @@ describe('enumerations', () => {
   it('doesn`t document not exported enumerations', () => {
     testDocumentation({
       'index.ts': `
-        enum simpleEnum { ONE, TWO };
+        enum SimpleEnum { ONE, TWO };
       `,
       markdown: ``
     });

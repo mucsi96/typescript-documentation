@@ -26,7 +26,7 @@ export function renderFunctionSignature(name: string, signature: SignatureReflec
   const title = `${name}(${parameters.map(({ name }) => name).join(', ')})`;
 
   return [
-    ...renderTitle(title, name),
+    ...renderTitle(title),
     ...renderDescription(signature),
     ...renderFunctionParameters(parameters),
     ...renderSubSection('Returns'),

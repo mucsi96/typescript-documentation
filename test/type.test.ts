@@ -22,7 +22,7 @@ describe('types', () => {
         };
       `,
       markdown: `
-        ## [SimpleType](#simple-type)
+        ## SimpleType
         Simple type description
         line 2
 
