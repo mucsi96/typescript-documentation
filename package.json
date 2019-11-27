@@ -5,6 +5,7 @@
   "license": "MIT",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
+  "bin": "./lib/cli.js",
   "files": [
     "lib"
   ],
@@ -12,6 +13,7 @@
     "node": ">= 10.0.0"
   },
   "scripts": {
+    "start": "ts-node src/cli.ts",
     "lint": "eslint src/**",
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "test": "ts-mocha test/**/*.test.ts --timeout 10000",
@@ -34,6 +36,7 @@
   "author": "Igor Mucsicska <mucsi_96@yahoo.com>",
   "dependencies": {
     "@sindresorhus/slugify": "^0.9.1",
+    "commander": "^4.0.1",
     "typedoc": "^0.15.3"
   },
   "devDependencies": {
@@ -60,6 +63,7 @@
     "pretty-quick": "^2.0.1",
     "rimraf": "^3.0.0",
     "ts-mocha": "^6.0.0",
+    "ts-node": "^8.5.2",
     "typescript": "^3.7.2"
   },
   "husky": {
