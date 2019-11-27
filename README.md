@@ -1,5 +1,10 @@
 # typescript-documentation
 
+[![npm version](https://badge.fury.io/js/%40mucsi96%2Ftypescript-documentation.svg)](https://www.npmjs.com/package/@mucsi96/typescript-documentation)
+[![Build Status](https://github.com/mucsi96/typescript-documentation/workflows/Build/badge.svg)](https://github.com/mucsi96/typescript-documentation/actions?query=workflow%3ABuild+branch%3Amaster)
+[![npm](https://img.shields.io/npm/dw/@mucsi96/typescript-documentation)](https://www.npmjs.com/package/@mucsi96/typescript-documentation)
+[![github](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://github.com/mucsi96/typescript-documentation)
+
 Generate markdown documentation for TypeScript projects
 
 # Documenting variables
