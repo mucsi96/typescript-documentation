@@ -47,6 +47,17 @@ describe('enumerations', () => {
     });
   });
 
+  it('documents minimal information', () => {
+    testDocumentation({
+      'index.ts': `
+        export enum SimpleEnum {};
+      `,
+      markdown: `
+        ## SimpleEnum
+      `
+    });
+  });
+
   it('doesn`t document not exported enumerations', () => {
     testDocumentation({
       'index.ts': `

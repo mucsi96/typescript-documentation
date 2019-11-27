@@ -103,6 +103,42 @@ describe('classes', () => {
     });
   });
 
+  it('documents minimal information', () => {
+    testDocumentation({
+      'index.ts': `
+        export class SimpleClass {
+          public simpleMethod1(): void {
+            return;
+          }
+
+          public simpleMethod2(a: string, b: number): string {
+            return a + b;
+          }
+        }
+      `,
+      markdown: `
+      ## SimpleClass
+
+      ## simpleClass.simpleMethod1()
+
+      **RETURNS**
+
+      \`void\`
+
+      ## simpleClass.simpleMethod2(a, b)
+
+      **PARAMETERS**
+
+      - \`a: string\`
+      - \`b: number\`
+
+      **RETURNS**
+
+      \`string\`
+      `
+    });
+  });
+
   it('doesn`t document not exported classes', () => {
     testDocumentation({
       'index.ts': `

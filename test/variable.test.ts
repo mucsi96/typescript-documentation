@@ -46,6 +46,21 @@ describe('variables', () => {
     });
   });
 
+  it('documents minimal information', () => {
+    testDocumentation({
+      'index.ts': `
+        export const simpleVariable: number = 1;
+      `,
+      markdown: `
+        ## simpleVariable
+
+        **TYPE**
+
+        \`number\`
+      `
+    });
+  });
+
   it('doesn`t document not exported variables', () => {
     testDocumentation({
       'index.ts': `

@@ -53,6 +53,28 @@ describe('functions', () => {
     });
   });
 
+  it('documents minimal information', () => {
+    testDocumentation({
+      'index.ts': `
+        export function simpleFunction(a: string, b: number): string {
+          return a + b;
+        }
+      `,
+      markdown: `
+      ## simpleFunction(a, b)
+
+      **PARAMETERS**
+
+      - \`a: string\`
+      - \`b: number\`
+
+      **RETURNS**
+
+      \`string\`
+      `
+    });
+  });
+
   it('doesn`t document not exported functions', () => {
     testDocumentation({
       'index.ts': `

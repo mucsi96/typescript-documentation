@@ -51,6 +51,17 @@ describe('types', () => {
     });
   });
 
+  it('documents minimal information', () => {
+    testDocumentation({
+      'index.ts': `
+        export type SimpleType = {};
+      `,
+      markdown: `
+        ## SimpleType
+      `
+    });
+  });
+
   it('doesn`t document not exported types', () => {
     testDocumentation({
       'index.ts': `
