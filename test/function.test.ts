@@ -21,7 +21,7 @@ describe('functions', () => {
         }
       `,
       markdown: `
-      # [simpleFunction(a, b)](#simple-function)
+      ## [simpleFunction(a, b)](#simple-function)
       Simple function description
       line 2
 

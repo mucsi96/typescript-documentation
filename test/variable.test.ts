@@ -19,7 +19,7 @@ describe('variables', () => {
         export const simpleVariable: number = 1;
       `,
       markdown: `
-        # [simpleVariable](#simple-variable)
+        ## [simpleVariable](#simple-variable)
         Simple variable description
         line 2
 
