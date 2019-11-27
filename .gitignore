@@ -1,3 +1,5 @@
 node_modules/
 lib/
-.temp-test/
+.nyc_output/
+coverage/
+.test-temp/
