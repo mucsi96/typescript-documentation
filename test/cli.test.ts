@@ -34,61 +34,58 @@ function runCLI(): TCLIResult {
 }
 
 describe('CLI', () => {
+  it('provides empty options by default', () => {
+    process.argv = ['node', 'typescript-documentation'];
+    expect(runCLI().options).toEqual({});
+  });
+
   it('writes markdown to provided output file (long)', () => {
     process.argv = ['node', 'typescript-documentation', '--output', 'test.md'];
     expect(runCLI().outputFile).toEqual('test.md');
-    expect(runCLI().outputContent).toEqual('test docs');
-    expect(runCLI().options).toEqual({ output: 'test.md' });
   });
 
   it('writes markdown to provided output file (short)', () => {
     process.argv = ['node', 'typescript-documentation', '-o', 'test.md'];
     expect(runCLI().outputFile).toEqual('test.md');
-    expect(runCLI().outputContent).toEqual('test docs');
-    expect(runCLI().options).toEqual({ output: 'test.md' });
   });
 
   it('reads tsConfig path from command line options (long)', () => {
-    process.argv = [
-      'node',
-      'typescript-documentation',
-      '-o',
-      'test.md',
-      '--project',
-      './tsconfig.json'
-    ];
+    process.argv = ['node', 'typescript-documentation', '--project', './tsconfig.json'];
     expect(runCLI().options.project).toEqual('./tsconfig.json');
   });
 
   it('reads tsConfig path from command line options (short)', () => {
-    process.argv = ['node', 'typescript-documentation', '-o', 'test.md', '-p', './tsconfig.json'];
+    process.argv = ['node', 'typescript-documentation', '-p', './tsconfig.json'];
     expect(runCLI().options.project).toEqual('./tsconfig.json');
   });
 
   it('reads entry file path from command line options (long)', () => {
-    process.argv = [
-      'node',
-      'typescript-documentation',
-      '-o',
-      'test.md',
-      '--entry',
-      './src/index.ts'
-    ];
+    process.argv = ['node', 'typescript-documentation', '--entry', './src/index.ts'];
     expect(runCLI().options.entry).toEqual('./src/index.ts');
   });
 
   it('reads entry file path from command line options (short)', () => {
-    process.argv = ['node', 'typescript-documentation', '-o', 'test.md', '-e', './src/index.ts'];
+    process.argv = ['node', 'typescript-documentation', '-e', './src/index.ts'];
     expect(runCLI().options.entry).toEqual('./src/index.ts');
   });
 
+  it('reads output file from command line options (long)', () => {
+    process.argv = ['node', 'typescript-documentation', '-o', 'test.md'];
+    expect(runCLI().options.output).toEqual('test.md');
+  });
+
+  it('reads output file from command line options (short)', () => {
+    process.argv = ['node', 'typescript-documentation', '-o', 'test.md'];
+    expect(runCLI().options.output).toEqual('test.md');
+  });
+
   it('reads section filter from command line options (long)', () => {
-    process.argv = ['node', 'typescript-documentation', '-o', 'test.md', '--section', 'intro'];
+    process.argv = ['node', 'typescript-documentation', '--section', 'intro'];
     expect(runCLI().options.section).toEqual('intro');
   });
 
   it('reads section filter from command line options (short)', () => {
-    process.argv = ['node', 'typescript-documentation', '-o', 'test.md', '-s', 'intro'];
+    process.argv = ['node', 'typescript-documentation', '-s', 'intro'];
     expect(runCLI().options.section).toEqual('intro');
   });
 });

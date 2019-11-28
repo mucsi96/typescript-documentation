@@ -30,6 +30,8 @@ const options = Object.keys(allOptions)
   .filter(key => allOptions[key])
   .reduce<TOptions>((acc, key) => ({ ...acc, [key]: allOptions[key] }), {});
 
+const markdown = createDocumentation(options);
+
 if (options.output) {
-  writeFileSync(options.output, createDocumentation(options), 'utf8');
+  writeFileSync(options.output, markdown, 'utf8');
 }
