@@ -3,7 +3,9 @@ import { resolve } from 'path';
 import expect from 'expect';
 import { createDocumentation } from '../src';
 import rimraf from 'rimraf';
+import rewiremock from 'rewiremock';
 
+rewiremock.overrideEntryPoint(module);
 const testTempDir = resolve(__dirname, '../.test-temp');
 
 export function prepare(): void {
@@ -35,5 +37,9 @@ export function testDocumentation(code: { [fileName: string]: string }): void {
     .join('\n')
     .trim();
 
-  expect(createDocumentation(resolve(testTempDir, 'index.ts')).trim()).toEqual(trimmedOutput);
+  expect(createDocumentation({ entry: resolve(testTempDir, 'index.ts') }).trim()).toEqual(
+    trimmedOutput
+  );
 }
+
+export { rewiremock };

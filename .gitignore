@@ -3,3 +3,4 @@ lib/
 .nyc_output/
 coverage/
 .test-temp/
+output.md
