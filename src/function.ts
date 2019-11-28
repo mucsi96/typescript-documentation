@@ -38,6 +38,7 @@ export function renderFunctionSignature(name: string, signature: SignatureReflec
 }
 
 export function renderFunction(reflection: DeclarationReflection): string[] {
+  /* istanbul ignore if */
   if (!reflection.signatures) {
     return [];
   }

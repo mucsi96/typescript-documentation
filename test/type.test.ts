@@ -18,7 +18,7 @@ describe('types', () => {
          */
         export type SimpleType = {
           a: string;
-          b: number;
+          b?: number;
         };
       `,
       markdown: `
@@ -29,7 +29,7 @@ describe('types', () => {
         **PROPERTIES**
 
         - \`a: string\`
-        - \`b: number\`
+        - \`b?: number\`
 
         **EXAMPLES**
 

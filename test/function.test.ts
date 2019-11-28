@@ -16,8 +16,8 @@ describe('functions', () => {
          * example 2 line 1
          * example 2 line 2
          */
-        export function simpleFunction(a: string, b: number): string {
-          return a + b;
+        export function simpleFunction(a: string, b?: number): string {
+          return a;
         }
       `,
       markdown: `
@@ -28,7 +28,7 @@ describe('functions', () => {
       **PARAMETERS**
 
       - \`a: string\`
-      - \`b: number\`
+      - \`b?: number\`
 
       **RETURNS**
 

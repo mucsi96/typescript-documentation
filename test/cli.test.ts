@@ -1,6 +1,6 @@
 import { rewiremock } from './utils';
-import { TOptions } from '../src/cli';
 import expect from 'expect';
+import { TOptions } from '../src/options';
 
 type TCLIResult = {
   options: TOptions;

@@ -1,13 +1,7 @@
 import program from 'commander';
 import { createDocumentation } from '.';
 import { writeFileSync } from 'fs';
-
-export type TOptions = {
-  project?: string;
-  entry?: string;
-  output?: string;
-  section?: string;
-};
+import { TOptions } from './options';
 
 program
   .name('typescript-documentation')

@@ -1,16 +1,14 @@
 import { Application, DeclarationReflection } from 'typedoc';
-import { resolve, sep, isAbsolute } from 'path';
+import { sep } from 'path';
 import { getDependentReflections } from './dependencies';
 import { renderReflection } from './reflection';
-import { TOptions } from './cli';
+import { createConfigurationFromOptions, TOptions } from './options';
 
 export function createDocumentation(options: TOptions): string {
-  const { project: tsConfig = './tsconfig.json', entry = './src/index.ts' } = options;
-  const tsConfigPath = isAbsolute(tsConfig) ? tsConfig : resolve(process.cwd(), tsConfig);
-  const entryPath = isAbsolute(entry) ? entry : resolve(process.cwd(), entry);
+  const { tsConfig, entry } = createConfigurationFromOptions(options);
 
-  const app = new Application({ tsConfig: tsConfigPath });
-  const { errors, project } = app.converter.convert([entryPath]);
+  const app = new Application({ tsConfig });
+  const { errors, project } = app.converter.convert([entry]);
 
   if (errors && errors.length) {
     errors.map(error => {
@@ -19,9 +17,10 @@ export function createDocumentation(options: TOptions): string {
   }
 
   const entryReflection = Object.values(project.reflections).find(
-    reflection => reflection.originalName.replace(/\//g, sep) === entryPath
+    reflection => reflection.originalName.replace(/\//g, sep) === entry
   ) as DeclarationReflection;
 
+  /* istanbul ignore if */
   if (!entryReflection) {
     throw new Error('Entry module not found');
   }

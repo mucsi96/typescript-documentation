@@ -8,6 +8,7 @@ import { renderSubSection } from './subSection';
 import { renderTypeInfo } from './typeInfo';
 
 function renderTypeDefinition(type?: Type): string[] {
+  /* istanbul ignore else */
   if (type instanceof ReflectionType) {
     if (!type.declaration.children) {
       return [];
@@ -22,7 +23,8 @@ function renderTypeDefinition(type?: Type): string[] {
     ];
   }
 
-  return [];
+  /* istanbul ignore next */
+  throw new Error(`Not supported type ${type && type.type}`);
 }
 
 export function renderType(reflection: DeclarationReflection): string[] {

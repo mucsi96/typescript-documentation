@@ -17,7 +17,8 @@ export function renderReflection(reflection: DeclarationReflection): string[] {
       return renderType(reflection);
     case ReflectionKind.Enum:
       return renderEnumeration(reflection);
-    default:
-      return [];
   }
+
+  /* istanbul ignore next */
+  throw new Error(`Not supported reflection kind ${reflection.kindString}`);
 }

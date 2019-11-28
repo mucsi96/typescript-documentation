@@ -12,6 +12,7 @@ export function getDependentReflections(
       const moduleItems = reflection.children.filter(item => item.flags.isExported);
 
       moduleItems.sort((a, b) => {
+        /* istanbul ignore if */
         if (!a.sources || !b.sources) {
           return 0;
         }

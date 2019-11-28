@@ -6,6 +6,7 @@ import { renderAdditionalLinks } from './additionalLinks';
 import { renderFunctionSignature } from './function';
 
 function getMethods(reflection: DeclarationReflection): DeclarationReflection[] {
+  /* istanbul ignore if */
   if (!reflection.children) {
     return [];
   }
@@ -15,6 +16,7 @@ function getMethods(reflection: DeclarationReflection): DeclarationReflection[] 
   );
 
   items.sort((a, b) => {
+    /* istanbul ignore if */
     if (!a.sources || !b.sources) {
       return 0;
     }
@@ -36,6 +38,7 @@ export function renderClass(reflection: DeclarationReflection): string[] {
     ...renderAdditionalLinks(reflection),
     '',
     ...methods.reduce<string[]>((output, method) => {
+      /* istanbul ignore if */
       if (!method.signatures) {
         return output;
       }
