@@ -25,9 +25,10 @@ program
 
 program.parse(process.argv);
 
-const options = Object.fromEntries(
-  Object.entries(program.opts()).filter(([, value]) => value)
-) as TOptions;
+const allOptions = program.opts();
+const options = Object.keys(allOptions)
+  .filter(key => allOptions[key])
+  .reduce<TOptions>((acc, key) => ({ ...acc, [key]: allOptions[key] }), {});
 
 if (options.output) {
   writeFileSync(options.output, createDocumentation(options), 'utf8');
