@@ -2,6 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/%40mucsi96%2Ftypescript-documentation.svg)](https://www.npmjs.com/package/@mucsi96/typescript-documentation)
 [![Build Status](https://github.com/mucsi96/typescript-documentation/workflows/Build/badge.svg)](https://github.com/mucsi96/typescript-documentation/actions?query=workflow%3ABuild+branch%3Amaster)
+[![Coverage Status](https://coveralls.io/repos/github/mucsi96/typescript-documentation/badge.svg?branch=master)](https://coveralls.io/github/mucsi96/typescript-documentation?branch=master)
 [![npm](https://img.shields.io/npm/dw/@mucsi96/typescript-documentation)](https://www.npmjs.com/package/@mucsi96/typescript-documentation)
 [![github](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://github.com/mucsi96/typescript-documentation)
 
