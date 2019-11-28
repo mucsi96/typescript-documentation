@@ -18,7 +18,7 @@
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "test": "ts-mocha test/**/*.test.ts --timeout 10000",
     "test:debug": "npm run test -- --inspect",
-    "test:coverage": "nyc --reporter=html --reporter=text --reporter=text-summary npm test",
+    "test:coverage": "nyc npm test",
     "clean": "del-cli lib",
     "build:declarations": "tsc --declaration --emitDeclarationOnly --outDir lib --project tsconfig.build.json",
     "build:compile": "babel src --out-dir lib --extensions \".ts\" --ignore \"**/*.test.ts\"",

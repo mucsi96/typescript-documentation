@@ -1,4 +1,5 @@
 {
+  "reporter": ["lcov", "text", "text-summary"],
   "cache": false,
   "extension": [".ts"],
   "check-coverage": true,
