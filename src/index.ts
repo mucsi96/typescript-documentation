@@ -2,12 +2,13 @@ import { Application, DeclarationReflection } from 'typedoc';
 import { resolve, sep } from 'path';
 import { getDependentReflections } from './dependencies';
 import { renderReflection } from './reflection';
+import { TOptions } from './cli';
 
-export function createDocumentation(entry: string): string {
+export function createDocumentation(options: TOptions): string {
   const app = new Application({
-    tsConfig: resolve(__dirname, '../tsconfig.json')
+    tsConfig: resolve(process.cwd(), options.project)
   });
-  const { errors, project } = app.converter.convert([entry]);
+  const { errors, project } = app.converter.convert([options.entry]);
 
   if (errors && errors.length) {
     errors.map(error => {
@@ -16,7 +17,7 @@ export function createDocumentation(entry: string): string {
   }
 
   const entryReflection = Object.values(project.reflections).find(
-    reflection => reflection.originalName.replace(/\//g, sep) === entry
+    reflection => reflection.originalName.replace(/\//g, sep) === options.entry
   ) as DeclarationReflection;
 
   if (!entryReflection) {
@@ -24,8 +25,6 @@ export function createDocumentation(entry: string): string {
   }
 
   const reflections = getDependentReflections(entryReflection);
-
-  console.log(reflections);
 
   return reflections
     .reduce<string[]>((acc, reflection) => [...acc, ...renderReflection(reflection)], [])

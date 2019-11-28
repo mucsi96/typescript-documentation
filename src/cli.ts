@@ -1,6 +1,8 @@
 import program from 'commander';
+import { createDocumentation } from '.';
+import { writeFileSync } from 'fs';
 
-type TOptions = {
+export type TOptions = {
   project: string;
   entry: string;
   output: string;
@@ -9,7 +11,6 @@ type TOptions = {
 
 program
   .name('typescript-documentation')
-  .usage('--project ./tsconfig.json --entry ./src/index.ts --output README.md')
   .description('Generate markdown API documentation directly from TypeScript source code')
   .option(
     '-p, --project <tsconfig file>',
@@ -26,4 +27,4 @@ const options = Object.fromEntries(
   Object.entries(program.opts()).filter(([, value]) => value)
 ) as TOptions;
 
-console.log(options);
+writeFileSync(options.output, createDocumentation(options), 'utf8');
