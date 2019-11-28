@@ -73,8 +73,8 @@ _Example input:_
  * example 2 line 1
  * example 2 line 2
  */
-export function simpleFunction(a: string, b: number): string {
-  return a + b;
+export function simpleFunction(a: string, b?: number): string {
+  return a;
 }
 ```
 
@@ -88,7 +88,7 @@ line 2
 **PARAMETERS**
 
 - `a: string`
-- `b: number`
+- `b?: number`
 
 **RETURNS**
 
@@ -238,7 +238,7 @@ _Example input:_
  */
 export type SimpleType = {
   a: string;
-  b: number;
+  b?: number;
 };
 ```
 
@@ -252,7 +252,7 @@ line 2
 **PROPERTIES**
 
 - `a: string`
-- `b: number`
+- `b?: number`
 
 **EXAMPLES**
 
