@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "ts-node src/cli.ts",
-    "lint": "eslint src/**",
+    "lint": "eslint src/** test/**",
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "test": "ts-mocha test/**/*.test.ts --timeout 10000",
     "test:debug": "npm run test -- --inspect",
@@ -54,6 +54,7 @@
     "del-cli": "^3.0.0",
     "eslint": "^6.7.0",
     "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-mocha": "^6.2.2",
     "eslint-plugin-react-hooks": "^2.3.0",
     "expect": "^24.9.0",
     "husky": "^3.1.0",

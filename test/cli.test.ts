@@ -33,7 +33,7 @@ function runCLI(): TCLIResult {
   return result;
 }
 
-describe.only('CLI', () => {
+describe('CLI', () => {
   it('writes markdown to provided output file (long)', () => {
     process.argv = ['node', 'typescript-documentation', '--output', 'test.md'];
     expect(runCLI().outputFile).toEqual('test.md');

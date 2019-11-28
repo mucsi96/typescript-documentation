@@ -9,7 +9,11 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier",
-    "prettier/@typescript-eslint"
+    "prettier/@typescript-eslint",
+    "plugin:mocha/recommended"
   ],
-  "plugins": ["@typescript-eslint"]
+  "plugins": ["@typescript-eslint", "mocha"],
+  "rules": {
+    "mocha/no-mocha-arrows": "off"
+  }
 }
