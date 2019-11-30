@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "ts-node src/cli.ts",
-    "lint": "eslint src/** test/**",
+    "lint": "eslint src/** test/** live/src/**",
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "test": "ts-mocha test/**/*.test.ts --timeout 10000",
     "test:debug": "npm run test -- --inspect",
