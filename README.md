@@ -8,6 +8,8 @@
 
 Generate markdown API documentation directly from TypeScript source code.
 
+# :construction: Work in progress...
+
 # Documenting variables
 
 _Example input:_
