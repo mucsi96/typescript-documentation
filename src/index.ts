@@ -1,33 +1,68 @@
-import { Application, DeclarationReflection } from 'typedoc';
-import { sep } from 'path';
-import { getDependentReflections } from './dependencies';
-import { renderReflection } from './reflection';
-import { createConfigurationFromOptions, TOptions } from './options';
+import {
+  createProgram,
+  createSourceFile,
+  ScriptTarget,
+  Symbol,
+  SourceFile,
+  TypeChecker,
+  SymbolFlags
+} from 'typescript';
+import { populateDefaultOptions, TOptions } from './options';
+import { renderVariable } from './variable';
+
+function renderSymbol(symbol: Symbol, typeChecker: TypeChecker): string[] {
+  const declarations = symbol.getDeclarations();
+  if (declarations) {
+    return declarations.reduce<string[]>((acc, declaration) => {
+      if (symbol.getFlags() & SymbolFlags.BlockScopedVariable) {
+        return [...acc, ...renderVariable(symbol, declaration, typeChecker)];
+      }
+      return acc;
+    }, []);
+  }
+
+  return [];
+}
 
 export function createDocumentation(options: TOptions): string {
-  const { tsConfig, entry } = createConfigurationFromOptions(options);
+  const { compilerOptions, entry, sourceCode } = populateDefaultOptions(options);
 
-  const app = new Application({ tsConfig });
-  const { errors, project } = app.converter.convert([entry]);
+  const program = createProgram({
+    rootNames: [entry],
+    options: compilerOptions,
+    ...(sourceCode && {
+      host: {
+        getSourceFile: (name): SourceFile =>
+          createSourceFile(name, (sourceCode && sourceCode[name]) || '', ScriptTarget.Latest),
+        writeFile: (): void => {},
+        getDefaultLibFileName: (): string => 'lib.d.ts',
+        useCaseSensitiveFileNames: (): boolean => false,
+        getCanonicalFileName: (filename): string => filename,
+        getCurrentDirectory: (): string => '',
+        getNewLine: (): string => '\n',
+        getDirectories: (): string[] => [],
+        fileExists: (): boolean => true,
+        readFile: (): string => ''
+      }
+    })
+  });
 
-  if (errors && errors.length) {
-    errors.map(error => {
-      throw new Error(error.messageText.toString());
-    });
+  const typeChecker = program.getTypeChecker();
+  const root = program.getSourceFile(entry);
+
+  if (!root) {
+    throw new Error(`Cannot find entry ${entry}`);
   }
 
-  const entryReflection = Object.values(project.reflections).find(
-    reflection => reflection.originalName.replace(/\//g, sep) === entry
-  ) as DeclarationReflection;
+  const type = typeChecker.getSymbolAtLocation(root);
 
-  /* istanbul ignore if */
-  if (!entryReflection) {
-    throw new Error('Entry module not found');
+  if (type) {
+    const exportedSymbols = typeChecker.getExportsOfModule(type);
+
+    return exportedSymbols
+      .reduce<string[]>((acc, symbol) => [...acc, ...renderSymbol(symbol, typeChecker)], [])
+      .join('\n');
   }
 
-  const reflections = getDependentReflections(entryReflection);
-
-  return reflections
-    .reduce<string[]>((acc, reflection) => [...acc, ...renderReflection(reflection)], [])
-    .join('\n');
+  return '';
 }

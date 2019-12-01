@@ -1,38 +1,21 @@
-import { renderTitle } from './title';
-import { DeclarationReflection } from 'typedoc';
-import { renderDescription } from './description';
-import { renderExamples } from './examples';
-import { renderAdditionalLinks } from './additionalLinks';
-import { Type, ReflectionType } from 'typedoc/dist/lib/models';
-import { renderSubSection } from './subSection';
-import { renderTypeInfo } from './typeInfo';
+import { Type, TypeChecker, TypeFlags } from 'typescript';
 
-function renderTypeDefinition(type?: Type): string[] {
-  /* istanbul ignore else */
-  if (type instanceof ReflectionType) {
-    if (!type.declaration.children) {
-      return [];
-    }
-
-    return [
-      ...renderSubSection('Properties'),
-      ...type.declaration.children.map(
-        ({ name, flags, type }) =>
-          `- \`${name}${flags && flags.isOptional ? '?' : ''}: ${renderTypeInfo(type)}\``
-      )
-    ];
+export function render(type: Type, typeChecker: TypeChecker): string {
+  if (type.getFlags() | TypeFlags.Number) {
+    return 'number';
   }
 
-  /* istanbul ignore next */
-  throw new Error(`Not supported type ${type && type.type}`);
-}
+  // if (type instanceof IntrinsicType) {
+  //   return type.name;
+  // }
+  // /* istanbul ignore else */
+  // if (type instanceof UnionType) {
+  //   return type.types
+  //     .map(type => render(type))
+  //     .filter(name => name !== 'undefined' && name !== 'false')
+  //     .join(' | ');
+  // }
 
-export function renderType(reflection: DeclarationReflection): string[] {
-  return [
-    ...renderTitle(reflection.name),
-    ...renderDescription(reflection),
-    ...renderTypeDefinition(reflection.type),
-    ...renderExamples(reflection),
-    ...renderAdditionalLinks(reflection)
-  ];
+  /* istanbul ignore next */
+  throw new Error(`Not supported type ${typeChecker.typeToString(type)}`);
 }

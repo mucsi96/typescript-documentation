@@ -1,19 +1,25 @@
-import { DeclarationReflection } from 'typedoc';
 import { renderTitle } from './title';
-import { renderTypeInfo } from './typeInfo';
+import { render } from './type';
+import { renderSubSection } from './subSection';
+import { TypeChecker, Declaration, Symbol } from 'typescript';
 import { renderDescription } from './description';
 import { renderExamples } from './examples';
 import { renderAdditionalLinks } from './additionalLinks';
-import { renderSubSection } from './subSection';
 
-export function renderVariable(reflection: DeclarationReflection): string[] {
+export function renderVariable(
+  symbol: Symbol,
+  declaration: Declaration,
+  typeChecker: TypeChecker
+): string[] {
+  const type = typeChecker.getTypeAtLocation(declaration);
+
   return [
-    ...renderTitle(reflection.name),
-    ...renderDescription(reflection),
+    ...renderTitle(symbol.getName()),
+    ...renderDescription(symbol, typeChecker),
     ...renderSubSection('Type'),
-    `\`${renderTypeInfo(reflection.type)}\``,
-    ...renderExamples(reflection),
-    ...renderAdditionalLinks(reflection),
+    `\`${render(type, typeChecker)}\``,
+    ...renderExamples(symbol),
+    ...renderAdditionalLinks(symbol),
     ''
   ];
 }

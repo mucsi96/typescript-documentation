@@ -1,35 +1,48 @@
 import expect from 'expect';
-import { createConfigurationFromOptions } from '../src/options';
+import { populateDefaultOptions } from '../src/options';
 import { resolve } from 'path';
 
 describe('options', () => {
-  it('provides default configuration', () => {
-    const configuration = createConfigurationFromOptions({});
-    expect(configuration).toEqual({
-      tsConfig: resolve(process.cwd(), 'tsconfig.json'),
-      entry: resolve(process.cwd(), 'src/index.ts')
+  describe('optionsWithDefaults', () => {
+    it('provides defaults', () => {
+      const optionsWithDefaults = populateDefaultOptions({});
+      expect(optionsWithDefaults).toEqual({
+        compilerOptions: {},
+        entry: resolve(process.cwd(), 'src/index.ts'),
+        output: resolve(process.cwd(), 'output.md')
+      });
     });
-  });
 
-  it('handles relative tsConfig path', () => {
-    const configuration = createConfigurationFromOptions({ project: './config/testTsConfig.json' });
-    expect(configuration.tsConfig).toEqual(resolve(process.cwd(), 'config/testTsConfig.json'));
-  });
+    it('passes through the compilerOptions', () => {
+      const { compilerOptions } = populateDefaultOptions({ compilerOptions: { strict: true } });
+      expect(compilerOptions).toEqual({ strict: true });
+    });
 
-  it('handles absolute tsConfig path', () => {
-    const testPath = resolve(process.cwd(), 'config/testTsConfig.json');
-    const configuration = createConfigurationFromOptions({ project: testPath });
-    expect(configuration.tsConfig).toEqual(testPath);
-  });
+    it('passes through the sourceCode', () => {
+      const { sourceCode } = populateDefaultOptions({ sourceCode: { index: 'const a = 1;' } });
+      expect(sourceCode).toEqual({ index: 'const a = 1;' });
+    });
 
-  it('handles relative entry path', () => {
-    const configuration = createConfigurationFromOptions({ entry: './src/testEntry.ts' });
-    expect(configuration.entry).toEqual(resolve(process.cwd(), 'src/testEntry.ts'));
-  });
+    it('handles relative entry path', () => {
+      const { entry } = populateDefaultOptions({ entry: './src/testEntry.ts' });
+      expect(entry).toEqual(resolve(process.cwd(), 'src/testEntry.ts'));
+    });
 
-  it('handles absolute entry path', () => {
-    const testPath = resolve(process.cwd(), 'src/testEntry.ts');
-    const configuration = createConfigurationFromOptions({ entry: testPath });
-    expect(configuration.entry).toEqual(testPath);
+    it('handles absolute entry path', () => {
+      const testPath = resolve(process.cwd(), 'src/testEntry.ts');
+      const { entry } = populateDefaultOptions({ entry: testPath });
+      expect(entry).toEqual(testPath);
+    });
+
+    it('handles relative output path', () => {
+      const { output } = populateDefaultOptions({ output: './testOutput.md' });
+      expect(output).toEqual(resolve(process.cwd(), 'testOutput.md'));
+    });
+
+    it('handles absolute output path', () => {
+      const testPath = resolve(process.cwd(), 'testOutput.md');
+      const { output } = populateDefaultOptions({ output: testPath });
+      expect(output).toEqual(testPath);
+    });
   });
 });

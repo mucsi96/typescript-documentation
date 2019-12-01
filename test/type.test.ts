@@ -1,6 +1,6 @@
 import { testDocumentation } from './utils';
 
-describe('types', () => {
+describe.skip('types', () => {
   it('documents exported types', () => {
     testDocumentation({
       'index.ts': `

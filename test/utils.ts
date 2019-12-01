@@ -1,29 +1,11 @@
-import { writeFileSync, mkdirSync } from 'fs';
-import { resolve } from 'path';
 import expect from 'expect';
 import { createDocumentation } from '../src';
-import rimraf from 'rimraf';
 import rewiremock from 'rewiremock';
 
 rewiremock.overrideEntryPoint(module);
-const testTempDir = resolve(__dirname, '../.test-temp');
 
-export function prepare(): void {
-  mkdirSync(testTempDir);
-}
-
-export function cleanup(): void {
-  rimraf.sync(testTempDir);
-}
-
-export function testDocumentation(code: { [fileName: string]: string }): void {
-  Object.entries(code)
-    .filter(([fileName]) => fileName !== 'result')
-    .forEach(([fileName, source]) => {
-      writeFileSync(resolve(testTempDir, fileName), source, 'utf8');
-    });
-
-  const output = code.markdown.split('\n');
+export function testDocumentation(sourceCode: { [fileName: string]: string }): void {
+  const output = sourceCode.markdown.split('\n');
   const padding = output.reduce((max, line) => {
     const match = /^\s*/.exec(line);
     if (!match || match[0].length < max) {
@@ -37,9 +19,16 @@ export function testDocumentation(code: { [fileName: string]: string }): void {
     .join('\n')
     .trim();
 
-  expect(createDocumentation({ entry: resolve(testTempDir, 'index.ts') }).trim()).toEqual(
-    trimmedOutput
-  );
+  expect(
+    createDocumentation({
+      entry: 'index.ts',
+      sourceCode,
+      compilerOptions: {
+        strict: true,
+        esModuleInterop: true
+      }
+    }).trim()
+  ).toEqual(trimmedOutput);
 }
 
 export { rewiremock };

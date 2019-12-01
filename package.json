@@ -16,7 +16,7 @@
     "start": "ts-node src/cli.ts",
     "lint": "eslint src/** test/** live/src/**",
     "typecheck": "tsc --noEmit --project tsconfig.json",
-    "test": "ts-mocha test/**/*.test.ts --timeout 10000",
+    "test": "ts-mocha test/**/*.test.ts",
     "test:debug": "npm run test -- --inspect",
     "test:coverage": "nyc npm test",
     "clean": "del-cli lib",
@@ -37,7 +37,7 @@
   "dependencies": {
     "@sindresorhus/slugify": "^0.9.1",
     "commander": "^4.0.1",
-    "typedoc": "^0.15.3"
+    "typescript": "^3.7.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
@@ -47,7 +47,6 @@
     "@types/expect": "^24.3.0",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.12.12",
-    "@types/rimraf": "^2.0.3",
     "@typescript-eslint/eslint-plugin": "^2.8.0",
     "@typescript-eslint/parser": "^2.8.0",
     "cpy-cli": "^2.0.0",
@@ -55,7 +54,6 @@
     "eslint": "^6.7.0",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-mocha": "^6.2.2",
-    "eslint-plugin-react-hooks": "^2.3.0",
     "expect": "^24.9.0",
     "husky": "^3.1.0",
     "mocha": "^6.2.2",
@@ -65,8 +63,7 @@
     "rewiremock": "^3.13.9",
     "rimraf": "^3.0.0",
     "ts-mocha": "^6.0.0",
-    "ts-node": "^8.5.2",
-    "typescript": "^3.7.2"
+    "ts-node": "^8.5.2"
   },
   "husky": {
     "hooks": {

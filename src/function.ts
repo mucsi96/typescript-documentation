@@ -1,6 +1,6 @@
 import { DeclarationReflection } from 'typedoc';
 import { renderTitle } from './title';
-import { renderTypeInfo } from './typeInfo';
+import { render } from './type';
 import { renderDescription } from './description';
 import { renderExamples } from './examples';
 import { renderAdditionalLinks } from './additionalLinks';
@@ -16,7 +16,7 @@ export function renderFunctionParameters(parameters: ParameterReflection[]): str
     ...renderSubSection('Parameters'),
     ...parameters.map(
       ({ name, flags, type }) =>
-        `- \`${name}${flags && flags.isOptional ? '?' : ''}: ${renderTypeInfo(type)}\``
+        `- \`${name}${flags && flags.isOptional ? '?' : ''}: ${render(type)}\``
     )
   ];
 }
@@ -30,7 +30,7 @@ export function renderFunctionSignature(name: string, signature: SignatureReflec
     ...renderDescription(signature),
     ...renderFunctionParameters(parameters),
     ...renderSubSection('Returns'),
-    `\`${renderTypeInfo(type)}\``,
+    `\`${render(type)}\``,
     ...renderExamples(signature),
     ...renderAdditionalLinks(signature),
     ''

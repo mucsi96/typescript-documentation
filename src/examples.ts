@@ -1,16 +1,8 @@
-import { CommentTag, Reflection } from 'typedoc/dist/lib/models';
 import { renderSubSection } from './subSection';
+import { Symbol } from 'typescript';
 
-function getExamples(reflection: Reflection): CommentTag[] {
-  if (!reflection.comment || !reflection.comment.tags) {
-    return [];
-  }
-
-  return reflection.comment.tags.filter(tag => tag.tagName === 'example');
-}
-
-export function renderExamples(reflection: Reflection): string[] {
-  const examples = getExamples(reflection);
+export function renderExamples(symbol: Symbol): string[] {
+  const examples = symbol.getJsDocTags().filter(tag => tag.name === 'example');
 
   if (!examples.length) {
     return [];
@@ -18,6 +10,6 @@ export function renderExamples(reflection: Reflection): string[] {
 
   return [
     ...renderSubSection('Examples'),
-    ...examples.map(example => `\`\`\`typescript\n${example.text.trim()}\n\`\`\``)
+    ...examples.map(example => `\`\`\`typescript\n${example.text && example.text.trim()}\n\`\`\``)
   ];
 }

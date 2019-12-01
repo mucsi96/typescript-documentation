@@ -2,7 +2,7 @@ import { DeclarationReflection, ReflectionKind } from 'typedoc';
 import { renderVariable } from './variable';
 import { renderFunction } from './function';
 import { renderClass } from './class';
-import { renderType } from './type';
+import { renderTypeDeclaration } from './typeDeclaration';
 import { renderEnumeration } from './enumeration';
 
 export function renderReflection(reflection: DeclarationReflection): string[] {
@@ -14,7 +14,7 @@ export function renderReflection(reflection: DeclarationReflection): string[] {
     case ReflectionKind.Variable:
       return renderVariable(reflection);
     case ReflectionKind.TypeAlias:
-      return renderType(reflection);
+      return renderTypeDeclaration(reflection);
     case ReflectionKind.Enum:
       return renderEnumeration(reflection);
   }

@@ -1,9 +1,7 @@
-import { Reflection } from 'typedoc';
+import { Symbol, TypeChecker } from 'typescript';
 
-export function renderDescription(reflection: Reflection): string[] {
-  if (reflection.comment) {
-    return [reflection.comment.shortText];
-  }
+export function renderDescription(symbol: Symbol, typeChecker: TypeChecker): string[] {
+  const documentationComment = symbol.getDocumentationComment(typeChecker);
 
-  return [];
+  return documentationComment.map(comment => comment.text);
 }
