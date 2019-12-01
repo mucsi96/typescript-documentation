@@ -5,6 +5,7 @@ import { renderAdditionalLinks } from './additionalLinks';
 import { renderSubSection } from './subSection';
 import { renderType, getSymbolsType, isOptionalType } from './type';
 import { Symbol, Type, TypeChecker, TypeFlags } from 'typescript';
+import { findExactMatchingTypeFlag } from './utils';
 
 function renderTypeProperty(property: Symbol, typeChecker: TypeChecker): string {
   const name = property.getName();
@@ -30,7 +31,7 @@ function renderTypeDefinition(type: Type, typeChecker: TypeChecker): string[] {
     return renderTypeProperties(type.getProperties(), typeChecker);
   }
 
-  throw new Error(`Not supported type ${typeChecker.typeToString(type)}`);
+  throw new Error(`Not supported type with flags ${findExactMatchingTypeFlag(flags)}`);
 }
 
 export function renderTypeDeclaration(

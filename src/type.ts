@@ -1,4 +1,5 @@
 import { TypeFlags, Type, TypeChecker, UnionType, Symbol } from 'typescript';
+import { findExactMatchingTypeFlag } from './utils';
 
 export function getSymbolsType(symbol: Symbol, typeChecker: TypeChecker): Type {
   const declarations = symbol.getDeclarations();
@@ -59,5 +60,5 @@ export function renderType(type: Type, typeChecker: TypeChecker): string {
   }
 
   /* istanbul ignore next */
-  throw new Error(`Not supported type ${typeChecker.typeToString(nonOptionalType)}`);
+  throw new Error(`Not supported type with flags ${findExactMatchingTypeFlag(flags)}`);
 }

@@ -6,6 +6,7 @@ import { renderClass } from './class';
 import { renderTypeDeclaration } from './typeDeclaration';
 import { renderEnumeration } from './enumeration';
 import { createCompilerHost } from './compilerHost';
+import { findExactMatchingSymbolFlags } from './utils';
 
 function renderDeclaration(symbol: Symbol, type: Type, typeChecker: TypeChecker): string[] {
   const flags = symbol.getFlags();
@@ -30,7 +31,7 @@ function renderDeclaration(symbol: Symbol, type: Type, typeChecker: TypeChecker)
     return renderEnumeration(symbol, type, typeChecker);
   }
 
-  throw new Error(`Unsupported symbol ${typeChecker.symbolToString(symbol)}`);
+  throw new Error(`Unsupported symbol with flags ${findExactMatchingSymbolFlags(flags)}`);
 }
 
 function renderSymbol(symbol: Symbol, typeChecker: TypeChecker): string[] {
