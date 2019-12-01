@@ -1,5 +1,5 @@
 import { renderTitle } from './title';
-import { renderType, isOptionalType } from './type';
+import { renderType, isOptionalType, getSymbolsType } from './type';
 import { renderDescription } from './description';
 import { renderExamples } from './examples';
 import { renderAdditionalLinks } from './additionalLinks';
@@ -8,13 +8,7 @@ import { Symbol, TypeChecker, Type, Signature } from 'typescript';
 
 function renderFunctionParameter(parameter: Symbol, typeChecker: TypeChecker): string {
   const name = parameter.getName();
-  const declarations = parameter.getDeclarations();
-
-  if (!declarations) {
-    throw new Error(`Can't find declaration of parameter ${name}`);
-  }
-
-  const type = typeChecker.getTypeAtLocation(declarations[0]);
+  const type = getSymbolsType(parameter, typeChecker);
   return `- \`${name}${isOptionalType(type) ? '?' : ''}: ${renderType(type, typeChecker)}\``;
 }
 
@@ -30,11 +24,10 @@ function renderFunctionParameters(parameters: Symbol[], typeChecker: TypeChecker
 }
 
 export function renderFunctionSignature(
-  symbol: Symbol,
+  name: string,
   signature: Signature,
   typeChecker: TypeChecker
 ): string[] {
-  const name = symbol.getName();
   const parameters = signature.getParameters();
 
   return [
@@ -54,7 +47,7 @@ export function renderFunction(symbol: Symbol, type: Type, typeChecker: TypeChec
   return signatures.reduce<string[]>(
     (output, signature): string[] => [
       ...output,
-      ...renderFunctionSignature(symbol, signature, typeChecker)
+      ...renderFunctionSignature(symbol.getName(), signature, typeChecker)
     ],
     []
   );

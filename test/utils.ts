@@ -25,7 +25,8 @@ export function testDocumentation(sourceCode: { [fileName: string]: string }): v
       sourceCode,
       compilerOptions: {
         strict: true,
-        esModuleInterop: true
+        esModuleInterop: true,
+        noLib: true
       }
     }).trim()
   ).toEqual(trimmedOutput);

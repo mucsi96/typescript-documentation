@@ -1,4 +1,14 @@
-import { TypeFlags, Type, TypeChecker, UnionType } from 'typescript';
+import { TypeFlags, Type, TypeChecker, UnionType, Symbol } from 'typescript';
+
+export function getSymbolsType(symbol: Symbol, typeChecker: TypeChecker): Type {
+  const declarations = symbol.getDeclarations();
+
+  if (!declarations) {
+    throw new Error(`No declaration found for symbol ${symbol.getName()}`);
+  }
+
+  return typeChecker.getTypeOfSymbolAtLocation(symbol, declarations[0]);
+}
 
 export function isOptionalType(type: Type): boolean {
   return type.isUnion() && !!type.types.find(type => type.getFlags() & TypeFlags.Undefined);
@@ -34,16 +44,19 @@ export function renderType(type: Type, typeChecker: TypeChecker): string {
     return 'string';
   }
 
-  // if (type instanceof IntrinsicType) {
-  //   return type.name;
-  // }
-  // /* istanbul ignore else */
-  // if (type instanceof UnionType) {
-  //   return type.types
-  //     .map(type => render(type))
-  //     .filter(name => name !== 'undefined' && name !== 'false')
-  //     .join(' | ');
-  // }
+  if (flags & TypeFlags.Void) {
+    return 'void';
+  }
+
+  if (flags & TypeFlags.EnumLiteral) {
+    const symbol = type.getSymbol();
+
+    if (!symbol) {
+      throw new Error(`Symbol not found for ${typeChecker.typeToString(nonOptionalType)}`);
+    }
+
+    return symbol.getName();
+  }
 
   /* istanbul ignore next */
   throw new Error(`Not supported type ${typeChecker.typeToString(nonOptionalType)}`);

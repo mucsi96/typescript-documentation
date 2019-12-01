@@ -1,16 +1,19 @@
 import {
   createProgram,
-  createSourceFile,
-  ScriptTarget,
   Symbol,
-  SourceFile,
   TypeChecker,
   SymbolFlags,
-  Type
+  Type,
+  getPreEmitDiagnostics,
+  flattenDiagnosticMessageText
 } from 'typescript';
 import { populateDefaultOptions, TOptions } from './options';
 import { renderVariable } from './variable';
 import { renderFunction } from './function';
+import { renderClass } from './class';
+import { renderTypeDeclaration } from './typeDeclaration';
+import { renderEnumeration } from './enumeration';
+import { createCompilerHost } from './compilerHost';
 
 function renderDeclaration(symbol: Symbol, type: Type, typeChecker: TypeChecker): string[] {
   const flags = symbol.getFlags();
@@ -19,8 +22,20 @@ function renderDeclaration(symbol: Symbol, type: Type, typeChecker: TypeChecker)
     return renderVariable(symbol, type, typeChecker);
   }
 
-  if (symbol) {
+  if (flags & SymbolFlags.Function) {
     return renderFunction(symbol, type, typeChecker);
+  }
+
+  if (flags & SymbolFlags.Class) {
+    return renderClass(symbol, type, typeChecker);
+  }
+
+  if (flags & SymbolFlags.TypeAlias) {
+    return renderTypeDeclaration(symbol, type, typeChecker);
+  }
+
+  if (flags & SymbolFlags.RegularEnum) {
+    return renderEnumeration(symbol, type, typeChecker);
   }
 
   throw new Error(`Unsupported symbol ${typeChecker.symbolToString(symbol)}`);
@@ -48,19 +63,7 @@ export function createDocumentation(options: TOptions): string {
     rootNames: [entry],
     options: compilerOptions,
     ...(sourceCode && {
-      host: {
-        getSourceFile: (name): SourceFile =>
-          createSourceFile(name, (sourceCode && sourceCode[name]) || '', ScriptTarget.Latest),
-        writeFile: (): void => {},
-        getDefaultLibFileName: (): string => 'lib.d.ts',
-        useCaseSensitiveFileNames: (): boolean => false,
-        getCanonicalFileName: (filename): string => filename,
-        getCurrentDirectory: (): string => '',
-        getNewLine: (): string => '\n',
-        getDirectories: (): string[] => [],
-        fileExists: (): boolean => true,
-        readFile: (): string => ''
-      }
+      host: createCompilerHost(sourceCode)
     })
   });
 

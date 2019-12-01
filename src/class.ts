@@ -1,58 +1,38 @@
-import { DeclarationReflection } from 'typedoc';
 import { renderTitle } from './title';
 import { renderDescription } from './description';
 import { renderExamples } from './examples';
 import { renderAdditionalLinks } from './additionalLinks';
 import { renderFunctionSignature } from './function';
+import { Type, TypeChecker, Symbol } from 'typescript';
+import { getSymbolsType } from './type';
 
-function getMethods(reflection: DeclarationReflection): DeclarationReflection[] {
-  /* istanbul ignore if */
-  if (!reflection.children) {
-    return [];
-  }
+function renderClassMethod(name: string, method: Symbol, typeChecker: TypeChecker): string[] {
+  const methodType = getSymbolsType(method, typeChecker);
+  const signatures = methodType.getCallSignatures();
 
-  const items = reflection.children.filter(
-    item => item.kindString === 'Method' && item.flags.isPublic
+  return signatures.reduce<string[]>(
+    (output, signature) => [...output, ...renderFunctionSignature(name, signature, typeChecker)],
+    []
   );
-
-  items.sort((a, b) => {
-    /* istanbul ignore if */
-    if (!a.sources || !b.sources) {
-      return 0;
-    }
-
-    return a.sources[0].line - b.sources[0].line;
-  });
-
-  return items;
 }
 
-export function renderClass(reflection: DeclarationReflection): string[] {
-  const classInstanceName = `${reflection.name.charAt(0).toLowerCase() + reflection.name.slice(1)}`;
-  const methods = getMethods(reflection);
+export function renderClass(symbol: Symbol, type: Type, typeChecker: TypeChecker): string[] {
+  const name = symbol.getName();
+  const classInstanceName = `${name.charAt(0).toLowerCase() + name.slice(1)}`;
+  const methods = type.getProperties();
 
   return [
-    ...renderTitle(reflection.name),
-    ...renderDescription(reflection),
-    ...renderExamples(reflection),
-    ...renderAdditionalLinks(reflection),
+    ...renderTitle(name),
+    ...renderDescription(symbol.getDocumentationComment(typeChecker)),
+    ...renderExamples(symbol.getJsDocTags()),
+    ...renderAdditionalLinks(symbol.getJsDocTags()),
     '',
-    ...methods.reduce<string[]>((output, method) => {
-      /* istanbul ignore if */
-      if (!method.signatures) {
-        return output;
-      }
-
-      return [
-        ...output,
-        ...method.signatures.reduce<string[]>(
-          (output, signature) => [
-            ...output,
-            ...renderFunctionSignature(`${classInstanceName}.${signature.name}`, signature)
-          ],
-          []
-        )
-      ];
-    }, [])
+    ...methods.reduce<string[]>(
+      (acc, method) => [
+        ...acc,
+        ...renderClassMethod(`${classInstanceName}.${method.getName()}`, method, typeChecker)
+      ],
+      []
+    )
   ];
 }

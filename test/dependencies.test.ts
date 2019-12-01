@@ -1,6 +1,6 @@
 import { testDocumentation } from './utils';
 
-describe.skip('dependencies', () => {
+describe('dependencies', () => {
   it('documents in same order as in source', () => {
     testDocumentation({
       'index.ts': `

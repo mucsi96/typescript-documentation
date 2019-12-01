@@ -1,38 +1,48 @@
 import { renderTitle } from './title';
-import { DeclarationReflection } from 'typedoc';
 import { renderDescription } from './description';
 import { renderExamples } from './examples';
 import { renderAdditionalLinks } from './additionalLinks';
-import { Type, ReflectionType } from 'typedoc/dist/lib/models';
 import { renderSubSection } from './subSection';
-import { renderType } from './type';
+import { renderType, getSymbolsType, isOptionalType } from './type';
+import { Symbol, Type, TypeChecker, TypeFlags } from 'typescript';
 
-function renderTypeDefinition(type?: Type): string[] {
-  /* istanbul ignore else */
-  if (type instanceof ReflectionType) {
-    if (!type.declaration.children) {
-      return [];
-    }
-
-    return [
-      ...renderSubSection('Properties'),
-      ...type.declaration.children.map(
-        ({ name, flags, type }) =>
-          `- \`${name}${flags && flags.isOptional ? '?' : ''}: ${renderType(type)}\``
-      )
-    ];
-  }
-
-  /* istanbul ignore next */
-  throw new Error(`Not supported type ${type && type.type}`);
+function renderTypeProperty(property: Symbol, typeChecker: TypeChecker): string {
+  const name = property.getName();
+  const type = getSymbolsType(property, typeChecker);
+  return `- \`${name}${isOptionalType(type) ? '?' : ''}: ${renderType(type, typeChecker)}\``;
 }
 
-export function renderTypeDeclaration(reflection: DeclarationReflection): string[] {
+function renderTypeProperties(properties: Symbol[], typeChecker: TypeChecker): string[] {
+  if (!properties.length) {
+    return [];
+  }
+
   return [
-    ...renderTitle(reflection.name),
-    ...renderDescription(reflection),
-    ...renderTypeDefinition(reflection.type),
-    ...renderExamples(reflection),
-    ...renderAdditionalLinks(reflection)
+    ...renderSubSection('Properties'),
+    ...properties.map(property => renderTypeProperty(property, typeChecker))
+  ];
+}
+
+function renderTypeDefinition(type: Type, typeChecker: TypeChecker): string[] {
+  const flags = type.getFlags();
+
+  if (flags & TypeFlags.Object) {
+    return renderTypeProperties(type.getProperties(), typeChecker);
+  }
+
+  throw new Error(`Not supported type ${typeChecker.typeToString(type)}`);
+}
+
+export function renderTypeDeclaration(
+  symbol: Symbol,
+  type: Type,
+  typeChecker: TypeChecker
+): string[] {
+  return [
+    ...renderTitle(symbol.getName()),
+    ...renderDescription(symbol.getDocumentationComment(typeChecker)),
+    ...renderTypeDefinition(type, typeChecker),
+    ...renderExamples(symbol.getJsDocTags()),
+    ...renderAdditionalLinks(symbol.getJsDocTags())
   ];
 }

@@ -1,6 +1,6 @@
 import { testDocumentation } from './utils';
 
-describe.skip('enumerations', () => {
+describe('enumerations', () => {
   it('documents exported enumerations', () => {
     testDocumentation({
       'index.ts': `
