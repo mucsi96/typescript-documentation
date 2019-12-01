@@ -1,12 +1,4 @@
-import {
-  createProgram,
-  Symbol,
-  TypeChecker,
-  SymbolFlags,
-  Type,
-  getPreEmitDiagnostics,
-  flattenDiagnosticMessageText
-} from 'typescript';
+import { createProgram, Symbol, TypeChecker, SymbolFlags, Type } from 'typescript';
 import { populateDefaultOptions, TOptions } from './options';
 import { renderVariable } from './variable';
 import { renderFunction } from './function';
