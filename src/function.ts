@@ -1,52 +1,60 @@
-import { DeclarationReflection } from 'typedoc';
 import { renderTitle } from './title';
-import { render } from './type';
+import { renderType, isOptionalType } from './type';
 import { renderDescription } from './description';
 import { renderExamples } from './examples';
 import { renderAdditionalLinks } from './additionalLinks';
 import { renderSubSection } from './subSection';
-import { SignatureReflection, ParameterReflection } from 'typedoc/dist/lib/models';
+import { Symbol, TypeChecker, Type, Signature } from 'typescript';
 
-export function renderFunctionParameters(parameters: ParameterReflection[]): string[] {
+function renderFunctionParameter(parameter: Symbol, typeChecker: TypeChecker): string {
+  const name = parameter.getName();
+  const declarations = parameter.getDeclarations();
+
+  if (!declarations) {
+    throw new Error(`Can't find declaration of parameter ${name}`);
+  }
+
+  const type = typeChecker.getTypeAtLocation(declarations[0]);
+  return `- \`${name}${isOptionalType(type) ? '?' : ''}: ${renderType(type, typeChecker)}\``;
+}
+
+function renderFunctionParameters(parameters: Symbol[], typeChecker: TypeChecker): string[] {
   if (!parameters.length) {
     return [];
   }
 
   return [
     ...renderSubSection('Parameters'),
-    ...parameters.map(
-      ({ name, flags, type }) =>
-        `- \`${name}${flags && flags.isOptional ? '?' : ''}: ${render(type)}\``
-    )
+    ...parameters.map(parameter => renderFunctionParameter(parameter, typeChecker))
   ];
 }
 
-export function renderFunctionSignature(name: string, signature: SignatureReflection): string[] {
-  const { parameters = [], type } = signature;
-  const title = `${name}(${parameters.map(({ name }) => name).join(', ')})`;
+export function renderFunctionSignature(
+  symbol: Symbol,
+  signature: Signature,
+  typeChecker: TypeChecker
+): string[] {
+  const name = symbol.getName();
+  const parameters = signature.getParameters();
 
   return [
-    ...renderTitle(title),
-    ...renderDescription(signature),
-    ...renderFunctionParameters(parameters),
+    ...renderTitle(`${name}(${parameters.map(({ name }) => name).join(', ')})`),
+    ...renderDescription(signature.getDocumentationComment(typeChecker)),
+    ...renderFunctionParameters(parameters, typeChecker),
     ...renderSubSection('Returns'),
-    `\`${render(type)}\``,
-    ...renderExamples(signature),
-    ...renderAdditionalLinks(signature),
+    `\`${renderType(signature.getReturnType(), typeChecker)}\``,
+    ...renderExamples(signature.getJsDocTags()),
+    ...renderAdditionalLinks(signature.getJsDocTags()),
     ''
   ];
 }
 
-export function renderFunction(reflection: DeclarationReflection): string[] {
-  /* istanbul ignore if */
-  if (!reflection.signatures) {
-    return [];
-  }
-
-  return reflection.signatures.reduce<string[]>(
+export function renderFunction(symbol: Symbol, type: Type, typeChecker: TypeChecker): string[] {
+  const signatures = type.getCallSignatures();
+  return signatures.reduce<string[]>(
     (output, signature): string[] => [
       ...output,
-      ...renderFunctionSignature(signature.name, signature)
+      ...renderFunctionSignature(symbol, signature, typeChecker)
     ],
     []
   );

@@ -1,7 +1,5 @@
-import { Symbol, TypeChecker } from 'typescript';
+import { SymbolDisplayPart } from 'typescript';
 
-export function renderDescription(symbol: Symbol, typeChecker: TypeChecker): string[] {
-  const documentationComment = symbol.getDocumentationComment(typeChecker);
-
-  return documentationComment.map(comment => comment.text);
+export function renderDescription(comments: SymbolDisplayPart[]): string[] {
+  return comments.map(comment => comment.text);
 }

@@ -5,7 +5,7 @@ import { renderExamples } from './examples';
 import { renderAdditionalLinks } from './additionalLinks';
 import { Type, ReflectionType } from 'typedoc/dist/lib/models';
 import { renderSubSection } from './subSection';
-import { render } from './type';
+import { renderType } from './type';
 
 function renderTypeDefinition(type?: Type): string[] {
   /* istanbul ignore else */
@@ -18,7 +18,7 @@ function renderTypeDefinition(type?: Type): string[] {
       ...renderSubSection('Properties'),
       ...type.declaration.children.map(
         ({ name, flags, type }) =>
-          `- \`${name}${flags && flags.isOptional ? '?' : ''}: ${render(type)}\``
+          `- \`${name}${flags && flags.isOptional ? '?' : ''}: ${renderType(type)}\``
       )
     ];
   }

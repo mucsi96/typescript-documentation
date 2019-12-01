@@ -1,8 +1,8 @@
 import { renderSubSection } from './subSection';
-import { Symbol } from 'typescript';
+import { JSDocTagInfo } from 'typescript';
 
-export function renderExamples(symbol: Symbol): string[] {
-  const examples = symbol.getJsDocTags().filter(tag => tag.name === 'example');
+export function renderExamples(tags: JSDocTagInfo[]): string[] {
+  const examples = tags.filter(tag => tag.name === 'example');
 
   if (!examples.length) {
     return [];

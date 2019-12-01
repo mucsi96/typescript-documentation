@@ -5,20 +5,37 @@ import {
   Symbol,
   SourceFile,
   TypeChecker,
-  SymbolFlags
+  SymbolFlags,
+  Type
 } from 'typescript';
 import { populateDefaultOptions, TOptions } from './options';
 import { renderVariable } from './variable';
+import { renderFunction } from './function';
+
+function renderDeclaration(symbol: Symbol, type: Type, typeChecker: TypeChecker): string[] {
+  const flags = symbol.getFlags();
+
+  if (flags & SymbolFlags.BlockScopedVariable) {
+    return renderVariable(symbol, type, typeChecker);
+  }
+
+  if (symbol) {
+    return renderFunction(symbol, type, typeChecker);
+  }
+
+  throw new Error(`Unsupported symbol ${typeChecker.symbolToString(symbol)}`);
+}
 
 function renderSymbol(symbol: Symbol, typeChecker: TypeChecker): string[] {
   const declarations = symbol.getDeclarations();
   if (declarations) {
-    return declarations.reduce<string[]>((acc, declaration) => {
-      if (symbol.getFlags() & SymbolFlags.BlockScopedVariable) {
-        return [...acc, ...renderVariable(symbol, declaration, typeChecker)];
-      }
-      return acc;
-    }, []);
+    return declarations.reduce<string[]>(
+      (acc, declaration) => [
+        ...acc,
+        ...renderDeclaration(symbol, typeChecker.getTypeAtLocation(declaration), typeChecker)
+      ],
+      []
+    );
   }
 
   return [];
