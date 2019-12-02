@@ -1,9 +1,9 @@
 import { rewiremock } from './utils';
 import expect from 'expect';
-import { TOptions } from '../src/options';
+import { Options } from '../src';
 
 type TCLIResult = {
-  options: TOptions;
+  options: Options;
   outputFile: string | undefined;
   outputContent: string | undefined;
 };
@@ -17,7 +17,7 @@ function runCLI(): TCLIResult {
 
   rewiremock.proxy('../src/cli', {
     '.': {
-      createDocumentation: (options: TOptions): string => {
+      createDocumentation: (options: Options): string => {
         result.options = options;
         return 'test docs';
       }
@@ -51,12 +51,12 @@ describe('CLI', () => {
 
   it('reads tsConfig path from command line options (long)', () => {
     process.argv = ['node', 'typescript-documentation', '--project', './tsconfig.json'];
-    expect(runCLI().options.project).toEqual('./tsconfig.json');
+    expect(runCLI().options.compilerOptions).toEqual('./tsconfig.json');
   });
 
   it('reads tsConfig path from command line options (short)', () => {
     process.argv = ['node', 'typescript-documentation', '-p', './tsconfig.json'];
-    expect(runCLI().options.project).toEqual('./tsconfig.json');
+    expect(runCLI().options.compilerOptions).toEqual('./tsconfig.json');
   });
 
   it('reads entry file path from command line options (long)', () => {
@@ -77,15 +77,5 @@ describe('CLI', () => {
   it('reads output file from command line options (short)', () => {
     process.argv = ['node', 'typescript-documentation', '-o', 'test.md'];
     expect(runCLI().options.output).toEqual('test.md');
-  });
-
-  it('reads section filter from command line options (long)', () => {
-    process.argv = ['node', 'typescript-documentation', '--section', 'intro'];
-    expect(runCLI().options.section).toEqual('intro');
-  });
-
-  it('reads section filter from command line options (short)', () => {
-    process.argv = ['node', 'typescript-documentation', '-s', 'intro'];
-    expect(runCLI().options.section).toEqual('intro');
   });
 });

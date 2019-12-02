@@ -6,5 +6,5 @@
     "skipLibCheck": true,
     "module": "commonjs"
   },
-  "include": ["src", "test", "live/src"]
+  "include": ["src", "test"]
 }

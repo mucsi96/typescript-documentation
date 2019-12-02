@@ -1,5 +1,4 @@
-import { createProgram, Symbol, TypeChecker, SymbolFlags, Type } from 'typescript';
-import { populateDefaultOptions, TOptions } from './options';
+import { createProgram, Symbol, TypeChecker, SymbolFlags, Type, CompilerOptions } from 'typescript';
 import { renderVariable } from './variable';
 import { renderFunction } from './function';
 import { renderClass } from './class';
@@ -49,9 +48,14 @@ function renderSymbol(symbol: Symbol, typeChecker: TypeChecker): string[] {
   return [];
 }
 
-export function createDocumentation(options: TOptions): string {
-  const { compilerOptions, entry, sourceCode } = populateDefaultOptions(options);
+export type Options = {
+  compilerOptions: CompilerOptions;
+  entry: string;
+  sourceCode?: { [name: string]: string };
+};
 
+export function createDocumentation(options: Options): string {
+  const { compilerOptions, entry, sourceCode } = options;
   const program = createProgram({
     rootNames: [entry],
     options: compilerOptions,
