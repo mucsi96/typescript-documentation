@@ -40,12 +40,15 @@ function getCompilerOptions(cliOptions: CLIOptions): CompilerOptions {
     {},
     {
       ...sys,
-      onUnRecoverableConfigFileDiagnostic: diagnostic =>
-        formatDiagnostic(diagnostic, {
-          getCurrentDirectory: (): string => process.cwd(),
-          getCanonicalFileName: (fileName: string): string => fileName,
-          getNewLine: (): string => '\n'
-        })
+      onUnRecoverableConfigFileDiagnostic: diagnostic => {
+        throw new Error(
+          formatDiagnostic(diagnostic, {
+            getCurrentDirectory: (): string => process.cwd(),
+            getCanonicalFileName: (fileName: string): string => fileName,
+            getNewLine: (): string => '\n'
+          })
+        );
+      }
     }
   );
 
