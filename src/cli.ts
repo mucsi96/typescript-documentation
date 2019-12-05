@@ -1,13 +1,9 @@
 import program from 'commander';
 import { createDocumentation } from '.';
 import { writeFileSync } from 'fs';
-import {
-  CompilerOptions,
-  getParsedCommandLineOfConfigFile,
-  sys,
-  formatDiagnostic
-} from 'typescript';
+import { CompilerOptions, getParsedCommandLineOfConfigFile, sys } from 'typescript';
 import { isAbsolute, resolve } from 'path';
+import { formatDiagnosticError } from './utils';
 
 type CLIOptions = {
   project: string;
@@ -41,17 +37,12 @@ function getCompilerOptions(cliOptions: CLIOptions): CompilerOptions {
     {
       ...sys,
       onUnRecoverableConfigFileDiagnostic: diagnostic => {
-        throw new Error(
-          formatDiagnostic(diagnostic, {
-            getCurrentDirectory: (): string => process.cwd(),
-            getCanonicalFileName: (fileName: string): string => fileName,
-            getNewLine: (): string => '\n'
-          })
-        );
+        throw new Error(formatDiagnosticError(diagnostic));
       }
     }
   );
 
+  /* istanbul ignore next */
   if (!config) {
     throw new Error(`Unable to parse ${tsConfigPath}`);
   }

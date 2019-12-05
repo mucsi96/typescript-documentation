@@ -4,8 +4,7 @@ import { renderFunction } from './function';
 import { renderClass } from './class';
 import { renderTypeDeclaration } from './typeDeclaration';
 import { renderEnumeration } from './enumeration';
-import { createCompilerHost } from './compilerHost';
-import { findExactMatchingSymbolFlags } from './utils';
+import { findExactMatchingSymbolFlags, createCompilerHost } from './utils';
 
 function renderDeclaration(symbol: Symbol, type: Type, typeChecker: TypeChecker): string[] {
   const flags = symbol.getFlags();
@@ -26,15 +25,18 @@ function renderDeclaration(symbol: Symbol, type: Type, typeChecker: TypeChecker)
     return renderTypeDeclaration(symbol, type, typeChecker);
   }
 
+  /* istanbul ignore else */
   if (flags & SymbolFlags.RegularEnum) {
     return renderEnumeration(symbol, type, typeChecker);
   }
 
+  /* istanbul ignore next */
   throw new Error(`Unsupported symbol with flags ${findExactMatchingSymbolFlags(flags)}`);
 }
 
 function renderSymbol(symbol: Symbol, typeChecker: TypeChecker): string[] {
   const declarations = symbol.getDeclarations();
+  /* istanbul ignore else */
   if (declarations) {
     return declarations.reduce<string[]>(
       (acc, declaration) => [
@@ -43,9 +45,9 @@ function renderSymbol(symbol: Symbol, typeChecker: TypeChecker): string[] {
       ],
       []
     );
+  } else {
+    return [];
   }
-
-  return [];
 }
 
 export type Options = {
@@ -67,6 +69,7 @@ export function createDocumentation(options: Options): string {
   const typeChecker = program.getTypeChecker();
   const root = program.getSourceFile(entry);
 
+  /* istanbul ignore next */
   if (!root) {
     throw new Error(`Cannot find entry ${entry}`);
   }

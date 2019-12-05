@@ -8,7 +8,7 @@ function isLink(value?: RegExpExecArray | null | undefined): value is RegExpExec
 function getAddtionalLinks(tags: JSDocTagInfo[]): { href: string; text: string }[] {
   return tags
     .filter(tag => tag.name === 'see')
-    .map(tag => /{@link (.*?)\|(.*?)}/.exec(tag.text || ''))
+    .map(tag => /{@link (.*?)\|(.*?)}/.exec(tag.text as string))
     .filter(isLink)
     .map(([, href, text]) => ({ href, text }));
 }

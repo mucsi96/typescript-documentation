@@ -52,21 +52,6 @@ function runCLI(): CLIResult {
 }
 
 describe('CLI', () => {
-  it('writes markdown to default output file', () => {
-    process.argv = ['node', 'typescript-documentation'];
-    expect(runCLI().outputFile).toEqual('./output.md');
-  });
-
-  it('writes markdown to provided output file (long)', () => {
-    process.argv = ['node', 'typescript-documentation', '--output', 'test.md'];
-    expect(runCLI().outputFile).toEqual('test.md');
-  });
-
-  it('writes markdown to provided output file (short)', () => {
-    process.argv = ['node', 'typescript-documentation', '-o', 'test.md'];
-    expect(runCLI().outputFile).toEqual('test.md');
-  });
-
   it('reads compiler options from default config file location', () => {
     process.argv = ['node', 'typescript-documentation'];
     expect(runCLI().options.compilerOptions.strict).toBe(false);
@@ -80,6 +65,24 @@ describe('CLI', () => {
   it('reads compiler options from provided config file (short)', () => {
     process.argv = ['node', 'typescript-documentation', '-p', './test.tsconfig.json'];
     expect(runCLI().options.compilerOptions.strict).toBe(true);
+  });
+
+  it('reads compiler options from provided config file (absolute)', () => {
+    const path = resolve(process.cwd(), 'test.tsconfig.json');
+    process.argv = ['node', 'typescript-documentation', '--project', path];
+    expect(runCLI().options.compilerOptions.strict).toBe(true);
+  });
+
+  it('throw error if config file doesn`t exist', () => {
+    process.argv = [
+      'node',
+      'typescript-documentation',
+      '--project',
+      './not.existing.tsconfig.json'
+    ];
+    expect(() => runCLI()).toThrowError(
+      `error TS6053: File '${resolve(process.cwd(), 'not.existing.tsconfig.json')}' not found.`
+    );
   });
 
   it('reads from default entry file', () => {
@@ -99,17 +102,23 @@ describe('CLI', () => {
 
   it('reads entry file path from command line options (absolute)', () => {
     const path = resolve(process.cwd(), 'src/main.ts');
-    process.argv = ['node', 'typescript-documentation', '-e', path];
+    process.argv = ['node', 'typescript-documentation', '--entry', path];
     expect(runCLI().options.entry).toEqual(path);
   });
 
   it('reads output file from command line options (long)', () => {
-    process.argv = ['node', 'typescript-documentation', '-o', 'test.md'];
+    process.argv = ['node', 'typescript-documentation', '--output', 'test.md'];
     expect(runCLI().outputFile).toEqual('test.md');
   });
 
   it('reads output file from command line options (short)', () => {
     process.argv = ['node', 'typescript-documentation', '-o', 'test.md'];
     expect(runCLI().outputFile).toEqual('test.md');
+  });
+
+  it('writes markdown to provided output file (absolute)', () => {
+    const path = resolve(process.cwd(), 'test.md');
+    process.argv = ['node', 'typescript-documentation', '--output', path];
+    expect(runCLI().outputFile).toEqual(path);
   });
 });

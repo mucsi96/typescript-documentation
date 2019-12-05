@@ -1,4 +1,29 @@
-import { TypeFlags, SymbolFlags } from 'typescript';
+import {
+  TypeFlags,
+  SymbolFlags,
+  SourceFile,
+  ScriptTarget,
+  CompilerHost,
+  createSourceFile,
+  Diagnostic,
+  formatDiagnostic
+} from 'typescript';
+
+export function createCompilerHost(sourceCode: { [name: string]: string }): CompilerHost {
+  return {
+    getSourceFile: (name: string): SourceFile =>
+      createSourceFile(name, (sourceCode && sourceCode[name]) || '', ScriptTarget.Latest),
+    writeFile: (): void => {},
+    getDefaultLibFileName: (): string => 'lib.d.ts',
+    useCaseSensitiveFileNames: (): boolean => false,
+    getCanonicalFileName: (filename: string): string => filename,
+    getCurrentDirectory: (): string => '',
+    getNewLine: (): string => '\n',
+    getDirectories: (): string[] => [],
+    fileExists: (): boolean => true,
+    readFile: (): string => ''
+  };
+}
 
 function isNumeric(value: [string, string | number]): value is [string, number] {
   return typeof value[1] === 'number';
@@ -30,4 +55,12 @@ export function findExactMatchingSymbolFlags(flags: SymbolFlags): string {
   }
 
   return match[0];
+}
+
+export function formatDiagnosticError(diagnostic: Diagnostic): string {
+  return formatDiagnostic(diagnostic, {
+    getCurrentDirectory: (): string => process.cwd(),
+    getCanonicalFileName: (fileName: string): string => fileName,
+    getNewLine: (): string => '\n'
+  });
 }

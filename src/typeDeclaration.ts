@@ -27,10 +27,12 @@ function renderTypeProperties(properties: Symbol[], typeChecker: TypeChecker): s
 function renderTypeDefinition(type: Type, typeChecker: TypeChecker): string[] {
   const flags = type.getFlags();
 
+  /* istanbul ignore else */
   if (flags & TypeFlags.Object) {
     return renderTypeProperties(type.getProperties(), typeChecker);
   }
 
+  /* istanbul ignore next */
   throw new Error(`Not supported type with flags ${findExactMatchingTypeFlag(flags)}`);
 }
 
