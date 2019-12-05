@@ -7,10 +7,10 @@ const sourceCode: { [name: string]: string } = {
 
         export const a = 1;
         export const b: B = 1;
-    `,
+  `,
   'b.ts': `
         export type B = 1;
-    `
+  `
 };
 
 const contentNode = document.getElementById('content');
