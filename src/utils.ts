@@ -6,7 +6,8 @@ import {
   CompilerHost,
   createSourceFile,
   Diagnostic,
-  formatDiagnostic
+  formatDiagnostic,
+  Declaration
 } from 'typescript';
 
 export function createCompilerHost(sourceCode: { [name: string]: string }): CompilerHost {
@@ -63,4 +64,16 @@ export function formatDiagnosticError(diagnostic: Diagnostic): string {
     getCanonicalFileName: (fileName: string): string => fileName,
     getNewLine: (): string => '\n'
   });
+}
+
+export function getDeclarationSourceLocation(declaration: Declaration): string {
+  const sourceFile = declaration.getSourceFile();
+  const pos = sourceFile.getLineAndCharacterOfPosition(declaration.getStart());
+  const fileNameWithPosition = [sourceFile.fileName, pos.line, pos.character].join(':');
+  const line = sourceFile.getFullText().split('\n')[pos.line];
+  const indentationMatch = /^([ \t]*)(?=\S)/.exec(line);
+  const indentation = indentationMatch ? indentationMatch[1].length : 0;
+  const lineWithoutIndentation = indentationMatch ? line.substr(indentation) : line;
+  const posMarker = '^'.padStart(pos.character + 1 - indentation);
+  return [`at ${fileNameWithPosition}`, lineWithoutIndentation, posMarker].join('\n');
 }

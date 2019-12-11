@@ -15,4 +15,20 @@ describe('type', () => {
       `
     });
   });
+
+  it('documents object type', () => {
+    testDocumentation({
+      'index.ts': `
+        type SimpleObjectType = {}
+        export const instance: SimpleObjectType;
+      `,
+      markdown: `
+        ## instance
+
+        **TYPE**
+
+        \`[SimpleObjectType](#simple-object-type)\`
+      `
+    });
+  });
 });

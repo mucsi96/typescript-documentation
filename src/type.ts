@@ -1,5 +1,6 @@
 import { TypeFlags, Type, TypeChecker, Symbol } from 'typescript';
 import { findExactMatchingTypeFlag } from './utils';
+import slugify from '@sindresorhus/slugify';
 
 export function getSymbolsType(symbol: Symbol, typeChecker: TypeChecker): Type {
   const declarations = symbol.getDeclarations();
@@ -42,12 +43,18 @@ export function renderType(type: Type, typeChecker: TypeChecker): string {
     return symbol.getName();
   }
 
-  /* istanbul ignore else */
   if (type.isUnion()) {
     return type.types
       .filter(type => !(type.getFlags() & TypeFlags.Undefined))
       .map(type => renderType(type, typeChecker))
       .join(' | ');
+  }
+
+  /* istanbul ignore else */
+  if (type.aliasSymbol) {
+    const name = type.aliasSymbol.getName();
+
+    return `[${name}](#${slugify(name)})`;
   }
 
   /* istanbul ignore next */

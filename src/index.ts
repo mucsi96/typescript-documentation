@@ -4,7 +4,11 @@ import { renderFunction } from './function';
 import { renderClass } from './class';
 import { renderTypeDeclaration } from './typeDeclaration';
 import { renderEnumeration } from './enumeration';
-import { findExactMatchingSymbolFlags, createCompilerHost } from './utils';
+import {
+  findExactMatchingSymbolFlags,
+  createCompilerHost,
+  getDeclarationSourceLocation
+} from './utils';
 
 function renderDeclaration(symbol: Symbol, type: Type, typeChecker: TypeChecker): string[] {
   const flags = symbol.getFlags();
@@ -38,13 +42,19 @@ function renderSymbol(symbol: Symbol, typeChecker: TypeChecker): string[] {
   const declarations = symbol.getDeclarations();
   /* istanbul ignore else */
   if (declarations) {
-    return declarations.reduce<string[]>(
-      (acc, declaration) => [
-        ...acc,
-        ...renderDeclaration(symbol, typeChecker.getTypeAtLocation(declaration), typeChecker)
-      ],
-      []
-    );
+    return declarations.reduce<string[]>((acc, declaration) => {
+      try {
+        const result = renderDeclaration(
+          symbol,
+          typeChecker.getTypeAtLocation(declaration),
+          typeChecker
+        );
+        return [...acc, ...result];
+      } catch (error) {
+        /* istanbul ignore next */
+        throw new Error([error, getDeclarationSourceLocation(declaration)].join('\n'));
+      }
+    }, []);
   } else {
     return [];
   }
