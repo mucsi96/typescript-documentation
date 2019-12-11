@@ -33,7 +33,7 @@ function renderTypeDefinition(type: Type, typeChecker: TypeChecker): string[] {
   }
 
   /* istanbul ignore next */
-  throw new Error(`Not supported type with flags ${findExactMatchingTypeFlag(flags)}`);
+  throw new Error(`Not supported type definition with flags ${findExactMatchingTypeFlag(flags)}`);
 }
 
 export function renderTypeDeclaration(

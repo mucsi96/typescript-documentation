@@ -19,6 +19,7 @@ export function isOptionalType(type: Type): boolean {
 
 export function renderType(type: Type, typeChecker: TypeChecker): string {
   const flags = type.getFlags();
+  const name = type.symbol && type.symbol.getName();
 
   if (flags & TypeFlags.Number) {
     return 'number';
@@ -33,14 +34,7 @@ export function renderType(type: Type, typeChecker: TypeChecker): string {
   }
 
   if (flags & TypeFlags.EnumLiteral) {
-    const symbol = type.getSymbol();
-
-    /* istanbul ignore if */
-    if (!symbol) {
-      throw new Error(`Symbol not found for ${typeChecker.typeToString(type)}`);
-    }
-
-    return symbol.getName();
+    return name;
   }
 
   if (type.isUnion()) {
@@ -52,11 +46,13 @@ export function renderType(type: Type, typeChecker: TypeChecker): string {
 
   /* istanbul ignore else */
   if (type.aliasSymbol) {
-    const name = type.aliasSymbol.getName();
+    const aliasName = type.aliasSymbol.getName();
 
-    return `[${name}](#${slugify(name)})`;
+    return `[${aliasName}](#${slugify(aliasName)})`;
   }
 
   /* istanbul ignore next */
-  throw new Error(`Not supported type with flags ${findExactMatchingTypeFlag(flags)}`);
+  throw new Error(
+    `Not supported type with name "${name}" and flags "${findExactMatchingTypeFlag(flags)}"`
+  );
 }
