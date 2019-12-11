@@ -52,7 +52,7 @@ function renderSymbol(symbol: Symbol, typeChecker: TypeChecker): string[] {
         return [...acc, ...result];
       } catch (error) {
         /* istanbul ignore next */
-        throw new Error([error, getDeclarationSourceLocation(declaration)].join('\n'));
+        throw new Error([error.message, getDeclarationSourceLocation(declaration)].join('\n'));
       }
     }, []);
   } else {
