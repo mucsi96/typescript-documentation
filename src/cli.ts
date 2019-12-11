@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import program from 'commander';
 import { createDocumentation } from '.';
 import { writeFileSync } from 'fs';
