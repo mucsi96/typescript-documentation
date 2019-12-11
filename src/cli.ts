@@ -67,5 +67,10 @@ function getOptions(cliOptions: CLIOptions): Options {
 
 program.parse(process.argv);
 const cliOptions = program.opts() as CLIOptions;
-const markdown = createDocumentation(getOptions(cliOptions));
-writeFileSync(cliOptions.output, markdown, 'utf8');
+try {
+  const markdown = createDocumentation(getOptions(cliOptions));
+  writeFileSync(cliOptions.output, markdown, 'utf8');
+} catch (e) {
+  console.log(e.message);
+  process.exit(1);
+}
