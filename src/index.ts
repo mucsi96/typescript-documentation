@@ -35,7 +35,11 @@ function renderDeclaration(symbol: Symbol, type: Type, typeChecker: TypeChecker)
   }
 
   /* istanbul ignore next */
-  throw new Error(`Unsupported symbol with flags ${findExactMatchingSymbolFlags(flags)}`);
+  throw new Error(
+    `Unsupported symbol with name "${symbol.getName()}" and flags "${findExactMatchingSymbolFlags(
+      flags
+    )}"`
+  );
 }
 
 function renderSymbol(symbol: Symbol, typeChecker: TypeChecker): string[] {

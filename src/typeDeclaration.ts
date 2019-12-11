@@ -26,6 +26,7 @@ function renderTypeProperties(properties: Symbol[], typeChecker: TypeChecker): s
 
 function renderTypeDefinition(type: Type, typeChecker: TypeChecker): string[] {
   const flags = type.getFlags();
+  const name = type.symbol && type.symbol.getName();
 
   /* istanbul ignore else */
   if (flags & TypeFlags.Object) {
@@ -33,7 +34,11 @@ function renderTypeDefinition(type: Type, typeChecker: TypeChecker): string[] {
   }
 
   /* istanbul ignore next */
-  throw new Error(`Not supported type definition with flags ${findExactMatchingTypeFlag(flags)}`);
+  throw new Error(
+    `Not supported type definition with name "${name}" and flags "${findExactMatchingTypeFlag(
+      flags
+    )}"`
+  );
 }
 
 export function renderTypeDeclaration(
