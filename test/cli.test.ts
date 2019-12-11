@@ -73,18 +73,6 @@ describe('CLI', () => {
     expect(runCLI().options.compilerOptions.strict).toBe(true);
   });
 
-  it('throw error if config file doesn`t exist', () => {
-    process.argv = [
-      'node',
-      'typescript-documentation',
-      '--project',
-      './not.existing.tsconfig.json'
-    ];
-    expect(() => runCLI()).toThrowError(
-      `error TS6053: File '${resolve(process.cwd(), 'not.existing.tsconfig.json')}' not found.`
-    );
-  });
-
   it('reads from default entry file', () => {
     process.argv = ['node', 'typescript-documentation'];
     expect(runCLI().options.entry).toEqual(resolve(process.cwd(), 'src/index.ts'));

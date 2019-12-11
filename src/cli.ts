@@ -37,7 +37,8 @@ function getCompilerOptions(cliOptions: CLIOptions): CompilerOptions {
     {},
     {
       ...sys,
-      onUnRecoverableConfigFileDiagnostic: diagnostic => {
+      onUnRecoverableConfigFileDiagnostic: /* istanbul ignore next */ diagnostic => {
+        /* istanbul ignore next */
         throw new Error(formatDiagnosticError(diagnostic));
       }
     }
@@ -71,6 +72,8 @@ try {
   const markdown = createDocumentation(getOptions(cliOptions));
   writeFileSync(cliOptions.output, markdown, 'utf8');
 } catch (e) {
+  /* istanbul ignore next */
   console.log(e.message);
+  /* istanbul ignore next */
   process.exit(1);
 }
