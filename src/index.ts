@@ -7,7 +7,8 @@ import { renderEnumeration } from './enumeration';
 import {
   findExactMatchingSymbolFlags,
   createCompilerHost,
-  getDeclarationSourceLocation
+  getDeclarationSourceLocation,
+  inspectObject
 } from './utils';
 
 function renderDeclaration(symbol: Symbol, type: Type, typeChecker: TypeChecker): string[] {
@@ -36,7 +37,7 @@ function renderDeclaration(symbol: Symbol, type: Type, typeChecker: TypeChecker)
 
   /* istanbul ignore next */
   throw new Error(
-    `Unsupported symbol with name "${symbol.getName()}" and flags "${findExactMatchingSymbolFlags(
+    `Unsupported symbol ${inspectObject(symbol)} with flags "${findExactMatchingSymbolFlags(
       flags
     )}"`
   );

@@ -7,8 +7,10 @@ import {
   createSourceFile,
   Diagnostic,
   formatDiagnostic,
-  Declaration
+  Declaration,
+  Type
 } from 'typescript';
+import { inspect } from 'util';
 
 export function createCompilerHost(sourceCode: { [name: string]: string }): CompilerHost {
   return {
@@ -76,4 +78,12 @@ export function getDeclarationSourceLocation(declaration: Declaration): string {
   const lineWithoutIndentation = indentationMatch ? line.substr(indentation) : line;
   const posMarker = '^'.padStart(pos.character + 1 - indentation);
   return [`at ${fileNameWithPosition}`, lineWithoutIndentation, posMarker].join('\n');
+}
+
+export function inspectObject(type: any): string {
+  const obj = Object.keys(type)
+    .filter(key => ['checker'].indexOf(key) < 0)
+    .reduce((newObj, key) => Object.assign(newObj, { [key]: type[key] }), {});
+
+  return inspect(obj, false, 1, true);
 }

@@ -5,7 +5,7 @@ import { renderAdditionalLinks } from './additionalLinks';
 import { renderSubSection } from './subSection';
 import { renderType, getSymbolsType, isOptionalType } from './type';
 import { Symbol, Type, TypeChecker, TypeFlags } from 'typescript';
-import { findExactMatchingTypeFlag } from './utils';
+import { findExactMatchingTypeFlag, inspectObject } from './utils';
 
 function renderTypeProperty(property: Symbol, typeChecker: TypeChecker): string {
   const name = property.getName();
@@ -24,6 +24,17 @@ function renderTypeProperties(properties: Symbol[], typeChecker: TypeChecker): s
   ];
 }
 
+function renderTypeValues(types: Type[], typeChecker: TypeChecker): string[] {
+  if (!types.length) {
+    return [];
+  }
+
+  return [
+    ...renderSubSection('Possible values'),
+    ...types.map(type => `- \`${renderType(type, typeChecker)}\``)
+  ];
+}
+
 function renderTypeDefinition(type: Type, typeChecker: TypeChecker): string[] {
   const flags = type.getFlags();
   const name = type.symbol && type.symbol.getName();
@@ -33,9 +44,13 @@ function renderTypeDefinition(type: Type, typeChecker: TypeChecker): string[] {
     return renderTypeProperties(type.getProperties(), typeChecker);
   }
 
+  if (type.isUnion()) {
+    return renderTypeValues(type.types, typeChecker);
+  }
+
   /* istanbul ignore next */
   throw new Error(
-    `Not supported type definition with name "${name}" and flags "${findExactMatchingTypeFlag(
+    `Not supported type definition ${inspectObject(type)} with flags "${findExactMatchingTypeFlag(
       flags
     )}"`
   );

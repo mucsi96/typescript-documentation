@@ -65,12 +65,45 @@ describe('type declarations', () => {
   it('doesn`t document not exported types', () => {
     testDocumentation({
       'index.ts': `
-        type SimpleType = {
-          a: string;
-          b: number;
-        };
+      type SimpleType = {
+        a: string;
+        b: number;
+      };
       `,
       markdown: ``
+    });
+  });
+
+  it('documents unions', () => {
+    testDocumentation({
+      'index.ts': `
+      export type UnionType = string | number;
+      `,
+      markdown: `
+      ## UnionType
+
+      **POSSIBLE VALUES**
+
+      - \`string\`
+      - \`number\`
+      `
+    });
+  });
+
+  it('documents type with optional boolean', () => {
+    testDocumentation({
+      'index.ts': `
+      export type TypeWithOptionalBoolean = {
+        a?: boolean;
+      };
+      `,
+      markdown: `
+      ## TypeWithOptionalBoolean
+
+      **PROPERTIES**
+
+      - \`a?: boolean\`
+      `
     });
   });
 });

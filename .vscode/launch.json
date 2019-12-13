@@ -2,19 +2,19 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "test",
       "type": "node",
       "request": "launch",
-      "name": "Start",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run-script", "start"],
-      "port": 9229,
-      "skipFiles": ["<node_internals>/**"]
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/ts-mocha",
+      "runtimeArgs": ["test/**/*.test.ts"],
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector"
     },
     {
-      "name": "Node Inspector",
+      "name": "cli",
       "type": "node",
       "request": "launch",
-      "args": ["${workspaceRoot}/live/src/index.ts"],
+      "args": ["${workspaceRoot}/src/cli.ts"],
       "runtimeArgs": ["-r", "ts-node/register"],
       "cwd": "${workspaceRoot}",
       "protocol": "inspector",
@@ -22,15 +22,6 @@
       "env": {
         "TS_NODE_IGNORE": "false"
       }
-    },
-    {
-      "name": "Run ts-mocha File",
-      "type": "node",
-      "request": "launch",
-      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/ts-mocha",
-      "runtimeArgs": ["test/**/*.test.ts"],
-      "cwd": "${workspaceRoot}",
-      "protocol": "inspector"
     }
   ]
 }
