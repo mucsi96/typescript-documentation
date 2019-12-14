@@ -4,14 +4,14 @@ describe('type', () => {
   it('documents unions', () => {
     testDocumentation({
       'index.ts': `
-        export const testVariable: string | number;
+        export let testVariable: string | number;
       `,
       markdown: `
         ## testVariable
 
         **TYPE**
 
-        \`string | number\`
+        \`string\` | \`number\`
       `
     });
   });
@@ -20,14 +20,31 @@ describe('type', () => {
     testDocumentation({
       'index.ts': `
         type SimpleObjectType = {}
-        export const testVariable: SimpleObjectType;
+        export let testVariable: SimpleObjectType;
       `,
       markdown: `
         ## testVariable
 
         **TYPE**
 
-        \`[SimpleObjectType](#simple-object-type)\`
+        \`SimpleObjectType\`
+      `
+    });
+  });
+
+  it('documents exported objects', () => {
+    testDocumentation({
+      'index.ts': `
+        export type SimpleObjectType = {};
+        export let testVariable: SimpleObjectType;
+      `,
+      markdown: `
+        ## SimpleObjectType
+        ## testVariable
+
+        **TYPE**
+
+        [\`SimpleObjectType\`](#simpleobjecttype)
       `
     });
   });
@@ -35,7 +52,7 @@ describe('type', () => {
   it('documents any', () => {
     testDocumentation({
       'index.ts': `
-        export const testVariable: any;
+        export let testVariable: any;
       `,
       markdown: `
         ## testVariable
@@ -51,14 +68,31 @@ describe('type', () => {
     testDocumentation({
       'index.ts': `
         interface InterfaceType {};
-        export const testVariable: InterfaceType;
+        export let testVariable: InterfaceType;
       `,
       markdown: `
         ## testVariable
 
         **TYPE**
 
-        \`[InterfaceType](#interface-type)\`
+        \`InterfaceType\`
+      `
+    });
+  });
+
+  it('documents exported interfaces', () => {
+    testDocumentation({
+      'index.ts': `
+        export interface InterfaceType {};
+        export let testVariable: InterfaceType;
+      `,
+      markdown: `
+        ## InterfaceType
+        ## testVariable
+
+        **TYPE**
+
+        [\`InterfaceType\`](#interfacetype)
       `
     });
   });
@@ -66,14 +100,14 @@ describe('type', () => {
   it('documents string literals', () => {
     testDocumentation({
       'index.ts': `
-        export const testVariable: 'test string literal';
+        export let testVariable: 'test string literal';
       `,
       markdown: `
         ## testVariable
 
         **TYPE**
 
-        \`test string literal\`
+        \`'test string literal'\`
       `
     });
   });
@@ -81,7 +115,7 @@ describe('type', () => {
   it('documents null', () => {
     testDocumentation({
       'index.ts': `
-        export const testVariable: null;
+        export let testVariable: null;
       `,
       markdown: `
         ## testVariable
@@ -96,7 +130,7 @@ describe('type', () => {
   it('documents boolean', () => {
     testDocumentation({
       'index.ts': `
-        export const testVariable: boolean;
+        export let testVariable: boolean;
       `,
       markdown: `
         ## testVariable

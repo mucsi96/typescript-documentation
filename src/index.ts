@@ -1,4 +1,4 @@
-import { createProgram, Symbol, TypeChecker, SymbolFlags, Type, CompilerOptions } from 'typescript';
+import { createProgram, Symbol, SymbolFlags, Type, CompilerOptions } from 'typescript';
 import { renderVariable } from './variable';
 import { renderFunction } from './function';
 import { renderClass } from './class';
@@ -10,29 +10,30 @@ import {
   getDeclarationSourceLocation,
   inspectObject
 } from './utils';
+import { Context } from './context';
 
-function renderDeclaration(symbol: Symbol, type: Type, typeChecker: TypeChecker): string[] {
+function renderDeclaration(symbol: Symbol, type: Type, context: Context): string[] {
   const flags = symbol.getFlags();
 
   if (flags & SymbolFlags.BlockScopedVariable) {
-    return renderVariable(symbol, type, typeChecker);
+    return renderVariable(symbol, type, context);
   }
 
   if (flags & SymbolFlags.Function) {
-    return renderFunction(symbol, type, typeChecker);
+    return renderFunction(symbol, type, context);
   }
 
   if (flags & SymbolFlags.Class) {
-    return renderClass(symbol, type, typeChecker);
+    return renderClass(symbol, type, context);
   }
 
-  if (flags & SymbolFlags.TypeAlias) {
-    return renderTypeDeclaration(symbol, type, typeChecker);
+  if (flags & SymbolFlags.TypeAlias || flags & SymbolFlags.Interface) {
+    return renderTypeDeclaration(symbol, type, context);
   }
 
   /* istanbul ignore else */
   if (flags & SymbolFlags.RegularEnum) {
-    return renderEnumeration(symbol, type, typeChecker);
+    return renderEnumeration(symbol, type, context);
   }
 
   /* istanbul ignore next */
@@ -43,7 +44,7 @@ function renderDeclaration(symbol: Symbol, type: Type, typeChecker: TypeChecker)
   );
 }
 
-function renderSymbol(symbol: Symbol, typeChecker: TypeChecker): string[] {
+function renderSymbol(symbol: Symbol, context: Context): string[] {
   const declarations = symbol.getDeclarations();
   /* istanbul ignore else */
   if (declarations) {
@@ -51,8 +52,8 @@ function renderSymbol(symbol: Symbol, typeChecker: TypeChecker): string[] {
       try {
         const result = renderDeclaration(
           symbol,
-          typeChecker.getTypeAtLocation(declaration),
-          typeChecker
+          context.typeChecker.getTypeAtLocation(declaration),
+          context
         );
         return [...acc, ...result];
       } catch (error) {
@@ -95,9 +96,14 @@ export function createDocumentation(options: Options): string {
     const exportedSymbols = typeChecker.getExportsOfModule(type);
 
     return exportedSymbols
-      .reduce<string[]>((acc, symbol) => [...acc, ...renderSymbol(symbol, typeChecker)], [])
+      .reduce<string[]>(
+        (acc, symbol) => [...acc, ...renderSymbol(symbol, { typeChecker, exportedSymbols })],
+        []
+      )
       .join('\n');
   }
 
   return '';
 }
+
+export let a: Promise<void>;

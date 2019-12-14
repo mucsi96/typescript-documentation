@@ -93,8 +93,8 @@ describe('classes', () => {
 
       **PARAMETERS**
 
-      - \`a: string\`
-      - \`b: number\`
+      - \`a\` : \`string\`
+      - \`b\` : \`number\`
 
       **RETURNS**
 
@@ -129,8 +129,8 @@ describe('classes', () => {
 
       **PARAMETERS**
 
-      - \`a: string\`
-      - \`b: number\`
+      - \`a\` : \`string\`
+      - \`b\` : \`number\`
 
       **RETURNS**
 

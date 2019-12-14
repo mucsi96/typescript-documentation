@@ -4,50 +4,51 @@ import { renderDescription } from './description';
 import { renderExamples } from './examples';
 import { renderAdditionalLinks } from './additionalLinks';
 import { renderSubSection } from './subSection';
-import { Symbol, TypeChecker, Type, Signature } from 'typescript';
+import { Symbol, Type, Signature } from 'typescript';
+import { Context } from './context';
 
-function renderFunctionParameter(parameter: Symbol, typeChecker: TypeChecker): string {
+function renderFunctionParameter(parameter: Symbol, context: Context): string {
   const name = parameter.getName();
-  const type = getSymbolsType(parameter, typeChecker);
-  return `- \`${name}${isOptionalType(type) ? '?' : ''}: ${renderType(type, typeChecker)}\``;
+  const type = getSymbolsType(parameter, context);
+  return `- \`${name}${isOptionalType(type) ? '?' : ''}\` : ${renderType(type, context)}`;
 }
 
-function renderFunctionParameters(parameters: Symbol[], typeChecker: TypeChecker): string[] {
+function renderFunctionParameters(parameters: Symbol[], context: Context): string[] {
   if (!parameters.length) {
     return [];
   }
 
   return [
     ...renderSubSection('Parameters'),
-    ...parameters.map(parameter => renderFunctionParameter(parameter, typeChecker))
+    ...parameters.map(parameter => renderFunctionParameter(parameter, context))
   ];
 }
 
 export function renderFunctionSignature(
   name: string,
   signature: Signature,
-  typeChecker: TypeChecker
+  context: Context
 ): string[] {
   const parameters = signature.getParameters();
 
   return [
     ...renderTitle(`${name}(${parameters.map(({ name }) => name).join(', ')})`),
-    ...renderDescription(signature.getDocumentationComment(typeChecker)),
-    ...renderFunctionParameters(parameters, typeChecker),
+    ...renderDescription(signature.getDocumentationComment(context.typeChecker)),
+    ...renderFunctionParameters(parameters, context),
     ...renderSubSection('Returns'),
-    `\`${renderType(signature.getReturnType(), typeChecker)}\``,
+    renderType(signature.getReturnType(), context),
     ...renderExamples(signature.getJsDocTags()),
     ...renderAdditionalLinks(signature.getJsDocTags()),
     ''
   ];
 }
 
-export function renderFunction(symbol: Symbol, type: Type, typeChecker: TypeChecker): string[] {
+export function renderFunction(symbol: Symbol, type: Type, context: Context): string[] {
   const signatures = type.getCallSignatures();
   return signatures.reduce<string[]>(
     (output, signature): string[] => [
       ...output,
-      ...renderFunctionSignature(symbol.getName(), signature, typeChecker)
+      ...renderFunctionSignature(symbol.getName(), signature, context)
     ],
     []
   );

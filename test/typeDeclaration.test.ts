@@ -28,8 +28,8 @@ describe('type declarations', () => {
 
         **PROPERTIES**
 
-        - \`a: string\`
-        - \`b?: number\`
+        - \`a\` : \`string\`
+        - \`b?\` : \`number\`
 
         **EXAMPLES**
 
@@ -102,7 +102,28 @@ describe('type declarations', () => {
 
       **PROPERTIES**
 
-      - \`a?: boolean\`
+      - \`a?\` : \`boolean\`
+      `
+    });
+  });
+
+  it('documents nested object types', () => {
+    testDocumentation({
+      'index.ts': `
+      export type TypeWithOptionalBoolean = {
+        a: {
+          b: {
+            c: string;
+          }
+        }
+      };
+      `,
+      markdown: `
+      ## TypeWithOptionalBoolean
+
+      **PROPERTIES**
+
+      - \`a\` : \`boolean\`
       `
     });
   });

@@ -1,9 +1,12 @@
-import { TypeFlags, Type, TypeChecker, Symbol } from 'typescript';
+import { TypeFlags, Type, Symbol } from 'typescript';
 import { findExactMatchingTypeFlag, inspectObject } from './utils';
-import slugify from '@sindresorhus/slugify';
-import { inspect } from 'util';
+import { Context } from './context';
 
-export function getSymbolsType(symbol: Symbol, typeChecker: TypeChecker): Type {
+function slugifyTypeName(name: string): string {
+  return name.toLowerCase().replace(/[^a-z\d]+/g, '');
+}
+
+export function getSymbolsType(symbol: Symbol, context: Context): Type {
   const declarations = symbol.getDeclarations();
 
   /* istanbul ignore if */
@@ -11,7 +14,7 @@ export function getSymbolsType(symbol: Symbol, typeChecker: TypeChecker): Type {
     throw new Error(`No declaration found for symbol ${symbol.getName()}`);
   }
 
-  return typeChecker.getTypeOfSymbolAtLocation(symbol, declarations[0]);
+  return context.typeChecker.getTypeOfSymbolAtLocation(symbol, declarations[0]);
 }
 
 export function isOptionalType(type: Type): boolean {
@@ -29,58 +32,66 @@ export function isOptionalBoolean(type: Type): boolean {
   );
 }
 
-export function renderType(type: Type, typeChecker: TypeChecker): string {
+export function renderType(type: Type, context: Context): string {
   const flags = type.getFlags();
   const name = type.symbol && type.symbol.getName();
 
   if (flags & TypeFlags.Number) {
-    return 'number';
+    return '`number`';
   }
 
   if (flags & TypeFlags.String) {
-    return 'string';
+    return '`string`';
   }
 
   if (flags & TypeFlags.Boolean || isOptionalBoolean(type)) {
-    return 'boolean';
+    return '`boolean`';
   }
 
   if (flags & TypeFlags.Void) {
-    return 'void';
+    return '`void`';
   }
 
   if (flags & TypeFlags.Any) {
-    return 'any';
+    return '`any`';
   }
 
   if (flags & TypeFlags.Null) {
-    return 'null';
+    return '`null`';
   }
 
   if (flags & TypeFlags.EnumLiteral) {
-    return name;
+    return `\`${name}\``;
   }
 
   if (type.isUnion()) {
     return type.types
       .filter(type => !(type.getFlags() & TypeFlags.Undefined))
-      .map(type => renderType(type, typeChecker))
+      .map(type => renderType(type, context))
       .join(' | ');
   }
 
   if (type.aliasSymbol) {
     const aliasName = type.aliasSymbol.getName();
 
-    return `[${aliasName}](#${slugify(aliasName)})`;
+    if (context.exportedSymbols.includes(type.aliasSymbol)) {
+      return `[\`${aliasName}\`](#${slugifyTypeName(aliasName)})`;
+    } else {
+      return `\`${aliasName}\``;
+    }
   }
 
   if (flags & TypeFlags.Object) {
-    return `[${name}](#${slugify(name)})`;
+    if (type.symbol && context.exportedSymbols.includes(type.symbol)) {
+      return `[\`${name}\`](#${slugifyTypeName(name)})`;
+    } else {
+      return `\`${name}\``;
+    }
   }
 
   /* istanbul ignore else */
   if (type.isStringLiteral()) {
-    return type.value;
+    return `\`'${type.value}'\``;
   }
 
   /* istanbul ignore next */

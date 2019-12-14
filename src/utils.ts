@@ -7,8 +7,7 @@ import {
   createSourceFile,
   Diagnostic,
   formatDiagnostic,
-  Declaration,
-  Type
+  Declaration
 } from 'typescript';
 import { inspect } from 'util';
 
@@ -80,9 +79,10 @@ export function getDeclarationSourceLocation(declaration: Declaration): string {
   return [`at ${fileNameWithPosition}`, lineWithoutIndentation, posMarker].join('\n');
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function inspectObject(type: any): string {
   const obj = Object.keys(type)
-    .filter(key => ['checker'].indexOf(key) < 0)
+    .filter(key => ['checker'].includes(key))
     .reduce((newObj, key) => Object.assign(newObj, { [key]: type[key] }), {});
 
   return inspect(obj, false, 1, true);

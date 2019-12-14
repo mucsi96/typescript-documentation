@@ -35,7 +35,6 @@
   "repository": "git@github.com:mucsi96/typescript-documentation.git",
   "author": "Igor Mucsicska <mucsi_96@yahoo.com>",
   "dependencies": {
-    "@sindresorhus/slugify": "^0.9.1",
     "commander": "^4.0.1",
     "typescript": "^3.7.2"
   },

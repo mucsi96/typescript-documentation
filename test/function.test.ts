@@ -27,8 +27,8 @@ describe('functions', () => {
 
       **PARAMETERS**
 
-      - \`a: string\`
-      - \`b?: number\`
+      - \`a\` : \`string\`
+      - \`b?\` : \`number\`
 
       **RETURNS**
 
@@ -65,8 +65,8 @@ describe('functions', () => {
 
       **PARAMETERS**
 
-      - \`a: string\`
-      - \`b: number\`
+      - \`a\` : \`string\`
+      - \`b\` : \`number\`
 
       **RETURNS**
 
