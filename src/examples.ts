@@ -1,5 +1,5 @@
-import { renderSubSection } from './subSection';
 import { JSDocTagInfo } from 'typescript';
+import { subSection, code } from './markdown';
 
 export function renderExamples(tags: JSDocTagInfo[]): string[] {
   const examples = tags.filter(tag => tag.name === 'example');
@@ -9,7 +9,7 @@ export function renderExamples(tags: JSDocTagInfo[]): string[] {
   }
 
   return [
-    ...renderSubSection('Examples'),
-    ...examples.map(example => `\`\`\`typescript\n${example.text && example.text.trim()}\n\`\`\``)
+    subSection('Examples'),
+    ...examples.map(example => code(example.text ? example.text.trim() : ''))
   ];
 }

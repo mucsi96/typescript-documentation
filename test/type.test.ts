@@ -231,7 +231,7 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>Promise<string></code>
+        <code>Promise\\<string\\></code>
       `
     });
   });
@@ -242,11 +242,11 @@ describe('type', () => {
         export function simpleFunction<T>(): Promise<T> {}
       `,
       markdown: `
-      ## simpleFunction<T>()
+      ## simpleFunction\\<T\\>()
 
       **RETURNS**
 
-      <code>Promise<T></code>
+      <code>Promise\\<T\\></code>
       `
     });
   });

@@ -58,12 +58,22 @@ describe('CLI', () => {
   });
 
   it('reads compiler options from provided config file (long)', () => {
-    process.argv = ['node', 'typescript-documentation', '--project', './test.tsconfig.json'];
+    process.argv = [
+      'node',
+      'typescript-documentation',
+      '--project',
+      './test.tsconfig.json'
+    ];
     expect(runCLI().options.compilerOptions.strict).toBe(true);
   });
 
   it('reads compiler options from provided config file (short)', () => {
-    process.argv = ['node', 'typescript-documentation', '-p', './test.tsconfig.json'];
+    process.argv = [
+      'node',
+      'typescript-documentation',
+      '-p',
+      './test.tsconfig.json'
+    ];
     expect(runCLI().options.compilerOptions.strict).toBe(true);
   });
 
@@ -75,17 +85,28 @@ describe('CLI', () => {
 
   it('reads from default entry file', () => {
     process.argv = ['node', 'typescript-documentation'];
-    expect(runCLI().options.entry).toEqual(resolve(process.cwd(), 'src/index.ts'));
+    expect(runCLI().options.entry).toEqual(
+      resolve(process.cwd(), 'src/index.ts')
+    );
   });
 
   it('reads entry file path from command line options (long)', () => {
-    process.argv = ['node', 'typescript-documentation', '--entry', './src/main.ts'];
-    expect(runCLI().options.entry).toEqual(resolve(process.cwd(), 'src/main.ts'));
+    process.argv = [
+      'node',
+      'typescript-documentation',
+      '--entry',
+      './src/main.ts'
+    ];
+    expect(runCLI().options.entry).toEqual(
+      resolve(process.cwd(), 'src/main.ts')
+    );
   });
 
   it('reads entry file path from command line options (short)', () => {
     process.argv = ['node', 'typescript-documentation', '-e', './src/main.ts'];
-    expect(runCLI().options.entry).toEqual(resolve(process.cwd(), 'src/main.ts'));
+    expect(runCLI().options.entry).toEqual(
+      resolve(process.cwd(), 'src/main.ts')
+    );
   });
 
   it('reads entry file path from command line options (absolute)', () => {

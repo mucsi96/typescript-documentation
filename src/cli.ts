@@ -2,7 +2,11 @@
 import program from 'commander';
 import { createDocumentation } from '.';
 import { writeFileSync } from 'fs';
-import { CompilerOptions, getParsedCommandLineOfConfigFile, sys } from 'typescript';
+import {
+  CompilerOptions,
+  getParsedCommandLineOfConfigFile,
+  sys
+} from 'typescript';
 import { isAbsolute, resolve } from 'path';
 import { formatDiagnosticError } from './utils';
 
@@ -14,13 +18,19 @@ type CLIOptions = {
 
 program
   .name('typescript-documentation')
-  .description('Generate markdown API documentation directly from TypeScript source code')
+  .description(
+    'Generate markdown API documentation directly from TypeScript source code'
+  )
   .option(
     '-p, --project <tsconfig file>',
     'relative or absolute path to a tsconfig.json file',
     './tsconfig.json'
   )
-  .option('-e, --entry <main file>', 'entry/main file of project', './src/index.ts')
+  .option(
+    '-e, --entry <main file>',
+    'entry/main file of project',
+    './src/index.ts'
+  )
   .option(
     '-o, --output <markdown file>',
     'markdown documentation output file location',

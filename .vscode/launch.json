@@ -19,7 +19,9 @@
         "--project",
         "C:/Users/mucsi/w3c-webdriver/packages/w3c-webdriver/tsconfig.json",
         "--entry",
-        "C:/Users/mucsi/w3c-webdriver/packages/w3c-webdriver/src/index.ts"
+        "C:/Users/mucsi/w3c-webdriver/packages/w3c-webdriver/src/index.ts",
+        "--output",
+        "example-output.md"
       ],
       "runtimeArgs": ["-r", "ts-node/register"],
       "cwd": "${workspaceRoot}",

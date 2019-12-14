@@ -28,8 +28,8 @@ describe('type declarations', () => {
 
         **PROPERTIES**
 
-        - \`a\` : <code>string</code>
-        - \`b?\` : <code>number</code>
+        - <code>a: string</code>
+        - <code>b?: number</code>
 
         **EXAMPLES**
 
@@ -117,7 +117,7 @@ describe('type declarations', () => {
 
         **PROPERTIES**
 
-        - \`a?\` : <code>boolean</code>
+        - <code>a?: boolean</code>
       `
     });
   });
@@ -138,7 +138,7 @@ describe('type declarations', () => {
 
         **PROPERTIES**
 
-        - \`a\` : <code>boolean</code>
+        - <code>a: boolean</code>
       `
     });
   });
