@@ -1,4 +1,4 @@
-import { TypeFlags, Type, Symbol } from 'typescript';
+import { TypeFlags, Type, Symbol, ObjectFlags, TypeReference } from 'typescript';
 import { findExactMatchingTypeFlag, inspectObject } from './utils';
 import { Context } from './context';
 
@@ -32,36 +32,69 @@ export function isOptionalBoolean(type: Type): boolean {
   );
 }
 
-export function renderType(type: Type, context: Context): string {
+function isArrayType(type: Type): boolean {
+  const name = type.symbol && type.symbol.getName();
+
+  return (
+    !!(type.getFlags() & TypeFlags.Object) &&
+    !!((type as TypeReference).objectFlags & ObjectFlags.Reference) &&
+    name === 'Array'
+  );
+}
+
+function getArrayType(type: Type): Type | undefined {
+  const typeArguments = (type as TypeReference).typeArguments;
+
+  return typeArguments && typeArguments[0];
+}
+
+function renderTypeName(
+  name: string,
+  options: { isArray?: boolean; isReference?: boolean } = {}
+): string {
+  const fullName = `\`${name}${options.isArray ? '[]' : ''}\``;
+
+  if (options.isReference) {
+    return `[${fullName}](#${slugifyTypeName(name)})`;
+  }
+
+  return fullName;
+}
+
+export function renderType(
+  type: Type,
+  context: Context,
+  options: { isArray?: boolean } = {}
+): string {
   const flags = type.getFlags();
   const name = type.symbol && type.symbol.getName();
 
   if (flags & TypeFlags.Number) {
-    return '`number`';
+    return renderTypeName('number', options);
   }
 
   if (flags & TypeFlags.String) {
-    return '`string`';
+    return renderTypeName('string', options);
   }
 
   if (flags & TypeFlags.Boolean || isOptionalBoolean(type)) {
-    return '`boolean`';
+    return renderTypeName('boolean', options);
   }
 
   if (flags & TypeFlags.Void) {
-    return '`void`';
+    return renderTypeName('void', options);
   }
 
   if (flags & TypeFlags.Any) {
-    return '`any`';
+    return renderTypeName('any', options);
   }
 
   if (flags & TypeFlags.Null) {
-    return '`null`';
+    return renderTypeName('null', options);
   }
 
   if (flags & TypeFlags.EnumLiteral) {
-    return `\`${name}\``;
+    return renderTypeName(name, options);
   }
 
   if (type.isUnion()) {
@@ -72,26 +105,32 @@ export function renderType(type: Type, context: Context): string {
   }
 
   if (type.aliasSymbol) {
-    const aliasName = type.aliasSymbol.getName();
+    return renderTypeName(type.aliasSymbol.getName(), {
+      ...options,
+      isReference: context.exportedSymbols.includes(type.aliasSymbol)
+    });
+  }
 
-    if (context.exportedSymbols.includes(type.aliasSymbol)) {
-      return `[\`${aliasName}\`](#${slugifyTypeName(aliasName)})`;
+  if (isArrayType(type)) {
+    const arrayType = getArrayType(type);
+
+    if (arrayType) {
+      return renderType(arrayType, context, { ...options, isArray: true });
     } else {
-      return `\`${aliasName}\``;
+      return `\`[]\``;
     }
   }
 
   if (flags & TypeFlags.Object) {
-    if (type.symbol && context.exportedSymbols.includes(type.symbol)) {
-      return `[\`${name}\`](#${slugifyTypeName(name)})`;
-    } else {
-      return `\`${name}\``;
-    }
+    return renderTypeName(name, {
+      ...options,
+      isReference: context.exportedSymbols.includes(type.symbol)
+    });
   }
 
   /* istanbul ignore else */
   if (type.isStringLiteral()) {
-    return `\`'${type.value}'\``;
+    return renderTypeName(`'${type.value}'`, options);
   }
 
   /* istanbul ignore next */

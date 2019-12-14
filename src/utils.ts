@@ -45,6 +45,28 @@ export function findExactMatchingTypeFlag(flags: TypeFlags): string {
   return match[0];
 }
 
+export function findMatchingTypeFlags(flags: TypeFlags): string[] {
+  return (
+    Object.keys(TypeFlags)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .map<[string, string | number]>(key => [key, TypeFlags[key as any]])
+      .filter(isNumeric)
+      .filter(([, value]) => value & flags)
+      .map(([key]) => key)
+  );
+}
+
+export function findMatchingSymbolFlags(flags: SymbolFlags): string[] {
+  return (
+    Object.keys(SymbolFlags)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .map<[string, string | number]>(key => [key, SymbolFlags[key as any]])
+      .filter(isNumeric)
+      .filter(([, value]) => value & flags)
+      .map(([key]) => key)
+  );
+}
+
 export function findExactMatchingSymbolFlags(flags: SymbolFlags): string {
   const match = Object.keys(SymbolFlags)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

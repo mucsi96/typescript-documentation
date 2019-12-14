@@ -105,5 +105,3 @@ export function createDocumentation(options: Options): string {
 
   return '';
 }
-
-export let a: Promise<void>;

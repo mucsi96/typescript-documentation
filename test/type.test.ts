@@ -141,4 +141,22 @@ describe('type', () => {
       `
     });
   });
+
+  it('documents array', () => {
+    testDocumentation({
+      'lib.d.ts': `
+        interface Array<T> {}
+      `,
+      'index.ts': `
+        export let testVariable: string[];
+      `,
+      markdown: `
+        ## testVariable
+
+        **TYPE**
+
+        \`string[]\`
+      `
+    });
+  });
 });
