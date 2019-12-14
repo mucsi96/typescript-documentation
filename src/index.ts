@@ -101,10 +101,13 @@ export function createDocumentation(options: Options): string {
 
     return exportedSymbols
       .reduce<string[]>(
-        (acc, symbol) => [...acc, ...renderSymbol(symbol, { typeChecker, exportedSymbols })],
+        (acc, symbol) => [
+          ...acc,
+          renderSymbol(symbol, { typeChecker, exportedSymbols }).join('\n')
+        ],
         []
       )
-      .join('\n');
+      .join('\n\n');
   }
 
   return '';

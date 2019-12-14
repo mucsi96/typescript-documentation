@@ -14,7 +14,6 @@ export function renderVariable(symbol: Symbol, type: Type, context: Context): st
     ...renderSubSection('Type'),
     renderType(type, context),
     ...renderExamples(symbol.getJsDocTags()),
-    ...renderAdditionalLinks(symbol.getJsDocTags()),
-    ''
+    ...renderAdditionalLinks(symbol.getJsDocTags())
   ];
 }

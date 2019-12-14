@@ -38,8 +38,7 @@ export function renderFunctionSignature(
     ...renderSubSection('Returns'),
     renderType(signature.getReturnType(), context),
     ...renderExamples(signature.getJsDocTags()),
-    ...renderAdditionalLinks(signature.getJsDocTags()),
-    ''
+    ...renderAdditionalLinks(signature.getJsDocTags())
   ];
 }
 

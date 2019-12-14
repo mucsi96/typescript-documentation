@@ -24,7 +24,6 @@ export function renderEnumeration(symbol: Symbol, type: Type, context: Context):
     ...renderDescription(symbol.getDocumentationComment(context.typeChecker)),
     ...renderEnumerationItems(type, context),
     ...renderExamples(symbol.getJsDocTags()),
-    ...renderAdditionalLinks(symbol.getJsDocTags()),
-    ''
+    ...renderAdditionalLinks(symbol.getJsDocTags())
   ];
 }

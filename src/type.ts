@@ -69,6 +69,13 @@ export function renderType(
   const flags = type.getFlags();
   const name = type.symbol && type.symbol.getName();
 
+  if (type.aliasSymbol) {
+    return renderTypeName(type.aliasSymbol.getName(), {
+      ...options,
+      isReference: context.exportedSymbols.includes(type.aliasSymbol)
+    });
+  }
+
   if (flags & TypeFlags.Number) {
     return renderTypeName('number', options);
   }
@@ -102,13 +109,6 @@ export function renderType(
       .filter(type => !(type.getFlags() & TypeFlags.Undefined))
       .map(type => renderType(type, context))
       .join(' | ');
-  }
-
-  if (type.aliasSymbol) {
-    return renderTypeName(type.aliasSymbol.getName(), {
-      ...options,
-      isReference: context.exportedSymbols.includes(type.aliasSymbol)
-    });
   }
 
   if (isArrayType(type)) {

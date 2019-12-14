@@ -40,6 +40,7 @@ describe('type', () => {
       `,
       markdown: `
         ## SimpleObjectType
+
         ## testVariable
 
         **TYPE**
@@ -64,6 +65,30 @@ describe('type', () => {
         **TYPE**
 
         \`SimpleObjectType\`
+      `
+    });
+  });
+
+  it('references to types', () => {
+    testDocumentation({
+      'index.ts': `
+      export type UnionType = string | number;
+      export let testVariable: UnionType;
+      `,
+      markdown: `
+        ## UnionType
+
+        **POSSIBLE VALUES**
+
+        - \`string\`
+        - \`number\`
+
+        ## testVariable
+
+        **TYPE**
+
+        [\`UnionType\`](#uniontype)
+
       `
     });
   });
@@ -107,6 +132,7 @@ describe('type', () => {
       `,
       markdown: `
         ## InterfaceType
+
         ## testVariable
 
         **TYPE**
@@ -203,6 +229,7 @@ describe('type', () => {
       `,
       markdown: `
         ## SimpleObjectType
+
         ## testVariable
 
         **TYPE**

@@ -21,22 +21,24 @@ function renderClassProperty(name: string, method: Symbol, context: Context): st
 export function renderClass(symbol: Symbol, type: Type, context: Context): string[] {
   const name = symbol.getName();
   const classInstanceName = `${name.charAt(0).toLowerCase() + name.slice(1)}`;
-  const properties = type.getProperties();
+  const properties = type.getProperties().filter(property => !isInternalSymbol(property));
 
   return [
     ...renderTitle(name),
     ...renderDescription(symbol.getDocumentationComment(context.typeChecker)),
     ...renderExamples(symbol.getJsDocTags()),
     ...renderAdditionalLinks(symbol.getJsDocTags()),
-    '',
-    ...properties
-      .filter(property => !isInternalSymbol(property))
+    ...(properties && ['']),
+    properties
       .reduce<string[]>(
         (acc, property) => [
           ...acc,
-          ...renderClassProperty(`${classInstanceName}.${property.getName()}`, property, context)
+          renderClassProperty(`${classInstanceName}.${property.getName()}`, property, context).join(
+            '\n'
+          )
         ],
         []
       )
+      .join('\n\n')
   ];
 }
