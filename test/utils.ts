@@ -4,8 +4,13 @@ import rewiremock from 'rewiremock';
 
 rewiremock.overrideEntryPoint(module);
 
-export function testDocumentation(sourceCode: { [fileName: string]: string }): void {
-  const output = sourceCode.markdown.split('\n');
+export function testDocumentation({
+  markdown,
+  ...sourceCode
+}: {
+  [fileName: string]: string;
+}): void {
+  const output = markdown.split('\n');
   const padding = output.reduce((max, line) => {
     const match = /^\s*/.exec(line);
     if (!match || match[0].length < max) {
@@ -22,7 +27,10 @@ export function testDocumentation(sourceCode: { [fileName: string]: string }): v
   expect(
     createDocumentation({
       entry: 'index.ts',
-      sourceCode,
+      sourceCode: {
+        ...sourceCode,
+        'lib.d.ts': 'interface Array<T> {}'
+      },
       compilerOptions: {
         strict: true,
         esModuleInterop: true

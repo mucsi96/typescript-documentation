@@ -7,9 +7,14 @@ import {
   createSourceFile,
   Diagnostic,
   formatDiagnostic,
-  Declaration
+  Declaration,
+  Symbol
 } from 'typescript';
 import { inspect } from 'util';
+
+export function isInternalSymbol(symbol: Symbol): boolean {
+  return symbol.getJsDocTags().some(tag => tag.name === 'internal');
+}
 
 export function createCompilerHost(sourceCode: { [name: string]: string }): CompilerHost {
   return {

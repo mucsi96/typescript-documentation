@@ -18,7 +18,7 @@ export function getSymbolsType(symbol: Symbol, context: Context): Type {
 }
 
 export function isOptionalType(type: Type): boolean {
-  return type.isUnion() && !!type.types.find(type => type.getFlags() & TypeFlags.Undefined);
+  return type.isUnion() && type.types.some(type => type.getFlags() & TypeFlags.Undefined);
 }
 
 export function isOptionalBoolean(type: Type): boolean {
@@ -115,9 +115,9 @@ export function renderType(
     const arrayType = getArrayType(type);
 
     if (arrayType) {
-      return renderType(arrayType, context, { ...options, isArray: true });
+      return renderType(arrayType || [], context, { ...options, isArray: true });
     } else {
-      return `\`[]\``;
+      return renderTypeName('', { isArray: true });
     }
   }
 

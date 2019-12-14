@@ -74,23 +74,38 @@ describe('type declarations', () => {
     });
   });
 
+  it('doesn`t document internal types', () => {
+    testDocumentation({
+      'index.ts': `
+      /**
+       * @internal
+       */
+      export type SimpleType = {
+        a: string;
+        b: number;
+      };
+      `,
+      markdown: ``
+    });
+  });
+
   it('documents unions', () => {
     testDocumentation({
       'index.ts': `
       export type UnionType = string | number;
       `,
       markdown: `
-      ## UnionType
+        ## UnionType
 
-      **POSSIBLE VALUES**
+        **POSSIBLE VALUES**
 
-      - \`string\`
-      - \`number\`
+        - \`string\`
+        - \`number\`
       `
     });
   });
 
-  it('documents type with optional boolean', () => {
+  it('documents types with optional boolean', () => {
     testDocumentation({
       'index.ts': `
       export type TypeWithOptionalBoolean = {
@@ -98,11 +113,11 @@ describe('type declarations', () => {
       };
       `,
       markdown: `
-      ## TypeWithOptionalBoolean
+        ## TypeWithOptionalBoolean
 
-      **PROPERTIES**
+        **PROPERTIES**
 
-      - \`a?\` : \`boolean\`
+        - \`a?\` : \`boolean\`
       `
     });
   });
@@ -119,11 +134,11 @@ describe('type declarations', () => {
       };
       `,
       markdown: `
-      ## TypeWithOptionalBoolean
+        ## TypeWithOptionalBoolean
 
-      **PROPERTIES**
+        **PROPERTIES**
 
-      - \`a\` : \`boolean\`
+        - \`a\` : \`boolean\`
       `
     });
   });

@@ -8,7 +8,8 @@ import {
   findExactMatchingSymbolFlags,
   createCompilerHost,
   getDeclarationSourceLocation,
-  inspectObject
+  inspectObject,
+  isInternalSymbol
 } from './utils';
 import { Context } from './context';
 
@@ -46,6 +47,7 @@ function renderDeclaration(symbol: Symbol, type: Type, context: Context): string
 
 function renderSymbol(symbol: Symbol, context: Context): string[] {
   const declarations = symbol.getDeclarations();
+
   /* istanbul ignore else */
   if (declarations) {
     return declarations.reduce<string[]>((acc, declaration) => {
@@ -93,7 +95,9 @@ export function createDocumentation(options: Options): string {
   const type = typeChecker.getSymbolAtLocation(root);
 
   if (type) {
-    const exportedSymbols = typeChecker.getExportsOfModule(type);
+    const exportedSymbols = typeChecker
+      .getExportsOfModule(type)
+      .filter(symbol => !isInternalSymbol(symbol));
 
     return exportedSymbols
       .reduce<string[]>(

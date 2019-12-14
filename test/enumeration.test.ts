@@ -66,4 +66,16 @@ describe('enumerations', () => {
       markdown: ``
     });
   });
+
+  it('doesn`t document internal enumerations', () => {
+    testDocumentation({
+      'index.ts': `
+        /**
+         * @internal
+         */
+        export enum SimpleEnum { ONE, TWO };
+      `,
+      markdown: ``
+    });
+  });
 });

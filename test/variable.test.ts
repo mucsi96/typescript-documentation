@@ -69,4 +69,16 @@ describe('variables', () => {
       markdown: ``
     });
   });
+
+  it('doesn`t document internal variables', () => {
+    testDocumentation({
+      'index.ts': `
+        /**
+         * @internal
+         */
+        export const simpleVariable = 1;
+      `,
+      markdown: ``
+    });
+  });
 });

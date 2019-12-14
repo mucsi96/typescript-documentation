@@ -49,6 +49,25 @@ describe('type', () => {
     });
   });
 
+  it('doesn`t documents internal objects', () => {
+    testDocumentation({
+      'index.ts': `
+        /**
+         * @internal
+         */
+        export type SimpleObjectType = {};
+        export let testVariable: SimpleObjectType;
+      `,
+      markdown: `
+        ## testVariable
+
+        **TYPE**
+
+        \`SimpleObjectType\`
+      `
+    });
+  });
+
   it('documents any', () => {
     testDocumentation({
       'index.ts': `
@@ -97,6 +116,25 @@ describe('type', () => {
     });
   });
 
+  it('doesn`t documents internal interfaces', () => {
+    testDocumentation({
+      'index.ts': `
+        /**
+         * @internal
+         */
+        export interface InterfaceType {};
+        export let testVariable: InterfaceType;
+      `,
+      markdown: `
+        ## testVariable
+
+        **TYPE**
+
+        \`InterfaceType\`
+      `
+    });
+  });
+
   it('documents string literals', () => {
     testDocumentation({
       'index.ts': `
@@ -112,7 +150,7 @@ describe('type', () => {
     });
   });
 
-  it('documents null', () => {
+  it('documents nulls', () => {
     testDocumentation({
       'index.ts': `
         export let testVariable: null;
@@ -127,7 +165,7 @@ describe('type', () => {
     });
   });
 
-  it('documents boolean', () => {
+  it('documents booleans', () => {
     testDocumentation({
       'index.ts': `
         export let testVariable: boolean;
@@ -142,11 +180,8 @@ describe('type', () => {
     });
   });
 
-  it('documents array', () => {
+  it('documents typed arrays', () => {
     testDocumentation({
-      'lib.d.ts': `
-        interface Array<T> {}
-      `,
       'index.ts': `
         export let testVariable: string[];
       `,
@@ -156,6 +191,23 @@ describe('type', () => {
         **TYPE**
 
         \`string[]\`
+      `
+    });
+  });
+
+  it('documents exported object arrays', () => {
+    testDocumentation({
+      'index.ts': `
+        export type SimpleObjectType = {};
+        export let testVariable: SimpleObjectType[];
+      `,
+      markdown: `
+        ## SimpleObjectType
+        ## testVariable
+
+        **TYPE**
+
+        [\`SimpleObjectType[]\`](#simpleobjecttype)
       `
     });
   });

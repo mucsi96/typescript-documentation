@@ -43,62 +43,62 @@ describe('classes', () => {
         }
       `,
       markdown: `
-      ## SimpleClass
-      Simple class description
-      line 2
+        ## SimpleClass
+        Simple class description
+        line 2
 
-      **EXAMPLES**
+        **EXAMPLES**
 
-      \`\`\`typescript
-      example 1 line 1
-      example 1 line 2
-      \`\`\`
-      \`\`\`typescript
-      example 2 line 1
-      example 2 line 2
-      \`\`\`
+        \`\`\`typescript
+        example 1 line 1
+        example 1 line 2
+        \`\`\`
+        \`\`\`typescript
+        example 2 line 1
+        example 2 line 2
+        \`\`\`
 
-      **SEE ALSO**
+        **SEE ALSO**
 
-      - [Example url 1](https://test.url.1)
-      - [Example url 2](https://test.url.2)
+        - [Example url 1](https://test.url.1)
+        - [Example url 2](https://test.url.2)
 
-      ## simpleClass.simpleMethod1()
-      simpleMethod1 description
-      line 2
+        ## simpleClass.simpleMethod1()
+        simpleMethod1 description
+        line 2
 
-      **RETURNS**
+        **RETURNS**
 
-      \`void\`
+        \`void\`
 
-      **EXAMPLES**
+        **EXAMPLES**
 
-      \`\`\`typescript
-      example 3 line 1
-      example 3 line 2
-      \`\`\`
-      \`\`\`typescript
-      example 4 line 1
-      example 4 line 2
-      \`\`\`
+        \`\`\`typescript
+        example 3 line 1
+        example 3 line 2
+        \`\`\`
+        \`\`\`typescript
+        example 4 line 1
+        example 4 line 2
+        \`\`\`
 
-      **SEE ALSO**
+        **SEE ALSO**
 
-      - [Example url 3](https://test.url.3)
-      - [Example url 4](https://test.url.4)
+        - [Example url 3](https://test.url.3)
+        - [Example url 4](https://test.url.4)
 
-      ## simpleClass.simpleMethod2(a, b)
-      simpleMethod2 description
-      line 2
+        ## simpleClass.simpleMethod2(a, b)
+        simpleMethod2 description
+        line 2
 
-      **PARAMETERS**
+        **PARAMETERS**
 
-      - \`a\` : \`string\`
-      - \`b\` : \`number\`
+        - \`a\` : \`string\`
+        - \`b\` : \`number\`
 
-      **RETURNS**
+        **RETURNS**
 
-      \`string\`
+        \`string\`
       `
     });
   });
@@ -117,24 +117,24 @@ describe('classes', () => {
         }
       `,
       markdown: `
-      ## SimpleClass
+        ## SimpleClass
 
-      ## simpleClass.simpleMethod1()
+        ## simpleClass.simpleMethod1()
 
-      **RETURNS**
+        **RETURNS**
 
-      \`void\`
+        \`void\`
 
-      ## simpleClass.simpleMethod2(a, b)
+        ## simpleClass.simpleMethod2(a, b)
 
-      **PARAMETERS**
+        **PARAMETERS**
 
-      - \`a\` : \`string\`
-      - \`b\` : \`number\`
+        - \`a\` : \`string\`
+        - \`b\` : \`number\`
 
-      **RETURNS**
+        **RETURNS**
 
-      \`string\`
+        \`string\`
       `
     });
   });
@@ -145,6 +145,36 @@ describe('classes', () => {
         class SimpleClass {}
       `,
       markdown: ``
+    });
+  });
+
+  it('doesn`t document internal classes', () => {
+    testDocumentation({
+      'index.ts': `
+        /**
+         * @internal
+         */
+        export class SimpleClass {}
+      `,
+      markdown: ``
+    });
+  });
+
+  it('doesn`t document internal methods', () => {
+    testDocumentation({
+      'index.ts': `
+        export class SimpleClass {
+          /**
+           * @internal
+           */
+          public simpleMethod1(): void {
+            return;
+          }
+        }
+      `,
+      markdown: `
+        ## SimpleClass
+      `
     });
   });
 });

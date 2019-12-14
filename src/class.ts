@@ -6,8 +6,9 @@ import { renderFunctionSignature } from './function';
 import { Type, Symbol } from 'typescript';
 import { getSymbolsType } from './type';
 import { Context } from './context';
+import { isInternalSymbol } from './utils';
 
-function renderClassMethod(name: string, method: Symbol, context: Context): string[] {
+function renderClassProperty(name: string, method: Symbol, context: Context): string[] {
   const methodType = getSymbolsType(method, context);
   const signatures = methodType.getCallSignatures();
 
@@ -20,7 +21,7 @@ function renderClassMethod(name: string, method: Symbol, context: Context): stri
 export function renderClass(symbol: Symbol, type: Type, context: Context): string[] {
   const name = symbol.getName();
   const classInstanceName = `${name.charAt(0).toLowerCase() + name.slice(1)}`;
-  const methods = type.getProperties();
+  const properties = type.getProperties();
 
   return [
     ...renderTitle(name),
@@ -28,12 +29,14 @@ export function renderClass(symbol: Symbol, type: Type, context: Context): strin
     ...renderExamples(symbol.getJsDocTags()),
     ...renderAdditionalLinks(symbol.getJsDocTags()),
     '',
-    ...methods.reduce<string[]>(
-      (acc, method) => [
-        ...acc,
-        ...renderClassMethod(`${classInstanceName}.${method.getName()}`, method, context)
-      ],
-      []
-    )
+    ...properties
+      .filter(property => !isInternalSymbol(property))
+      .reduce<string[]>(
+        (acc, property) => [
+          ...acc,
+          ...renderClassProperty(`${classInstanceName}.${property.getName()}`, property, context)
+        ],
+        []
+      )
   ];
 }
