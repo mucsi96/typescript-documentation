@@ -14,7 +14,13 @@
       "name": "cli",
       "type": "node",
       "request": "launch",
-      "args": ["${workspaceRoot}/src/cli.ts"],
+      "args": [
+        "${workspaceRoot}/src/cli.ts",
+        "--project",
+        "C:/Users/mucsi/w3c-webdriver/packages/w3c-webdriver/tsconfig.json",
+        "--entry",
+        "C:/Users/mucsi/w3c-webdriver/packages/w3c-webdriver/src/index.ts"
+      ],
       "runtimeArgs": ["-r", "ts-node/register"],
       "cwd": "${workspaceRoot}",
       "protocol": "inspector",

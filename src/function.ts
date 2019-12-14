@@ -6,6 +6,7 @@ import { renderAdditionalLinks } from './additionalLinks';
 import { renderSubSection } from './subSection';
 import { Symbol, Type, Signature } from 'typescript';
 import { Context } from './context';
+import { type } from 'os';
 
 function renderFunctionParameter(parameter: Symbol, context: Context): string {
   const name = parameter.getName();
@@ -30,9 +31,16 @@ export function renderFunctionSignature(
   context: Context
 ): string[] {
   const parameters = signature.getParameters();
+  const typeParameters = (signature.getTypeParameters() || [])
+    .map(typeParameter => typeParameter.symbol.name)
+    .join(', ');
 
   return [
-    ...renderTitle(`${name}(${parameters.map(({ name }) => name).join(', ')})`),
+    ...renderTitle(
+      `${name}${typeParameters ? `\\<${typeParameters}\\>` : ''}(${parameters
+        .map(({ name }) => name)
+        .join(', ')})`
+    ),
     ...renderDescription(signature.getDocumentationComment(context.typeChecker)),
     ...renderFunctionParameters(parameters, context),
     ...renderSubSection('Returns'),

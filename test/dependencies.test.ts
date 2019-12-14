@@ -12,13 +12,13 @@ describe('dependencies', () => {
 
         **TYPE**
 
-        \`string\`
+        <code>string</code>
 
         ## a
 
         **TYPE**
 
-        \`number\`
+        <code>number</code>
       `
     });
   });

@@ -29,7 +29,10 @@ export function testDocumentation({
       entry: 'index.ts',
       sourceCode: {
         ...sourceCode,
-        'lib.d.ts': 'interface Array<T> {}'
+        'lib.d.ts': `
+          interface Array<T> {}
+          interface Promise<T> {}
+        `
       },
       compilerOptions: {
         strict: true,

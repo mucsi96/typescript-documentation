@@ -23,15 +23,19 @@ export function renderClass(symbol: Symbol, type: Type, context: Context): strin
   const classInstanceName = `${name.charAt(0).toLowerCase() + name.slice(1)}`;
   const properties = type.getProperties().filter(property => !isInternalSymbol(property));
   const renderedProperties = properties
-    .reduce<string[]>(
-      (acc, property) => [
-        ...acc,
-        renderClassProperty(`${classInstanceName}.${property.getName()}`, property, context).join(
-          '\n'
-        )
-      ],
-      []
-    )
+    .reduce<string[]>((acc, property) => {
+      const renderedClassProperty = renderClassProperty(
+        `${classInstanceName}.${property.getName()}`,
+        property,
+        context
+      ).join('\n');
+
+      if (!renderedClassProperty) {
+        return acc;
+      }
+
+      return [...acc, renderedClassProperty];
+    }, [])
     .join('\n\n');
 
   return [

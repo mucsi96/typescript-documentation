@@ -25,7 +25,7 @@ describe('variables', () => {
 
         **TYPE**
 
-        \`number\`
+        <code>number</code>
 
         **EXAMPLES**
 
@@ -56,7 +56,7 @@ describe('variables', () => {
 
         **TYPE**
 
-        \`number\`
+        <code>number</code>
       `
     });
   });

@@ -2,7 +2,7 @@ import { TypeFlags, Type, Symbol, ObjectFlags, TypeReference } from 'typescript'
 import { findExactMatchingTypeFlag, inspectObject } from './utils';
 import { Context } from './context';
 
-function slugifyTypeName(name: string): string {
+function slugifyTypeTitle(name: string): string {
   return name.toLowerCase().replace(/[^a-z\d]+/g, '');
 }
 
@@ -48,93 +48,90 @@ function getArrayType(type: Type): Type | undefined {
   return typeArguments && typeArguments[0];
 }
 
-function renderTypeName(
-  name: string,
-  options: { isArray?: boolean; isReference?: boolean } = {}
-): string {
-  const fullName = `\`${name}${options.isArray ? '[]' : ''}\``;
+function isReference(type: Type, context: Context): boolean {
+  const isExportedTypeAlias =
+    type.aliasSymbol && context.exportedSymbols.includes(type.aliasSymbol);
+  const isExportedObject =
+    !!(type.getFlags() & TypeFlags.Object) && context.exportedSymbols.includes(type.symbol);
 
-  if (options.isReference) {
-    return `[${fullName}](#${slugifyTypeName(name)})`;
-  }
-
-  return fullName;
+  return isExportedTypeAlias || isExportedObject;
 }
 
-export function renderType(
-  type: Type,
-  context: Context,
-  options: { isArray?: boolean } = {}
-): string {
-  const flags = type.getFlags();
-  const name = type.symbol && type.symbol.getName();
-
+function getTypeTitle(type: Type, context: Context): string {
   if (type.aliasSymbol) {
-    return renderTypeName(type.aliasSymbol.getName(), {
-      ...options,
-      isReference: context.exportedSymbols.includes(type.aliasSymbol)
-    });
+    return type.aliasSymbol.getName();
   }
 
+  const flags = type.getFlags();
   if (flags & TypeFlags.Number) {
-    return renderTypeName('number', options);
+    return 'number';
   }
 
   if (flags & TypeFlags.String) {
-    return renderTypeName('string', options);
+    return 'string';
   }
 
   if (flags & TypeFlags.Boolean || isOptionalBoolean(type)) {
-    return renderTypeName('boolean', options);
+    return 'boolean';
   }
 
   if (flags & TypeFlags.Void) {
-    return renderTypeName('void', options);
+    return 'void';
   }
 
   if (flags & TypeFlags.Any) {
-    return renderTypeName('any', options);
+    return 'any';
   }
 
   if (flags & TypeFlags.Null) {
-    return renderTypeName('null', options);
-  }
-
-  if (flags & TypeFlags.EnumLiteral) {
-    return renderTypeName(name, options);
+    return 'null';
   }
 
   if (type.isUnion()) {
-    return type.types
-      .filter(type => !(type.getFlags() & TypeFlags.Undefined))
-      .map(type => renderType(type, context))
-      .join(' | ');
+    return (
+      type.types
+        .filter(type => !(type.getFlags() & TypeFlags.Undefined))
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        .map(type => renderType(type, context, { noWrap: true }))
+        .join(' | ')
+    );
   }
 
-  if (isArrayType(type)) {
-    const arrayType = getArrayType(type);
-
-    if (arrayType) {
-      return renderType(arrayType || [], context, { ...options, isArray: true });
-    } else {
-      return renderTypeName('', { isArray: true });
-    }
-  }
-
-  if (flags & TypeFlags.Object) {
-    return renderTypeName(name, {
-      ...options,
-      isReference: context.exportedSymbols.includes(type.symbol)
-    });
-  }
-
-  /* istanbul ignore else */
   if (type.isStringLiteral()) {
-    return renderTypeName(`'${type.value}'`, options);
+    return `'${type.value}'`;
+  }
+
+  if (flags & TypeFlags.EnumLiteral || flags & TypeFlags.Object || type.isTypeParameter()) {
+    return type.symbol && type.symbol.getName();
   }
 
   /* istanbul ignore next */
   throw new Error(
     `Not supported type ${inspectObject(type)} with flags "${findExactMatchingTypeFlag(flags)}"`
   );
+}
+
+export function renderType(
+  type: Type,
+  context: Context,
+  options: { isArray?: boolean; noWrap?: boolean } = {}
+): string {
+  const arrayType = isArrayType(type) && getArrayType(type);
+
+  if (arrayType) {
+    return renderType(arrayType, context, { isArray: true, noWrap: options.noWrap });
+  }
+
+  const title = getTypeTitle(type, context);
+  const typeArguments = ((type as TypeReference).typeArguments || [])
+    .map(typeArgument => renderType(typeArgument, context, { noWrap: true }))
+    .join(', ');
+
+  const result = [
+    isReference(type, context) ? `[${title}](#${slugifyTypeTitle(title)})` : title,
+    ...(typeArguments ? [`\\<${typeArguments}\\>`] : []),
+    ...(options.isArray ? ['[]'] : [])
+  ].join('');
+
+  return options.noWrap ? result : `<code>${result}</code>`;
 }

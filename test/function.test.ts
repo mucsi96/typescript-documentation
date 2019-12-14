@@ -27,12 +27,12 @@ describe('functions', () => {
 
         **PARAMETERS**
 
-        - \`a\` : \`string\`
-        - \`b?\` : \`number\`
+        - \`a\` : <code>string</code>
+        - \`b?\` : <code>number</code>
 
         **RETURNS**
 
-        \`string\`
+        <code>string</code>
 
         **EXAMPLES**
 
@@ -65,12 +65,12 @@ describe('functions', () => {
 
         **PARAMETERS**
 
-        - \`a\` : \`string\`
-        - \`b\` : \`number\`
+        - \`a\` : <code>string</code>
+        - \`b\` : <code>number</code>
 
         **RETURNS**
 
-        \`string\`
+        <code>string</code>
       `
     });
   });

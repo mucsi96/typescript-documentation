@@ -28,8 +28,8 @@ describe('type declarations', () => {
 
         **PROPERTIES**
 
-        - \`a\` : \`string\`
-        - \`b?\` : \`number\`
+        - \`a\` : <code>string</code>
+        - \`b?\` : <code>number</code>
 
         **EXAMPLES**
 
@@ -99,8 +99,8 @@ describe('type declarations', () => {
 
         **POSSIBLE VALUES**
 
-        - \`string\`
-        - \`number\`
+        - <code>string</code>
+        - <code>number</code>
       `
     });
   });
@@ -117,7 +117,7 @@ describe('type declarations', () => {
 
         **PROPERTIES**
 
-        - \`a?\` : \`boolean\`
+        - \`a?\` : <code>boolean</code>
       `
     });
   });
@@ -138,7 +138,7 @@ describe('type declarations', () => {
 
         **PROPERTIES**
 
-        - \`a\` : \`boolean\`
+        - \`a\` : <code>boolean</code>
       `
     });
   });
