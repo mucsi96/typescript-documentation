@@ -301,4 +301,21 @@ describe('type', () => {
       `
     });
   });
+
+  it('documents nested anonymous types with optional properties', () => {
+    testDocumentation({
+      'index.ts': `
+        export let testVariable: { a?: { b: string } };
+      `,
+      markdown: `
+        ## testVariable
+
+        **TYPE**
+
+        <code>object</code>
+        - <code>a?: object</code>
+          - <code>b: string</code>
+      `
+    });
+  });
 });

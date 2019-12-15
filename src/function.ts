@@ -16,7 +16,7 @@ import { getSymbolsType } from './type/utils';
 function renderFunctionParameter(parameter: Symbol, context: Context): string {
   const name = parameter.getName();
   const type = getSymbolsType(parameter, context);
-  return listItem(renderType(type, context, { name }));
+  return listItem(renderType(type, context, { name, nestingLevel: 2 }));
 }
 
 function renderFunctionParameters(

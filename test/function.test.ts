@@ -101,4 +101,26 @@ describe('functions', () => {
       markdown: ``
     });
   });
+
+  it('documents functions with nested object parameters', () => {
+    testDocumentation({
+      'index.ts': `
+        export function simpleFunction(a: {
+          b: string
+        }): void {}
+      `,
+      markdown: `
+        ## simpleFunction(a)
+
+        **PARAMETERS**
+
+        - <code>a: object</code>
+          - <code>b: string</code>
+
+        **RETURNS**
+
+        <code>void</code>
+      `
+    });
+  });
 });

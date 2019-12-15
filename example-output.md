@@ -11,10 +11,11 @@ Also we can set the browser and operating system parameters we want to interact 
 **PARAMETERS**
 
 - <code>options: object</code>
-- <code>url: string</code>
-- <code>capabilities: [Capabilities](#capabilities)</code>
-- <code>desiredCapabilities?: object</code>
-- <code>headers?: Headers | string[] | object</code>
+  - <code>url: string</code>
+  - <code>capabilities: [Capabilities](#capabilities)</code>
+  - <code>desiredCapabilities?: object</code>
+    - <code>browserstack.use_w3c: boolean</code>
+  - <code>headers: Headers | string[] | object</code>
 
 **RETURNS**
 
@@ -1326,7 +1327,7 @@ const screenshot = await session.takeScreenshot();
 - <code>x: number</code>
 - <code>y: number</code>
 - <code>duration?: number</code>
-- <code>origin?: [Element](#element) | 'viewport' | 'pointer'</code>
+- <code>origin: [Element](#element) | 'viewport' | 'pointer'</code>
 
 ## PointerUpAction
 
@@ -1493,6 +1494,7 @@ const screenshot = await session.takeScreenshot();
 **PROPERTIES**
 
 - <code>log?: object</code>
+  - <code>level?: string</code>
 - <code>args?: string[]</code>
 
 ## InternetExplorerOptions
@@ -1516,6 +1518,8 @@ const screenshot = await session.takeScreenshot();
 - <code>networkLogs?: boolean</code>
 - <code>local?: boolean</code>
 - <code>safari?: object</code>
+  - <code>enablePopups?: boolean</code>
+  - <code>allowAllCookies?: boolean</code>
 
 ## BrowserCapability
 

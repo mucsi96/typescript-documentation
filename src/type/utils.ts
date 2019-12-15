@@ -3,7 +3,8 @@ import {
   TypeFlags,
   TypeReference,
   ObjectFlags,
-  Symbol
+  Symbol,
+  UnionType
 } from 'typescript';
 import { Context } from '../context';
 
@@ -22,10 +23,13 @@ export function isFunctionSymbol(symbol: Symbol, context: Context): boolean {
   return !!getSymbolsType(symbol, context).getCallSignatures().length;
 }
 
-export function isOptionalType(type: Type): boolean {
+export function getNonOptionalType(type: Type): Type {
   return (
-    type.isUnion() &&
-    type.types.some(type => type.getFlags() & TypeFlags.Undefined)
+    (type.isUnion() &&
+      type.types.length === 2 &&
+      type.types.some(type => type.getFlags() & TypeFlags.Undefined) &&
+      type.types.find(type => !(type.getFlags() & TypeFlags.Undefined))) ||
+    type
   );
 }
 
@@ -38,6 +42,9 @@ export function isOptionalBoolean(type: Type): boolean {
       return flags & TypeFlags.Undefined || flags & TypeFlags.BooleanLiteral;
     })
   );
+}
+export function isOptionalType(type: Type): boolean {
+  return isOptionalBoolean(type) || getNonOptionalType(type) !== type;
 }
 
 export function isArrayType(type: Type): boolean {
