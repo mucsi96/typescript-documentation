@@ -22,7 +22,8 @@ export function renderTypeDeclaration(
   if (arrayType) {
     return renderType(arrayType, context, {
       isArray: true,
-      noWrap: typeContext.noWrap
+      noWrap: typeContext.noWrap,
+      name: typeContext.name
     });
   }
 

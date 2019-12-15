@@ -915,7 +915,7 @@ the result of evaluating the script is returned to the client.
 **PARAMETERS**
 
 - <code>script: string</code>
-- <code>any[]</code>
+- <code>args: any[]</code>
 
 **RETURNS**
 
@@ -946,7 +946,7 @@ as the response.
 **PARAMETERS**
 
 - <code>script: string</code>
-- <code>any[]</code>
+- <code>args: any[]</code>
 
 **RETURNS**
 
@@ -1087,7 +1087,7 @@ Sends virtualised device input to the web browser like keyboard or pointer event
 
 **PARAMETERS**
 
-- <code>[ActionSequence](#actionsequence)[]</code>
+- <code>actionSequences: [ActionSequence](#actionsequence)[]</code>
 
 **RETURNS**
 
@@ -1372,7 +1372,7 @@ const screenshot = await session.takeScreenshot();
 
 - <code>type: 'none'</code>
 - <code>id: string</code>
-- <code>[PauseAction](#pauseaction)[]</code>
+- <code>actions: [PauseAction](#pauseaction)[]</code>
 
 ## KeyActionSequence
 
@@ -1380,7 +1380,7 @@ const screenshot = await session.takeScreenshot();
 
 - <code>type: 'key'</code>
 - <code>id: string</code>
-- <code>[KeyAction](#keyaction)[]</code>
+- <code>actions: [KeyAction](#keyaction)[]</code>
 
 ## PointerParameters
 
@@ -1394,7 +1394,7 @@ const screenshot = await session.takeScreenshot();
 
 - <code>type: 'pointer'</code>
 - <code>id: string</code>
-- <code>[PointerAction](#pointeraction)[]</code>
+- <code>actions: [PointerAction](#pointeraction)[]</code>
 - <code>parameters?: [PointerParameters](#pointerparameters)</code>
 
 ## ActionSequence

@@ -160,4 +160,21 @@ describe('type declarations', () => {
       `
     });
   });
+
+  it('documents arrays', () => {
+    testDocumentation({
+      'index.ts': `
+      export type TypeWithArray = {
+        a: string[];
+      };
+      `,
+      markdown: `
+        ## TypeWithArray
+
+        **PROPERTIES**
+
+        - <code>a: string[]</code>
+      `
+    });
+  });
 });
