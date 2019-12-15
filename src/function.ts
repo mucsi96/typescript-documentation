@@ -1,40 +1,38 @@
-import { renderType, isOptionalType, getSymbolsType } from './type';
+import { renderType } from './type';
 import { renderDescription } from './description';
 import { renderExamples } from './examples';
 import { renderAdditionalLinks } from './additionalLinks';
 import { Symbol, Type, Signature } from 'typescript';
 import { Context } from './context';
-import { listItem, inlineCode, bolt, heading } from './markdown';
+import {
+  listItem,
+  subSection,
+  heading,
+  joinLines,
+  joinSections
+} from './markdown';
+import { getSymbolsType } from './type/utils';
 
 function renderFunctionParameter(parameter: Symbol, context: Context): string {
   const name = parameter.getName();
   const type = getSymbolsType(parameter, context);
-  return listItem(
-    inlineCode(
-      [
-        name,
-        isOptionalType(type) ? '?' : '',
-        ': ',
-        renderType(type, context)
-      ].join('')
-    )
-  );
+  return listItem(renderType(type, context, { name }));
 }
 
 function renderFunctionParameters(
   parameters: Symbol[],
   context: Context
-): string[] {
+): string {
   if (!parameters.length) {
-    return [];
+    return '';
   }
 
-  return [
-    bolt('Parameters'),
-    parameters
-      .map(parameter => renderFunctionParameter(parameter, context))
-      .join('\n')
-  ];
+  return joinSections([
+    subSection('Parameters'),
+    joinLines(
+      parameters.map(parameter => renderFunctionParameter(parameter, context))
+    )
+  ]);
 }
 
 export function renderFunctionSignature(
@@ -47,21 +45,19 @@ export function renderFunctionSignature(
     .map(typeParameter => typeParameter.symbol.name)
     .join(', ');
 
-  return [
+  return joinSections([
     heading(
       `${name}${
         typeParameters ? `\\<${typeParameters}\\>` : ''
       }(${parameters.map(({ name }) => name).join(', ')})`
     ),
-    ...renderDescription(
-      signature.getDocumentationComment(context.typeChecker)
-    ),
-    ...renderFunctionParameters(parameters, context),
-    bolt('Returns'),
-    inlineCode(renderType(signature.getReturnType(), context)),
-    ...renderExamples(signature.getJsDocTags()),
-    ...renderAdditionalLinks(signature.getJsDocTags())
-  ].join('\n\n');
+    renderDescription(signature.getDocumentationComment(context.typeChecker)),
+    renderFunctionParameters(parameters, context),
+    subSection('Returns'),
+    renderType(signature.getReturnType(), context),
+    renderExamples(signature.getJsDocTags()),
+    renderAdditionalLinks(signature.getJsDocTags())
+  ]);
 }
 
 export function renderFunction(
@@ -69,10 +65,11 @@ export function renderFunction(
   type: Type,
   context: Context
 ): string {
-  const signatures = type.getCallSignatures();
-  return signatures
-    .map<string>(signature =>
-      renderFunctionSignature(symbol.getName(), signature, context)
-    )
-    .join('\n\n');
+  return joinSections(
+    type
+      .getCallSignatures()
+      .map<string>(signature =>
+        renderFunctionSignature(symbol.getName(), signature, context)
+      )
+  );
 }

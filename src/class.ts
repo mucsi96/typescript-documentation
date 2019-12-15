@@ -3,10 +3,10 @@ import { renderExamples } from './examples';
 import { renderAdditionalLinks } from './additionalLinks';
 import { renderFunctionSignature } from './function';
 import { Type, Symbol } from 'typescript';
-import { getSymbolsType, isFunctionSymbol } from './type';
 import { Context } from './context';
 import { isInternalSymbol } from './utils';
-import { heading } from './markdown';
+import { heading, joinSections } from './markdown';
+import { getSymbolsType, isFunctionSymbol } from './type/utils';
 
 function renderClassMethod(
   name: string,
@@ -25,12 +25,14 @@ function renderClassMethods(
   classInstanceName: string,
   properties: Symbol[],
   context: Context
-): string[] {
-  return properties.map(property =>
-    renderClassMethod(
-      `${classInstanceName}.${property.getName()}`,
-      property,
-      context
+): string {
+  return joinSections(
+    properties.map(property =>
+      renderClassMethod(
+        `${classInstanceName}.${property.getName()}`,
+        property,
+        context
+      )
     )
   );
 }
@@ -48,15 +50,15 @@ export function renderClass(
         isFunctionSymbol(property, context) && !isInternalSymbol(property)
     );
 
-  return [
+  return joinSections([
     heading(name),
-    ...renderDescription(symbol.getDocumentationComment(context.typeChecker)),
-    ...renderExamples(symbol.getJsDocTags()),
-    ...renderAdditionalLinks(symbol.getJsDocTags()),
-    ...renderClassMethods(
+    renderDescription(symbol.getDocumentationComment(context.typeChecker)),
+    renderExamples(symbol.getJsDocTags()),
+    renderAdditionalLinks(symbol.getJsDocTags()),
+    renderClassMethods(
       `${name.charAt(0).toLowerCase() + name.slice(1)}`,
       methods,
       context
     )
-  ].join('\n\n');
+  ]);
 }

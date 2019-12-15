@@ -52,10 +52,15 @@ describe('enumerations', () => {
   it('documents minimal information', () => {
     testDocumentation({
       'index.ts': `
-        export enum SimpleEnum {};
+        export enum SimpleEnum { ONE, TWO };
       `,
       markdown: `
         ## SimpleEnum
+
+        **POSSIBLE VALUES**
+
+        - <code>ONE</code>
+        - <code>TWO</code>
       `
     });
   });

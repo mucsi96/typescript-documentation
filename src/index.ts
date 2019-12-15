@@ -18,6 +18,7 @@ import {
   isInternalSymbol
 } from './utils';
 import { Context } from './context';
+import { heading } from './markdown';
 
 function renderDeclaration(
   symbol: Symbol,
@@ -43,7 +44,7 @@ function renderDeclaration(
   }
 
   /* istanbul ignore else */
-  if (flags & SymbolFlags.RegularEnum) {
+  if (flags & SymbolFlags.RegularEnum && type.isUnion()) {
     return renderEnumeration(symbol, type, context);
   }
 

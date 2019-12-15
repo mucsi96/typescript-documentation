@@ -1,0 +1,67 @@
+import {
+  Type,
+  TypeFlags,
+  TypeReference,
+  ObjectFlags,
+  Symbol
+} from 'typescript';
+import { Context } from '../context';
+
+export function getSymbolsType(symbol: Symbol, context: Context): Type {
+  const declarations = symbol.getDeclarations();
+
+  /* istanbul ignore if */
+  if (!declarations) {
+    throw new Error(`No declaration found for symbol ${symbol.getName()}`);
+  }
+
+  return context.typeChecker.getTypeOfSymbolAtLocation(symbol, declarations[0]);
+}
+
+export function isFunctionSymbol(symbol: Symbol, context: Context): boolean {
+  return !!getSymbolsType(symbol, context).getCallSignatures().length;
+}
+
+export function isOptionalType(type: Type): boolean {
+  return (
+    type.isUnion() &&
+    type.types.some(type => type.getFlags() & TypeFlags.Undefined)
+  );
+}
+
+export function isOptionalBoolean(type: Type): boolean {
+  return (
+    type.isUnion() &&
+    type.types.length === 3 &&
+    type.types.every(type => {
+      const flags = type.getFlags();
+      return flags & TypeFlags.Undefined || flags & TypeFlags.BooleanLiteral;
+    })
+  );
+}
+
+export function isArrayType(type: Type): boolean {
+  const name = type.symbol && type.symbol.getName();
+
+  return (
+    !!(type.getFlags() & TypeFlags.Object) &&
+    !!((type as TypeReference).objectFlags & ObjectFlags.Reference) &&
+    name === 'Array'
+  );
+}
+
+export function getArrayType(type: Type): Type | undefined {
+  const typeArguments = (type as TypeReference).typeArguments;
+
+  return typeArguments && typeArguments[0];
+}
+
+export function isReference(type: Type, context: Context): boolean {
+  const isExportedTypeAlias =
+    type.aliasSymbol && context.exportedSymbols.includes(type.aliasSymbol);
+  const isExportedObject =
+    !!(type.getFlags() & TypeFlags.Object) &&
+    context.exportedSymbols.includes(type.symbol);
+
+  return isExportedTypeAlias || isExportedObject;
+}

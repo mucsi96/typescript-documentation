@@ -269,7 +269,7 @@ describe('type', () => {
     });
   });
 
-  it('documents anonymous type', () => {
+  it('documents anonymous types', () => {
     testDocumentation({
       'index.ts': `
         export let testVariable: { a: string };
@@ -279,7 +279,25 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>[SimpleObjectType](#simpleobjecttype)[]</code>
+        <code>object</code>
+        - <code>a: string</code>
+      `
+    });
+  });
+
+  it('documents nested anonymous types', () => {
+    testDocumentation({
+      'index.ts': `
+        export let testVariable: { a: { b: string } };
+      `,
+      markdown: `
+        ## testVariable
+
+        **TYPE**
+
+        <code>object</code>
+        - <code>a: object</code>
+          - <code>b: string</code>
       `
     });
   });

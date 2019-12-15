@@ -124,23 +124,39 @@ describe('type declarations', () => {
     });
   });
 
-  it.skip('documents nested object types', () => {
+  it('documents anonymous types', () => {
     testDocumentation({
       'index.ts': `
-      export type TypeWithOptionalBoolean = {
+      export type TypeWithAnonymous = {
         a: {
-          b: {
-            c: string;
-          }
-        }
+          b: string
+        };
       };
       `,
       markdown: `
-        ## TypeWithOptionalBoolean
+        ## TypeWithAnonymous
 
         **PROPERTIES**
 
-        - <code>a: boolean</code>
+        - <code>a: object</code>
+          - <code>b: string</code>
+      `
+    });
+  });
+
+  it('documents circular anonymous types', () => {
+    testDocumentation({
+      'index.ts': `
+      export type TypeWithAnonymous = {
+        a: TypeWithAnonymous;
+      };
+      `,
+      markdown: `
+        ## TypeWithAnonymous
+
+        **PROPERTIES**
+
+        - <code>a: [TypeWithAnonymous](#typewithanonymous)</code>
       `
     });
   });

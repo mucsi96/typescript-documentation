@@ -1,5 +1,11 @@
 import { JSDocTagInfo } from 'typescript';
-import { bolt, listItem, link } from './markdown';
+import {
+  subSection,
+  listItem,
+  link,
+  joinLines,
+  joinSections
+} from './markdown';
 
 function isLink(
   value?: RegExpExecArray | null | undefined
@@ -17,17 +23,17 @@ function getAddtionalLinks(
     .map(([, href, text]) => ({ href, text }));
 }
 
-export function renderAdditionalLinks(tags: JSDocTagInfo[]): string[] {
+export function renderAdditionalLinks(tags: JSDocTagInfo[]): string {
   const additionalLinks = getAddtionalLinks(tags);
 
   if (!additionalLinks.length) {
-    return [];
+    return '';
   }
 
-  return [
-    bolt('See also'),
-    additionalLinks
-      .map(({ href, text }) => listItem(link(text, href)))
-      .join('\n')
-  ];
+  return joinSections([
+    subSection('See also'),
+    joinLines(
+      additionalLinks.map(({ href, text }) => listItem(link(text, href)))
+    )
+  ]);
 }

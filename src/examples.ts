@@ -1,15 +1,17 @@
 import { JSDocTagInfo } from 'typescript';
-import { bolt, code } from './markdown';
+import { subSection, code, joinSections } from './markdown';
 
-export function renderExamples(tags: JSDocTagInfo[]): string[] {
+export function renderExamples(tags: JSDocTagInfo[]): string {
   const examples = tags.filter(tag => tag.name === 'example');
 
   if (!examples.length) {
-    return [];
+    return '';
   }
 
-  return [
-    bolt('Examples'),
-    ...examples.map(example => code(example.text ? example.text.trim() : ''))
-  ];
+  return joinSections([
+    subSection('Examples'),
+    joinSections(
+      examples.map(example => code(example.text ? example.text.trim() : ''))
+    )
+  ]);
 }

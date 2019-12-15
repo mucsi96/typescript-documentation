@@ -1,73 +1,23 @@
 import { renderDescription } from './description';
 import { renderExamples } from './examples';
 import { renderAdditionalLinks } from './additionalLinks';
-import { renderType, getSymbolsType, isOptionalType } from './type';
 import { Symbol, Type, TypeFlags } from 'typescript';
-import { findExactMatchingTypeFlag, inspectObject } from './utils';
 import { Context } from './context';
-import { bolt, listItem, inlineCode, heading } from './markdown';
+import { heading, joinSections, subSection } from './markdown';
+import { renderTypeMembers } from './type/members';
 
-function renderTypeProperty(property: Symbol, context: Context): string {
-  const name = property.getName();
-  const type = getSymbolsType(property, context);
-
-  return listItem(
-    inlineCode(
-      [
-        name,
-        isOptionalType(type) ? '?' : '',
-        ': ',
-        renderType(type, context)
-      ].join('')
-    )
-  );
-}
-
-function renderTypeProperties(
-  properties: Symbol[],
-  context: Context
-): string[] {
-  if (!properties.length) {
-    return [];
-  }
-
-  return [
-    bolt('Properties'),
-    properties.map(property => renderTypeProperty(property, context)).join('\n')
-  ];
-}
-
-function renderTypeValues(types: Type[], context: Context): string[] {
-  if (!types.length) {
-    return [];
-  }
-
-  return [
-    bolt('Possible values'),
-    types
-      .map(type => listItem(inlineCode(renderType(type, context))))
-      .join('\n')
-  ];
-}
-
-function renderTypeDefinition(type: Type, context: Context): string[] {
+function renderContentTitle(type: Type): string {
   const flags = type.getFlags();
 
-  if (flags & TypeFlags.Object) {
-    return renderTypeProperties(type.getProperties(), context);
+  if (flags & TypeFlags.Object && type.getProperties().length) {
+    return subSection('Properties');
   }
 
-  /* istanbul ignore else */
   if (type.isUnion()) {
-    return renderTypeValues(type.types, context);
+    return subSection('Possible values');
   }
 
-  /* istanbul ignore next */
-  throw new Error(
-    `Not supported type definition ${inspectObject(
-      type
-    )} with flags "${findExactMatchingTypeFlag(flags)}"`
-  );
+  return '';
 }
 
 export function renderTypeDeclaration(
@@ -75,11 +25,12 @@ export function renderTypeDeclaration(
   type: Type,
   context: Context
 ): string {
-  return [
+  return joinSections([
     heading(symbol.getName()),
-    ...renderDescription(symbol.getDocumentationComment(context.typeChecker)),
-    ...renderTypeDefinition(type, context),
-    ...renderExamples(symbol.getJsDocTags()),
-    ...renderAdditionalLinks(symbol.getJsDocTags())
-  ].join('\n\n');
+    renderDescription(symbol.getDocumentationComment(context.typeChecker)),
+    renderContentTitle(type),
+    renderTypeMembers(type, context),
+    renderExamples(symbol.getJsDocTags()),
+    renderAdditionalLinks(symbol.getJsDocTags())
+  ]);
 }

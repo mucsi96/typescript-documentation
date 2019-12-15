@@ -11,16 +11,18 @@ export function testDocumentation({
   [fileName: string]: string;
 }): void {
   const output = markdown.split('\n');
-  const padding = output.reduce((max, line) => {
-    const match = /^\s*/.exec(line);
-    if (!match || match[0].length < max) {
-      return max;
-    }
+  const padding = output.length
+    ? output.reduce((min, line) => {
+        const match = /^(\s*)(\S)/.exec(line);
+        if (!match || match[1].length > min) {
+          return min;
+        }
 
-    return match[0].length;
-  }, 0);
+        return match[1].length;
+      }, 9999)
+    : 0;
   const trimmedOutput = output
-    .map(line => line.substr(padding))
+    .map(line => (line.length > padding ? line.substr(padding) : line))
     .join('\n')
     .trim();
 

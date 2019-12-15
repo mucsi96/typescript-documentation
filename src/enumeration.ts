@@ -1,34 +1,34 @@
 import { renderDescription } from './description';
 import { renderExamples } from './examples';
 import { renderAdditionalLinks } from './additionalLinks';
-import { Symbol, Type } from 'typescript';
+import { Symbol, UnionType } from 'typescript';
 import { renderType } from './type';
 import { Context } from './context';
-import { inlineCode, listItem, bolt, heading } from './markdown';
+import {
+  listItem,
+  subSection,
+  heading,
+  joinLines,
+  joinSections
+} from './markdown';
 
-function renderEnumerationItems(type: Type, context: Context): string[] {
-  if (!type.isUnion()) {
-    return [];
-  }
-
-  return [
-    bolt('Possible values'),
-    type.types
-      .map(type => listItem(inlineCode(renderType(type, context))))
-      .join('\n')
-  ];
+function renderEnumerationItems(type: UnionType, context: Context): string {
+  return joinSections([
+    subSection('Possible values'),
+    joinLines(type.types.map(type => listItem(renderType(type, context))))
+  ]);
 }
 
 export function renderEnumeration(
   symbol: Symbol,
-  type: Type,
+  type: UnionType,
   context: Context
 ): string {
-  return [
+  return joinSections([
     heading(symbol.getName()),
-    ...renderDescription(symbol.getDocumentationComment(context.typeChecker)),
-    ...renderEnumerationItems(type, context),
-    ...renderExamples(symbol.getJsDocTags()),
-    ...renderAdditionalLinks(symbol.getJsDocTags())
-  ].join('\n\n');
+    renderDescription(symbol.getDocumentationComment(context.typeChecker)),
+    renderEnumerationItems(type, context),
+    renderExamples(symbol.getJsDocTags()),
+    renderAdditionalLinks(symbol.getJsDocTags())
+  ]);
 }

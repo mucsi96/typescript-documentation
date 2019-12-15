@@ -9,7 +9,9 @@ import {
   formatDiagnostic,
   Declaration,
   Symbol,
-  ObjectFlags
+  ObjectFlags,
+  Type,
+  TypeReference
 } from 'typescript';
 import { inspect } from 'util';
 
@@ -59,7 +61,9 @@ export function findExactMatchingTypeFlag(flags: TypeFlags): string {
   return match[0];
 }
 
-export function findMatchingTypeFlags(flags: TypeFlags): string[] {
+export function findMatchingTypeFlags(type: Type): string[] {
+  const flags = type.getFlags();
+
   return (
     Object.keys(TypeFlags)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -70,7 +74,9 @@ export function findMatchingTypeFlags(flags: TypeFlags): string[] {
   );
 }
 
-export function findMatchingObjectsFlags(flags: ObjectFlags): string[] {
+export function findMatchingObjectsFlags(type: Type): string[] {
+  const flags = (type as TypeReference).objectFlags;
+
   return (
     Object.keys(ObjectFlags)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -81,7 +87,9 @@ export function findMatchingObjectsFlags(flags: ObjectFlags): string[] {
   );
 }
 
-export function findMatchingSymbolFlags(flags: SymbolFlags): string[] {
+export function findMatchingSymbolFlags(symbol: Symbol): string[] {
+  const flags = symbol.getFlags();
+
   return (
     Object.keys(SymbolFlags)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -128,7 +136,7 @@ export function getDeclarationSourceLocation(declaration: Declaration): string {
   const lineWithoutIndentation = indentationMatch
     ? line.substr(indentation)
     : line;
-  const posMarker = '^'.padStart(pos.character + 1 - indentation);
+  const posMarker = `${' '.repeat(pos.character - indentation)}^`;
   return [`at ${fileNameWithPosition}`, lineWithoutIndentation, posMarker].join(
     '\n'
   );

@@ -10,13 +10,11 @@ Also we can set the browser and operating system parameters we want to interact 
 
 **PARAMETERS**
 
-- <code>options: object
-- url: string
-- capabilities: [Capabilities](#capabilities)
-- desiredCapabilities: object
-- browserstack.use_w3c: boolean
-- headers: Headers | string[] | object
-- \_\_index: any</code>
+- <code>options: object</code>
+- <code>url: string</code>
+- <code>capabilities: [Capabilities](#capabilities)</code>
+- <code>desiredCapabilities?: object</code>
+- <code>headers?: Headers | string[] | object</code>
 
 **RETURNS**
 
@@ -917,7 +915,7 @@ the result of evaluating the script is returned to the client.
 **PARAMETERS**
 
 - <code>script: string</code>
-- <code>args: any[]</code>
+- <code>any[]</code>
 
 **RETURNS**
 
@@ -948,7 +946,7 @@ as the response.
 **PARAMETERS**
 
 - <code>script: string</code>
-- <code>args: any[]</code>
+- <code>any[]</code>
 
 **RETURNS**
 
@@ -1089,7 +1087,7 @@ Sends virtualised device input to the web browser like keyboard or pointer event
 
 **PARAMETERS**
 
-- <code>actionSequences: [ActionSequence](#actionsequence)[]</code>
+- <code>[ActionSequence](#actionsequence)[]</code>
 
 **RETURNS**
 
@@ -1374,7 +1372,7 @@ const screenshot = await session.takeScreenshot();
 
 - <code>type: 'none'</code>
 - <code>id: string</code>
-- <code>actions: [PauseAction](#pauseaction)[]</code>
+- <code>[PauseAction](#pauseaction)[]</code>
 
 ## KeyActionSequence
 
@@ -1382,7 +1380,7 @@ const screenshot = await session.takeScreenshot();
 
 - <code>type: 'key'</code>
 - <code>id: string</code>
-- <code>actions: [KeyAction](#keyaction)[]</code>
+- <code>[KeyAction](#keyaction)[]</code>
 
 ## PointerParameters
 
@@ -1396,7 +1394,7 @@ const screenshot = await session.takeScreenshot();
 
 - <code>type: 'pointer'</code>
 - <code>id: string</code>
-- <code>actions: [PointerAction](#pointeraction)[]</code>
+- <code>[PointerAction](#pointeraction)[]</code>
 - <code>parameters?: [PointerParameters](#pointerparameters)</code>
 
 ## ActionSequence
@@ -1494,8 +1492,7 @@ const screenshot = await session.takeScreenshot();
 
 **PROPERTIES**
 
-- <code>log?: object
-- level: string</code>
+- <code>log?: object</code>
 - <code>args?: string[]</code>
 
 ## InternetExplorerOptions
@@ -1518,9 +1515,7 @@ const screenshot = await session.takeScreenshot();
 - <code>debug?: boolean</code>
 - <code>networkLogs?: boolean</code>
 - <code>local?: boolean</code>
-- <code>safari?: object
-- enablePopups: boolean
-- allowAllCookies: boolean</code>
+- <code>safari?: object</code>
 
 ## BrowserCapability
 
