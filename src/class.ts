@@ -16,9 +16,11 @@ function renderClassMethod(
   const methodType = getSymbolsType(method, context);
   const signatures = methodType.getCallSignatures();
 
-  return signatures
-    .map(signature => renderFunctionSignature(name, signature, context))
-    .join('\n\n');
+  return joinSections(
+    signatures.map(signature =>
+      renderFunctionSignature(name, signature, context)
+    )
+  );
 }
 
 function renderClassMethods(

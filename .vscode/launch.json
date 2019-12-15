@@ -21,7 +21,7 @@
         "--entry",
         "C:/Users/mucsi/w3c-webdriver/packages/w3c-webdriver/src/index.ts",
         "--output",
-        "example-output.md"
+        "example-output/index.md"
       ],
       "runtimeArgs": ["-r", "ts-node/register"],
       "cwd": "${workspaceRoot}",

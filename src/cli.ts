@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 import program from 'commander';
-import { createDocumentation } from '.';
-import { writeFileSync } from 'fs';
+import { mkdirSync, writeFileSync } from 'fs';
+import { dirname, isAbsolute, resolve } from 'path';
 import {
   CompilerOptions,
   getParsedCommandLineOfConfigFile,
   sys
 } from 'typescript';
-import { isAbsolute, resolve } from 'path';
+import { createDocumentation } from '.';
 import { formatDiagnosticError } from './utils';
 
 type CLIOptions = {
@@ -78,9 +78,24 @@ function getOptions(cliOptions: CLIOptions): Options {
 
 program.parse(process.argv);
 const cliOptions = program.opts() as CLIOptions;
+const output = isAbsolute(cliOptions.output)
+  ? cliOptions.output
+  : resolve(process.cwd(), cliOptions.output);
+const outputDir = dirname(output);
 try {
-  const markdown = createDocumentation(getOptions(cliOptions));
-  writeFileSync(cliOptions.output, markdown, 'utf8');
+  const documentation = createDocumentation(getOptions(cliOptions));
+  try {
+    mkdirSync(outputDir);
+  } catch {
+    1;
+  }
+  writeFileSync(output, documentation.get('default'), 'utf8');
+  documentation.forEach((text: string, section: string) => {
+    const fileName =
+      section === 'default' ? output : resolve(outputDir, `${section}.md`);
+
+    writeFileSync(fileName, text, 'utf8');
+  });
 } catch (e) {
   /* istanbul ignore next */
   console.log(e.message);
