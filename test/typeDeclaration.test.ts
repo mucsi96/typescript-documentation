@@ -124,7 +124,7 @@ describe('type declarations', () => {
     });
   });
 
-  it('documents nested object types', () => {
+  it.skip('documents nested object types', () => {
     testDocumentation({
       'index.ts': `
       export type TypeWithOptionalBoolean = {

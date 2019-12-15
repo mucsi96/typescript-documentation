@@ -10,7 +10,13 @@ Also we can set the browser and operating system parameters we want to interact 
 
 **PARAMETERS**
 
-- <code>options: \_\_type</code>
+- <code>options: object
+- url: string
+- capabilities: [Capabilities](#capabilities)
+- desiredCapabilities: object
+- browserstack.use_w3c: boolean
+- headers: Headers | string[] | object
+- \_\_index: any</code>
 
 **RETURNS**
 
@@ -1488,7 +1494,8 @@ const screenshot = await session.takeScreenshot();
 
 **PROPERTIES**
 
-- <code>log?: \_\_type</code>
+- <code>log?: object
+- level: string</code>
 - <code>args?: string[]</code>
 
 ## InternetExplorerOptions
@@ -1511,7 +1518,9 @@ const screenshot = await session.takeScreenshot();
 - <code>debug?: boolean</code>
 - <code>networkLogs?: boolean</code>
 - <code>local?: boolean</code>
-- <code>safari?: \_\_type</code>
+- <code>safari?: object
+- enablePopups: boolean
+- allowAllCookies: boolean</code>
 
 ## BrowserCapability
 

@@ -8,7 +8,8 @@ import {
   Diagnostic,
   formatDiagnostic,
   Declaration,
-  Symbol
+  Symbol,
+  ObjectFlags
 } from 'typescript';
 import { inspect } from 'util';
 
@@ -16,10 +17,16 @@ export function isInternalSymbol(symbol: Symbol): boolean {
   return symbol.getJsDocTags().some(tag => tag.name === 'internal');
 }
 
-export function createCompilerHost(sourceCode: { [name: string]: string }): CompilerHost {
+export function createCompilerHost(sourceCode: {
+  [name: string]: string;
+}): CompilerHost {
   return {
     getSourceFile: (name: string): SourceFile =>
-      createSourceFile(name, (sourceCode && sourceCode[name]) || '', ScriptTarget.Latest),
+      createSourceFile(
+        name,
+        (sourceCode && sourceCode[name]) || '',
+        ScriptTarget.Latest
+      ),
     writeFile: (): void => {},
     getDefaultLibFileName: (): string => 'lib.d.ts',
     useCaseSensitiveFileNames: (): boolean => false,
@@ -32,7 +39,9 @@ export function createCompilerHost(sourceCode: { [name: string]: string }): Comp
   };
 }
 
-function isNumeric(value: [string, string | number]): value is [string, number] {
+function isNumeric(
+  value: [string, string | number]
+): value is [string, number] {
   return typeof value[1] === 'number';
 }
 
@@ -55,6 +64,17 @@ export function findMatchingTypeFlags(flags: TypeFlags): string[] {
     Object.keys(TypeFlags)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map<[string, string | number]>(key => [key, TypeFlags[key as any]])
+      .filter(isNumeric)
+      .filter(([, value]) => value & flags)
+      .map(([key]) => key)
+  );
+}
+
+export function findMatchingObjectsFlags(flags: ObjectFlags): string[] {
+  return (
+    Object.keys(ObjectFlags)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .map<[string, string | number]>(key => [key, ObjectFlags[key as any]])
       .filter(isNumeric)
       .filter(([, value]) => value & flags)
       .map(([key]) => key)
@@ -97,13 +117,21 @@ export function formatDiagnosticError(diagnostic: Diagnostic): string {
 export function getDeclarationSourceLocation(declaration: Declaration): string {
   const sourceFile = declaration.getSourceFile();
   const pos = sourceFile.getLineAndCharacterOfPosition(declaration.getStart());
-  const fileNameWithPosition = [sourceFile.fileName, pos.line, pos.character].join(':');
+  const fileNameWithPosition = [
+    sourceFile.fileName,
+    pos.line,
+    pos.character
+  ].join(':');
   const line = sourceFile.getFullText().split('\n')[pos.line];
   const indentationMatch = /^([ \t]*)(?=\S)/.exec(line);
   const indentation = indentationMatch ? indentationMatch[1].length : 0;
-  const lineWithoutIndentation = indentationMatch ? line.substr(indentation) : line;
+  const lineWithoutIndentation = indentationMatch
+    ? line.substr(indentation)
+    : line;
   const posMarker = '^'.padStart(pos.character + 1 - indentation);
-  return [`at ${fileNameWithPosition}`, lineWithoutIndentation, posMarker].join('\n');
+  return [`at ${fileNameWithPosition}`, lineWithoutIndentation, posMarker].join(
+    '\n'
+  );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

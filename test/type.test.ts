@@ -268,4 +268,19 @@ describe('type', () => {
       `
     });
   });
+
+  it('documents anonymous type', () => {
+    testDocumentation({
+      'index.ts': `
+        export let testVariable: { a: string };
+      `,
+      markdown: `
+        ## testVariable
+
+        **TYPE**
+
+        <code>[SimpleObjectType](#simpleobjecttype)[]</code>
+      `
+    });
+  });
 });
