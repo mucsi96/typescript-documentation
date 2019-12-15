@@ -44,6 +44,7 @@ describe('classes', () => {
       `,
       markdown: `
         ## SimpleClass
+
         Simple class description
         line 2
 
@@ -53,6 +54,7 @@ describe('classes', () => {
         example 1 line 1
         example 1 line 2
         \`\`\`
+
         \`\`\`typescript
         example 2 line 1
         example 2 line 2
@@ -64,6 +66,7 @@ describe('classes', () => {
         - [Example url 2](https://test.url.2)
 
         ## simpleClass.simpleMethod1()
+
         simpleMethod1 description
         line 2
 
@@ -77,6 +80,7 @@ describe('classes', () => {
         example 3 line 1
         example 3 line 2
         \`\`\`
+
         \`\`\`typescript
         example 4 line 1
         example 4 line 2
@@ -88,6 +92,7 @@ describe('classes', () => {
         - [Example url 4](https://test.url.4)
 
         ## simpleClass.simpleMethod2(a, b)
+
         simpleMethod2 description
         line 2
 

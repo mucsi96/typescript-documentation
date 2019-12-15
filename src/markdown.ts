@@ -6,8 +6,8 @@ export function inlineCode(content: string): string {
   return `<code>${content}</code>`;
 }
 
-export function subSection(name: string): string {
-  return `\n**${name.toUpperCase()}**\n`;
+export function bolt(name: string): string {
+  return `**${name.toUpperCase()}**`;
 }
 
 export function heading(name: string): string {

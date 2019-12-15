@@ -1,4 +1,10 @@
-import { createProgram, Symbol, SymbolFlags, Type, CompilerOptions } from 'typescript';
+import {
+  createProgram,
+  Symbol,
+  SymbolFlags,
+  Type,
+  CompilerOptions
+} from 'typescript';
 import { renderVariable } from './variable';
 import { renderFunction } from './function';
 import { renderClass } from './class';
@@ -13,7 +19,11 @@ import {
 } from './utils';
 import { Context } from './context';
 
-function renderDeclaration(symbol: Symbol, type: Type, context: Context): string[] {
+function renderDeclaration(
+  symbol: Symbol,
+  type: Type,
+  context: Context
+): string {
   const flags = symbol.getFlags();
 
   if (flags & SymbolFlags.BlockScopedVariable) {
@@ -39,32 +49,37 @@ function renderDeclaration(symbol: Symbol, type: Type, context: Context): string
 
   /* istanbul ignore next */
   throw new Error(
-    `Unsupported symbol ${inspectObject(symbol)} with flags "${findExactMatchingSymbolFlags(
-      flags
-    )}"`
+    `Unsupported symbol ${inspectObject(
+      symbol
+    )} with flags "${findExactMatchingSymbolFlags(flags)}"`
   );
 }
 
-function renderSymbol(symbol: Symbol, context: Context): string[] {
+function renderSymbol(symbol: Symbol, context: Context): string {
   const declarations = symbol.getDeclarations();
 
   /* istanbul ignore else */
   if (declarations) {
-    return declarations.reduce<string[]>((acc, declaration) => {
-      try {
-        const result = renderDeclaration(
-          symbol,
-          context.typeChecker.getTypeAtLocation(declaration),
-          context
-        );
-        return [...acc, ...result];
-      } catch (error) {
-        /* istanbul ignore next */
-        throw new Error([error.message, getDeclarationSourceLocation(declaration)].join('\n'));
-      }
-    }, []);
+    return declarations
+      .map<string>(declaration => {
+        try {
+          return renderDeclaration(
+            symbol,
+            context.typeChecker.getTypeAtLocation(declaration),
+            context
+          );
+        } catch (error) {
+          /* istanbul ignore next */
+          throw new Error(
+            [error.message, getDeclarationSourceLocation(declaration)].join(
+              '\n'
+            )
+          );
+        }
+      })
+      .join('\n\n');
   } else {
-    return [];
+    return '';
   }
 }
 
@@ -100,13 +115,7 @@ export function createDocumentation(options: Options): string {
       .filter(symbol => !isInternalSymbol(symbol));
 
     return exportedSymbols
-      .reduce<string[]>(
-        (acc, symbol) => [
-          ...acc,
-          renderSymbol(symbol, { typeChecker, exportedSymbols }).join('\n')
-        ],
-        []
-      )
+      .map(symbol => renderSymbol(symbol, { typeChecker, exportedSymbols }))
       .join('\n\n');
   }
 

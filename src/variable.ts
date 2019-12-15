@@ -4,19 +4,19 @@ import { renderDescription } from './description';
 import { renderExamples } from './examples';
 import { renderAdditionalLinks } from './additionalLinks';
 import { Context } from './context';
-import { heading, subSection, inlineCode } from './markdown';
+import { heading, bolt, inlineCode } from './markdown';
 
 export function renderVariable(
   symbol: Symbol,
   type: Type,
   context: Context
-): string[] {
+): string {
   return [
     heading(symbol.getName()),
     ...renderDescription(symbol.getDocumentationComment(context.typeChecker)),
-    subSection('Type'),
+    bolt('Type'),
     inlineCode(renderType(type, context)),
     ...renderExamples(symbol.getJsDocTags()),
     ...renderAdditionalLinks(symbol.getJsDocTags())
-  ];
+  ].join('\n\n');
 }

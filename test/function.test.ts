@@ -22,6 +22,7 @@ describe('functions', () => {
       `,
       markdown: `
         ## simpleFunction(a, b)
+
         Simple function description
         line 2
 
@@ -40,6 +41,7 @@ describe('functions', () => {
         example 1 line 1
         example 1 line 2
         \`\`\`
+
         \`\`\`typescript
         example 2 line 1
         example 2 line 2

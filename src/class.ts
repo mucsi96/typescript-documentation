@@ -3,25 +3,35 @@ import { renderExamples } from './examples';
 import { renderAdditionalLinks } from './additionalLinks';
 import { renderFunctionSignature } from './function';
 import { Type, Symbol } from 'typescript';
-import { getSymbolsType } from './type';
+import { getSymbolsType, isFunctionSymbol } from './type';
 import { Context } from './context';
 import { isInternalSymbol } from './utils';
 import { heading } from './markdown';
 
-function renderClassProperty(
+function renderClassMethod(
   name: string,
   method: Symbol,
   context: Context
-): string[] {
+): string {
   const methodType = getSymbolsType(method, context);
   const signatures = methodType.getCallSignatures();
 
-  return signatures.reduce<string[]>(
-    (output, signature) => [
-      ...output,
-      ...renderFunctionSignature(name, signature, context)
-    ],
-    []
+  return signatures
+    .map(signature => renderFunctionSignature(name, signature, context))
+    .join('\n\n');
+}
+
+function renderClassMethods(
+  classInstanceName: string,
+  properties: Symbol[],
+  context: Context
+): string[] {
+  return properties.map(property =>
+    renderClassMethod(
+      `${classInstanceName}.${property.getName()}`,
+      property,
+      context
+    )
   );
 }
 
@@ -29,33 +39,24 @@ export function renderClass(
   symbol: Symbol,
   type: Type,
   context: Context
-): string[] {
+): string {
   const name = symbol.getName();
-  const classInstanceName = `${name.charAt(0).toLowerCase() + name.slice(1)}`;
-  const properties = type
+  const methods = type
     .getProperties()
-    .filter(property => !isInternalSymbol(property));
-  const renderedProperties = properties
-    .reduce<string[]>((acc, property) => {
-      const renderedClassProperty = renderClassProperty(
-        `${classInstanceName}.${property.getName()}`,
-        property,
-        context
-      ).join('\n');
-
-      if (!renderedClassProperty) {
-        return acc;
-      }
-
-      return [...acc, renderedClassProperty];
-    }, [])
-    .join('\n\n');
+    .filter(
+      property =>
+        isFunctionSymbol(property, context) && !isInternalSymbol(property)
+    );
 
   return [
     heading(name),
     ...renderDescription(symbol.getDocumentationComment(context.typeChecker)),
     ...renderExamples(symbol.getJsDocTags()),
     ...renderAdditionalLinks(symbol.getJsDocTags()),
-    ...(renderedProperties ? [`\n${renderedProperties}`] : [])
-  ];
+    ...renderClassMethods(
+      `${name.charAt(0).toLowerCase() + name.slice(1)}`,
+      methods,
+      context
+    )
+  ].join('\n\n');
 }

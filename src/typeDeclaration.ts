@@ -5,7 +5,7 @@ import { renderType, getSymbolsType, isOptionalType } from './type';
 import { Symbol, Type, TypeFlags } from 'typescript';
 import { findExactMatchingTypeFlag, inspectObject } from './utils';
 import { Context } from './context';
-import { subSection, listItem, inlineCode, heading } from './markdown';
+import { bolt, listItem, inlineCode, heading } from './markdown';
 
 function renderTypeProperty(property: Symbol, context: Context): string {
   const name = property.getName();
@@ -32,8 +32,8 @@ function renderTypeProperties(
   }
 
   return [
-    subSection('Properties'),
-    ...properties.map(property => renderTypeProperty(property, context))
+    bolt('Properties'),
+    properties.map(property => renderTypeProperty(property, context)).join('\n')
   ];
 }
 
@@ -43,8 +43,10 @@ function renderTypeValues(types: Type[], context: Context): string[] {
   }
 
   return [
-    subSection('Possible values'),
-    ...types.map(type => listItem(inlineCode(renderType(type, context))))
+    bolt('Possible values'),
+    types
+      .map(type => listItem(inlineCode(renderType(type, context))))
+      .join('\n')
   ];
 }
 
@@ -72,12 +74,12 @@ export function renderTypeDeclaration(
   symbol: Symbol,
   type: Type,
   context: Context
-): string[] {
+): string {
   return [
     heading(symbol.getName()),
     ...renderDescription(symbol.getDocumentationComment(context.typeChecker)),
     ...renderTypeDefinition(type, context),
     ...renderExamples(symbol.getJsDocTags()),
     ...renderAdditionalLinks(symbol.getJsDocTags())
-  ];
+  ].join('\n\n');
 }

@@ -20,6 +20,10 @@ export function getSymbolsType(symbol: Symbol, context: Context): Type {
   return context.typeChecker.getTypeOfSymbolAtLocation(symbol, declarations[0]);
 }
 
+export function isFunctionSymbol(symbol: Symbol, context: Context): boolean {
+  return !!getSymbolsType(symbol, context).getCallSignatures().length;
+}
+
 export function isOptionalType(type: Type): boolean {
   return (
     type.isUnion() &&
@@ -104,7 +108,7 @@ function getTypeTitle(type: Type, context: Context): string {
     );
   }
 
-  if (type.isStringLiteral()) {
+  if (type.isStringLiteral() && !(flags & TypeFlags.EnumLiteral)) {
     return `'${type.value}'`;
   }
 

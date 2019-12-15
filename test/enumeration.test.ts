@@ -16,10 +16,11 @@ describe('enumerations', () => {
          * example 2 line 1
          * example 2 line 2
          */
-        export enum SimpleEnum { ONE, TWO };
+        export enum SimpleEnum { ONE = '\uE000', TWO = 1 };
       `,
       markdown: `
         ## SimpleEnum
+
         Simple enumeration description
         line 2
 
@@ -34,6 +35,7 @@ describe('enumerations', () => {
         example 1 line 1
         example 1 line 2
         \`\`\`
+
         \`\`\`typescript
         example 2 line 1
         example 2 line 2

@@ -1,5 +1,5 @@
 import { JSDocTagInfo } from 'typescript';
-import { subSection, listItem, link } from './markdown';
+import { bolt, listItem, link } from './markdown';
 
 function isLink(
   value?: RegExpExecArray | null | undefined
@@ -25,7 +25,9 @@ export function renderAdditionalLinks(tags: JSDocTagInfo[]): string[] {
   }
 
   return [
-    subSection('See also'),
-    ...additionalLinks.map(({ href, text }) => listItem(link(text, href)))
+    bolt('See also'),
+    additionalLinks
+      .map(({ href, text }) => listItem(link(text, href)))
+      .join('\n')
   ];
 }

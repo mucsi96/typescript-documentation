@@ -4,7 +4,7 @@ import { renderExamples } from './examples';
 import { renderAdditionalLinks } from './additionalLinks';
 import { Symbol, Type, Signature } from 'typescript';
 import { Context } from './context';
-import { listItem, inlineCode, subSection, heading } from './markdown';
+import { listItem, inlineCode, bolt, heading } from './markdown';
 
 function renderFunctionParameter(parameter: Symbol, context: Context): string {
   const name = parameter.getName();
@@ -30,8 +30,10 @@ function renderFunctionParameters(
   }
 
   return [
-    subSection('Parameters'),
-    ...parameters.map(parameter => renderFunctionParameter(parameter, context))
+    bolt('Parameters'),
+    parameters
+      .map(parameter => renderFunctionParameter(parameter, context))
+      .join('\n')
   ];
 }
 
@@ -39,7 +41,7 @@ export function renderFunctionSignature(
   name: string,
   signature: Signature,
   context: Context
-): string[] {
+): string {
   const parameters = signature.getParameters();
   const typeParameters = (signature.getTypeParameters() || [])
     .map(typeParameter => typeParameter.symbol.name)
@@ -55,24 +57,22 @@ export function renderFunctionSignature(
       signature.getDocumentationComment(context.typeChecker)
     ),
     ...renderFunctionParameters(parameters, context),
-    subSection('Returns'),
+    bolt('Returns'),
     inlineCode(renderType(signature.getReturnType(), context)),
     ...renderExamples(signature.getJsDocTags()),
     ...renderAdditionalLinks(signature.getJsDocTags())
-  ];
+  ].join('\n\n');
 }
 
 export function renderFunction(
   symbol: Symbol,
   type: Type,
   context: Context
-): string[] {
+): string {
   const signatures = type.getCallSignatures();
-  return signatures.reduce<string[]>(
-    (output, signature): string[] => [
-      ...output,
-      ...renderFunctionSignature(symbol.getName(), signature, context)
-    ],
-    []
-  );
+  return signatures
+    .map<string>(signature =>
+      renderFunctionSignature(symbol.getName(), signature, context)
+    )
+    .join('\n\n');
 }
