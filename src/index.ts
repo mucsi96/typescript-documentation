@@ -18,7 +18,6 @@ import {
   isInternalSymbol
 } from './utils';
 import { Context } from './context';
-import { heading } from './markdown';
 
 function renderDeclaration(
   symbol: Symbol,

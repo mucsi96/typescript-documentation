@@ -11,7 +11,9 @@ export function renderExamples(tags: JSDocTagInfo[]): string {
   return joinSections([
     subSection('Examples'),
     joinSections(
-      examples.map(example => code(example.text ? example.text.trim() : ''))
+      examples.map(example =>
+        code(example.text ? example.text.trim() : /* istanbul ignore next */ '')
+      )
     )
   ]);
 }

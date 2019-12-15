@@ -1,4 +1,4 @@
-import { Type, Symbol, __String, SymbolFlags } from 'typescript';
+import { Type, Symbol, __String } from 'typescript';
 import { Context } from '../context';
 import { getSymbolsType } from './utils';
 import { joinLines, listItem } from '../markdown';
@@ -12,10 +12,6 @@ function getTypeMembers(
     const membersList: { name: string; type: Type }[] = [];
 
     type.symbol.members.forEach((value: Symbol, key: __String) => {
-      if (value.flags & SymbolFlags.TypeParameter) {
-        return;
-      }
-
       membersList.push({
         name: key.toString(),
         type: getSymbolsType(value, context)
@@ -25,10 +21,12 @@ function getTypeMembers(
     return membersList;
   }
 
+  /* istanbul ignore else */
   if (type.isUnion()) {
     return type.types.map(type => ({ type }));
   }
 
+  /* istanbul ignore next */
   return [];
 }
 

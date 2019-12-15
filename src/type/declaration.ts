@@ -14,7 +14,7 @@ import { TypeContext } from './context';
 export function renderTypeDeclaration(
   type: Type,
   context: Context,
-  typeContext: TypeContext = {}
+  typeContext: TypeContext
 ): string {
   const typeReference = type as TypeReference;
   const arrayType = isArrayType(type) && getArrayType(type);

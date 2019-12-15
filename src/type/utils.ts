@@ -3,8 +3,7 @@ import {
   TypeFlags,
   TypeReference,
   ObjectFlags,
-  Symbol,
-  UnionType
+  Symbol
 } from 'typescript';
 import { Context } from '../context';
 

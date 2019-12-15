@@ -59,6 +59,7 @@ export function getTypeTitle(type: Type, context: Context): string {
     return `'${type.value}'`;
   }
 
+  /* istanbul ignore else */
   if (objectFlags & ObjectFlags.Anonymous) {
     return 'object';
   }
