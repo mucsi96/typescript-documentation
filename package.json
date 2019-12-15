@@ -36,21 +36,21 @@
   "author": "Igor Mucsicska <mucsi_96@yahoo.com>",
   "dependencies": {
     "commander": "^4.0.1",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.4",
-    "@babel/core": "^7.7.4",
-    "@babel/preset-env": "^7.7.4",
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.6",
     "@babel/preset-typescript": "^7.7.4",
     "@types/expect": "^24.3.0",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^12.12.12",
-    "@typescript-eslint/eslint-plugin": "^2.8.0",
-    "@typescript-eslint/parser": "^2.8.0",
-    "cpy-cli": "^2.0.0",
+    "@types/node": "^12.12.17",
+    "@typescript-eslint/eslint-plugin": "^2.11.0",
+    "@typescript-eslint/parser": "^2.11.0",
+    "cpy-cli": "^3.0.0",
     "del-cli": "^3.0.0",
-    "eslint": "^6.7.0",
+    "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-mocha": "^6.2.2",
     "expect": "^24.9.0",
@@ -62,7 +62,7 @@
     "rewiremock": "^3.13.9",
     "rimraf": "^3.0.0",
     "ts-mocha": "^6.0.0",
-    "ts-node": "^8.5.2"
+    "ts-node": "^8.5.4"
   },
   "husky": {
     "hooks": {

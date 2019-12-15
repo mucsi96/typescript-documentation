@@ -29,6 +29,7 @@ export function createCompilerHost(sourceCode: {
         (sourceCode && sourceCode[name]) || '',
         ScriptTarget.Latest
       ),
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     writeFile: (): void => {},
     getDefaultLibFileName: (): string => 'lib.d.ts',
     useCaseSensitiveFileNames: (): boolean => false,
