@@ -22,8 +22,8 @@ export function subSection(name: string): string {
   return wrap(name.toUpperCase(), '**');
 }
 
-export function heading(name: string): string {
-  return ['##', name].join(' ');
+export function heading(name: string, level: number): string {
+  return ['#'.repeat(level), name].join(' ');
 }
 
 export function listItem(text: string, level = 1): string {

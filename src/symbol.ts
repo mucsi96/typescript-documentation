@@ -1,16 +1,16 @@
+import { Symbol, SymbolFlags, Type } from 'typescript';
+import { renderClass } from './class';
 import { Context } from './context';
-import { Symbol, Type, SymbolFlags } from 'typescript';
+import { renderEnumeration } from './enumeration';
+import { renderFunction } from './function';
 import { joinSections } from './markdown';
+import { renderTypeDeclaration } from './typeDeclaration';
 import {
+  findExactMatchingSymbolFlags,
   getDeclarationSourceLocation,
-  inspectObject,
-  findExactMatchingSymbolFlags
+  inspectObject
 } from './utils';
 import { renderVariable } from './variable';
-import { renderFunction } from './function';
-import { renderClass } from './class';
-import { renderTypeDeclaration } from './typeDeclaration';
-import { renderEnumeration } from './enumeration';
 
 function renderDeclaration(
   symbol: Symbol,
@@ -23,12 +23,16 @@ function renderDeclaration(
     return renderVariable(symbol, type, context);
   }
 
-  if (flags & SymbolFlags.Function) {
+  if (flags & SymbolFlags.Function || flags & SymbolFlags.Method) {
     return renderFunction(symbol, type, context);
   }
 
   if (flags & SymbolFlags.Class) {
-    return renderClass(symbol, type, context);
+    return renderClass(symbol, context);
+  }
+
+  if (flags & SymbolFlags.Property || flags & SymbolFlags.Constructor) {
+    return '';
   }
 
   if (flags & SymbolFlags.TypeAlias || flags & SymbolFlags.Interface) {

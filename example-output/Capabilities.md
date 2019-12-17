@@ -1,3 +1,5 @@
+# Capabilities
+
 ## ChromeOptions
 
 **PROPERTIES**

@@ -1,4 +1,5 @@
 import { CompilerOptions, createProgram, Symbol } from 'typescript';
+import { spreadClassProperties } from './class';
 import { joinSections } from './markdown';
 import { renderSymbol } from './symbol';
 import { createCompilerHost, isInternalSymbol } from './utils';
@@ -45,16 +46,19 @@ export function createDocumentation(options: Options): Documentation {
     .getExportsOfModule(type)
     .filter(symbol => !isInternalSymbol(symbol));
 
-  return exportedSymbols.reduce<Documentation>((acc, symbol) => {
-    const section = getSymbolSection(symbol);
-    const output = renderSymbol(symbol, { typeChecker, exportedSymbols });
+  return spreadClassProperties(exportedSymbols).reduce<Documentation>(
+    (acc, symbol) => {
+      const section = getSymbolSection(symbol);
+      const output = renderSymbol(symbol, { typeChecker, exportedSymbols });
 
-    if (acc.has(section)) {
-      acc.set(section, joinSections([acc.get(section) || '', output]));
-    } else {
-      acc.set(section, output);
-    }
+      if (acc.has(section)) {
+        acc.set(section, joinSections([acc.get(section) || '', output]));
+      } else {
+        acc.set(section, output);
+      }
 
-    return acc;
-  }, new Map<string, string>());
+      return acc;
+    },
+    new Map<string, string>()
+  );
 }

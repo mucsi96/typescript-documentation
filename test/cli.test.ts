@@ -1,8 +1,8 @@
-import { rewiremock } from './utils';
 import expect from 'expect';
-import { Options } from '../src';
-import * as ts from 'typescript';
 import { resolve } from 'path';
+import * as ts from 'typescript';
+import { Documentation, Options } from '../src';
+import { rewiremock } from './utils';
 
 type CLIResult = {
   options: Options;
@@ -19,9 +19,11 @@ function runCLI(): CLIResult {
 
   rewiremock.proxy('../src/cli', {
     '.': {
-      createDocumentation: (options: Options): string => {
+      createDocumentation: (options: Options): Documentation => {
         result.options = options;
-        return 'test docs';
+        const docs = new Map<string, string>();
+        docs.set('default', 'test docs');
+        return docs;
       }
     },
     fs: {
@@ -117,15 +119,21 @@ describe('CLI', () => {
 
   it('reads output file from command line options (long)', () => {
     process.argv = ['node', 'typescript-documentation', '--output', 'test.md'];
-    expect(runCLI().outputFile).toEqual('test.md');
+    expect(runCLI().outputFile).toEqual(resolve(process.cwd(), 'test.md'));
   });
 
   it('reads output file from command line options (short)', () => {
     process.argv = ['node', 'typescript-documentation', '-o', 'test.md'];
-    expect(runCLI().outputFile).toEqual('test.md');
+    expect(runCLI().outputFile).toEqual(resolve(process.cwd(), 'test.md'));
   });
 
-  it('writes markdown to provided output file (absolute)', () => {
+  it('reads output file from command line options (absolute)', () => {
+    const path = resolve(process.cwd(), 'test.md');
+    process.argv = ['node', 'typescript-documentation', '--output', path];
+    expect(runCLI().outputFile).toEqual(path);
+  });
+
+  it('writes markdown to provided output file', () => {
     const path = resolve(process.cwd(), 'test.md');
     process.argv = ['node', 'typescript-documentation', '--output', path];
     expect(runCLI().outputFile).toEqual(path);

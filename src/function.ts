@@ -1,16 +1,16 @@
-import { renderType } from './type';
+import { Signature, Symbol, Type } from 'typescript';
+import { renderAdditionalLinks } from './additionalLinks';
+import { Context } from './context';
 import { renderDescription } from './description';
 import { renderExamples } from './examples';
-import { renderAdditionalLinks } from './additionalLinks';
-import { Symbol, Type, Signature } from 'typescript';
-import { Context } from './context';
 import {
-  listItem,
-  subSection,
   heading,
   joinLines,
-  joinSections
+  joinSections,
+  listItem,
+  subSection
 } from './markdown';
+import { renderType } from './type';
 import { getSymbolsType } from './type/utils';
 
 function renderFunctionParameter(parameter: Symbol, context: Context): string {
@@ -49,7 +49,8 @@ export function renderFunctionSignature(
     heading(
       `${name}${
         typeParameters ? `\\<${typeParameters}\\>` : ''
-      }(${parameters.map(({ name }) => name).join(', ')})`
+      }(${parameters.map(({ name }) => name).join(', ')})`,
+      2
     ),
     renderDescription(signature.getDocumentationComment(context.typeChecker)),
     renderFunctionParameters(parameters, context),
@@ -65,11 +66,12 @@ export function renderFunction(
   type: Type,
   context: Context
 ): string {
+  const name = symbol.getName();
   return joinSections(
     type
       .getCallSignatures()
       .map<string>(signature =>
-        renderFunctionSignature(symbol.getName(), signature, context)
+        renderFunctionSignature(name, signature, context)
       )
   );
 }

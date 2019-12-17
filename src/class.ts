@@ -1,66 +1,41 @@
+import { Symbol, SymbolFlags } from 'typescript';
+import { renderAdditionalLinks } from './additionalLinks';
+import { Context } from './context';
 import { renderDescription } from './description';
 import { renderExamples } from './examples';
-import { renderAdditionalLinks } from './additionalLinks';
-import { renderFunctionSignature } from './function';
-import { Type, Symbol } from 'typescript';
-import { Context } from './context';
-import { isInternalSymbol } from './utils';
 import { heading, joinSections } from './markdown';
-import { getSymbolsType, isFunctionSymbol } from './type/utils';
+import { isInternalSymbol } from './utils';
 
-function renderClassMethod(
-  name: string,
-  method: Symbol,
-  context: Context
-): string {
-  const methodType = getSymbolsType(method, context);
-  const signatures = methodType.getCallSignatures();
+export function spreadClassProperties(symbols: Symbol[]): Symbol[] {
+  return symbols.reduce<Symbol[]>((acc, symbol) => {
+    if (!(symbol.getFlags() & SymbolFlags.Class) || !symbol.members) {
+      return [...acc, symbol];
+    }
 
-  return joinSections(
-    signatures.map(signature =>
-      renderFunctionSignature(name, signature, context)
-    )
-  );
+    const classInstanceName = [
+      symbol.name.charAt(0).toLowerCase(),
+      symbol.name.slice(1)
+    ].join('');
+    const members: Symbol[] = [];
+    symbol.members.forEach(member => {
+      if (!isInternalSymbol(member)) {
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        member.getName = (): string => `${classInstanceName}.${member.name}`;
+        members.push(member);
+      }
+    });
+
+    return [...acc, symbol, ...members];
+  }, []);
 }
 
-function renderClassMethods(
-  classInstanceName: string,
-  properties: Symbol[],
-  context: Context
-): string {
-  return joinSections(
-    properties.map(property =>
-      renderClassMethod(
-        `${classInstanceName}.${property.getName()}`,
-        property,
-        context
-      )
-    )
-  );
-}
-
-export function renderClass(
-  symbol: Symbol,
-  type: Type,
-  context: Context
-): string {
+export function renderClass(symbol: Symbol, context: Context): string {
   const name = symbol.getName();
-  const methods = type
-    .getProperties()
-    .filter(
-      property =>
-        isFunctionSymbol(property, context) && !isInternalSymbol(property)
-    );
 
   return joinSections([
-    heading(name),
+    heading(name, 2),
     renderDescription(symbol.getDocumentationComment(context.typeChecker)),
     renderExamples(symbol.getJsDocTags()),
-    renderAdditionalLinks(symbol.getJsDocTags()),
-    renderClassMethods(
-      `${name.charAt(0).toLowerCase() + name.slice(1)}`,
-      methods,
-      context
-    )
+    renderAdditionalLinks(symbol.getJsDocTags())
   ]);
 }

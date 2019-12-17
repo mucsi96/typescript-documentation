@@ -1,8 +1,8 @@
+import { Symbol, Type, TypeFlags } from 'typescript';
+import { renderAdditionalLinks } from './additionalLinks';
+import { Context } from './context';
 import { renderDescription } from './description';
 import { renderExamples } from './examples';
-import { renderAdditionalLinks } from './additionalLinks';
-import { Symbol, Type, TypeFlags } from 'typescript';
-import { Context } from './context';
 import { heading, joinSections, subSection } from './markdown';
 import { renderTypeMembers } from './type/members';
 
@@ -26,7 +26,7 @@ export function renderTypeDeclaration(
   context: Context
 ): string {
   return joinSections([
-    heading(symbol.getName()),
+    heading(symbol.getName(), 2),
     renderDescription(symbol.getDocumentationComment(context.typeChecker)),
     renderContentTitle(type),
     renderTypeMembers(type, context),

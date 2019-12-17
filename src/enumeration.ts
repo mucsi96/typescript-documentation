@@ -1,16 +1,16 @@
+import { Symbol, UnionType } from 'typescript';
+import { renderAdditionalLinks } from './additionalLinks';
+import { Context } from './context';
 import { renderDescription } from './description';
 import { renderExamples } from './examples';
-import { renderAdditionalLinks } from './additionalLinks';
-import { Symbol, UnionType } from 'typescript';
-import { renderType } from './type';
-import { Context } from './context';
 import {
-  listItem,
-  subSection,
   heading,
   joinLines,
-  joinSections
+  joinSections,
+  listItem,
+  subSection
 } from './markdown';
+import { renderType } from './type';
 
 function renderEnumerationItems(type: UnionType, context: Context): string {
   return joinSections([
@@ -25,7 +25,7 @@ export function renderEnumeration(
   context: Context
 ): string {
   return joinSections([
-    heading(symbol.getName()),
+    heading(symbol.getName(), 2),
     renderDescription(symbol.getDocumentationComment(context.typeChecker)),
     renderEnumerationItems(type, context),
     renderExamples(symbol.getJsDocTags()),

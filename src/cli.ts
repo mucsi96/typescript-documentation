@@ -8,6 +8,7 @@ import {
   sys
 } from 'typescript';
 import { createDocumentation } from '.';
+import { heading, joinSections } from './markdown';
 import { formatDiagnosticError } from './utils';
 
 type CLIOptions = {
@@ -92,9 +93,14 @@ try {
   writeFileSync(output, documentation.get('default'), 'utf8');
   documentation.forEach((text: string, section: string) => {
     const fileName =
-      section === 'default' ? output : resolve(outputDir, `${section}.md`);
+      section === 'default'
+        ? output
+        : resolve(outputDir, `${section.toLowerCase().replace(/ /g, '-')}.md`);
 
-    writeFileSync(fileName, text, 'utf8');
+    const content =
+      section === 'default' ? text : joinSections([heading(section, 1), text]);
+
+    writeFileSync(fileName, content, 'utf8');
   });
 } catch (e) {
   /* istanbul ignore next */

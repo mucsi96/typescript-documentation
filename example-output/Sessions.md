@@ -1,3 +1,39 @@
+# Sessions
+
+## session.close()
+
+Close the session.
+
+**RETURNS**
+
+<code>Promise\<void\></code>
+
+**EXAMPLES**
+
+```typescript
+import { newSession } from 'w3c-webdriver';
+
+let session;
+
+(async () => {
+  try {
+    session = await newSession('http://localhost:4444', {
+      desiredCapabilities: {
+        browserName: 'Chrome'
+      }
+    });
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    session.close();
+  }
+})();
+```
+
+**SEE ALSO**
+
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#delete-session)
+
 ## StatusOfOS
 
 **PROPERTIES**

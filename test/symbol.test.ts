@@ -58,4 +58,47 @@ describe('symbol', () => {
       `)
     );
   });
+
+  it('documents class methods in separate sections', () => {
+    const docs = createTestDocumentation({
+      'index.ts': `
+        /**
+         * @section one
+         */
+        export class SimpleClass {
+          public simpleMethod1(): void {}
+
+          /**
+           * @section two
+           */
+          public simpleMethod2(): void {}
+        }
+      `
+    });
+    expect(docs.get('one')).toEqual(
+      removePadding(`
+        ## SimpleClass
+      `)
+    );
+
+    expect(docs.get('default')).toEqual(
+      removePadding(`
+        ## simpleClass.simpleMethod1()
+
+        **RETURNS**
+
+        <code>void</code>
+      `)
+    );
+
+    expect(docs.get('two')).toEqual(
+      removePadding(`
+        ## simpleClass.simpleMethod2()
+
+        **RETURNS**
+
+        <code>void</code>
+      `)
+    );
+  });
 });
