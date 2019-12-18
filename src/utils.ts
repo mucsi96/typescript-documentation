@@ -1,22 +1,28 @@
 import {
-  TypeFlags,
-  SymbolFlags,
-  SourceFile,
-  ScriptTarget,
   CompilerHost,
   createSourceFile,
+  Declaration,
   Diagnostic,
   formatDiagnostic,
-  Declaration,
-  Symbol,
   ObjectFlags,
+  ScriptTarget,
+  SourceFile,
+  Symbol,
+  SymbolFlags,
   Type,
+  TypeFlags,
   TypeReference
 } from 'typescript';
 import { inspect } from 'util';
 
 export function isInternalSymbol(symbol: Symbol): boolean {
   return symbol.getJsDocTags().some(tag => tag.name === 'internal');
+}
+
+export function getSymbolSection(symbol: Symbol): string {
+  const sectionTag = symbol.getJsDocTags().find(tag => tag.name === 'section');
+
+  return (sectionTag && sectionTag.text) || 'default';
 }
 
 export function createCompilerHost(sourceCode: {

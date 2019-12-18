@@ -1,15 +1,34 @@
 import { Type, TypeReference } from 'typescript';
+import { renderType } from '.';
 import { Context } from '../context';
+import { inlineCode, link } from '../markdown';
+import { getSymbolSection } from '../utils';
+import { TypeContext } from './context';
+import { getTypeTitle } from './title';
 import {
-  isArrayType,
   getArrayType,
-  isReference,
+  getExportedSymbolByType,
+  isArrayType,
   isOptionalType
 } from './utils';
-import { renderType } from '.';
-import { getTypeTitle } from './title';
-import { reference, inlineCode } from '../markdown';
-import { TypeContext } from './context';
+
+function getReferenceUrl(type: Type, context: Context): string | undefined {
+  const exportedSymbol = getExportedSymbolByType(type, context);
+
+  if (!exportedSymbol) {
+    return;
+  }
+
+  const section = getSymbolSection(exportedSymbol);
+  const location =
+    section !== context.section ? context.getSectionLocation(section) : '';
+  const hash = exportedSymbol
+    .getName()
+    .toLowerCase()
+    .replace(/[^a-z\d]+/g, '');
+
+  return [location, hash].join('#');
+}
 
 export function renderTypeDeclaration(
   type: Type,
@@ -31,11 +50,12 @@ export function renderTypeDeclaration(
   const typeArguments = (typeReference.typeArguments || [])
     .map(typeArgument => renderType(typeArgument, context, { noWrap: true }))
     .join(', ');
+  const url = getReferenceUrl(type, context);
 
   const result = [
     typeContext.name &&
       `${typeContext.name}${isOptionalType(type) ? '?' : ''}: `,
-    isReference(type, context) ? reference(title) : title,
+    url ? link(title, url) : title,
     ...(typeArguments ? [`\\<${typeArguments}\\>`] : []),
     ...(typeContext.isArray ? ['[]'] : [])
   ].join('');

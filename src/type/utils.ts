@@ -1,9 +1,9 @@
 import {
+  ObjectFlags,
+  Symbol,
   Type,
   TypeFlags,
-  TypeReference,
-  ObjectFlags,
-  Symbol
+  TypeReference
 } from 'typescript';
 import { Context } from '../context';
 
@@ -62,12 +62,21 @@ export function getArrayType(type: Type): Type | undefined {
   return typeArguments && typeArguments[0];
 }
 
-export function isReference(type: Type, context: Context): boolean {
+export function getExportedSymbolByType(
+  type: Type,
+  context: Context
+): Symbol | undefined {
   const isExportedTypeAlias =
     type.aliasSymbol && context.exportedSymbols.includes(type.aliasSymbol);
   const isExportedObject =
     !!(type.getFlags() & TypeFlags.Object) &&
     context.exportedSymbols.includes(type.symbol);
 
-  return isExportedTypeAlias || isExportedObject;
+  if (isExportedTypeAlias) {
+    return type.aliasSymbol;
+  }
+
+  if (isExportedObject) {
+    return type.symbol;
+  }
 }

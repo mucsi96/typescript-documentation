@@ -19,7 +19,8 @@ export function createTestDocumentation(sourceCode: {
     compilerOptions: {
       strict: true,
       esModuleInterop: true
-    }
+    },
+    getSectionLocation: (section: string): string => `${section}.md`
   });
 }
 

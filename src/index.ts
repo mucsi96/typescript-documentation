@@ -1,22 +1,21 @@
-import { CompilerOptions, createProgram, Symbol } from 'typescript';
+import { CompilerOptions, createProgram } from 'typescript';
 import { spreadClassProperties } from './class';
 import { joinSections } from './markdown';
 import { renderSymbol } from './symbol';
-import { createCompilerHost, isInternalSymbol } from './utils';
+import {
+  createCompilerHost,
+  getSymbolSection,
+  isInternalSymbol
+} from './utils';
 
 export type Options = {
   compilerOptions: CompilerOptions;
   entry: string;
   sourceCode?: { [name: string]: string };
+  getSectionLocation: (section: string) => string;
 };
 
 export type Documentation = Map<string, string>;
-
-function getSymbolSection(symbol: Symbol): string {
-  const sectionTag = symbol.getJsDocTags().find(tag => tag.name === 'section');
-
-  return (sectionTag && sectionTag.text) || 'default';
-}
 
 export function createDocumentation(options: Options): Documentation {
   const { compilerOptions, entry, sourceCode } = options;
@@ -49,7 +48,12 @@ export function createDocumentation(options: Options): Documentation {
   return spreadClassProperties(exportedSymbols).reduce<Documentation>(
     (acc, symbol) => {
       const section = getSymbolSection(symbol);
-      const output = renderSymbol(symbol, { typeChecker, exportedSymbols });
+      const output = renderSymbol(symbol, {
+        typeChecker,
+        exportedSymbols,
+        section,
+        getSectionLocation: options.getSectionLocation
+      });
 
       if (acc.has(section)) {
         acc.set(section, joinSections([acc.get(section) || '', output]));

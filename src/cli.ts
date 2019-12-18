@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 import program from 'commander';
 import { mkdirSync, writeFileSync } from 'fs';
-import { dirname, isAbsolute, resolve } from 'path';
+import { basename, dirname, isAbsolute, resolve } from 'path';
 import {
   CompilerOptions,
   getParsedCommandLineOfConfigFile,
   sys
 } from 'typescript';
-import { createDocumentation } from '.';
+import { createDocumentation, Options } from '.';
 import { heading, joinSections } from './markdown';
 import { formatDiagnosticError } from './utils';
 
@@ -62,45 +62,47 @@ function getCompilerOptions(cliOptions: CLIOptions): CompilerOptions {
   return config.options;
 }
 
-type Options = {
-  compilerOptions: CompilerOptions;
-  entry: string;
-  sourceCode?: { [name: string]: string };
-};
+function getOutput(cliOptions: CLIOptions): string {
+  return isAbsolute(cliOptions.output)
+    ? cliOptions.output
+    : resolve(process.cwd(), cliOptions.output);
+}
 
 function getOptions(cliOptions: CLIOptions): Options {
+  try {
+    mkdirSync(dirname(getOutput(cliOptions)));
+  } catch {
+    1;
+  }
+
   return {
     compilerOptions: getCompilerOptions(cliOptions),
     entry: isAbsolute(cliOptions.entry)
       ? cliOptions.entry
-      : resolve(process.cwd(), cliOptions.entry)
+      : resolve(process.cwd(), cliOptions.entry),
+    getSectionLocation: (section: string): string =>
+      section === 'default'
+        ? basename(getOutput(cliOptions))
+        : `${section.toLowerCase().replace(/ /g, '-')}.md`
   };
 }
 
 program.parse(process.argv);
 const cliOptions = program.opts() as CLIOptions;
-const output = isAbsolute(cliOptions.output)
-  ? cliOptions.output
-  : resolve(process.cwd(), cliOptions.output);
-const outputDir = dirname(output);
+const options = getOptions(cliOptions);
 try {
-  const documentation = createDocumentation(getOptions(cliOptions));
-  try {
-    mkdirSync(outputDir);
-  } catch {
-    1;
-  }
-  writeFileSync(output, documentation.get('default'), 'utf8');
-  documentation.forEach((text: string, section: string) => {
-    const fileName =
-      section === 'default'
-        ? output
-        : resolve(outputDir, `${section.toLowerCase().replace(/ /g, '-')}.md`);
-
+  createDocumentation(options).forEach((text: string, section: string) => {
     const content =
       section === 'default' ? text : joinSections([heading(section, 1), text]);
 
-    writeFileSync(fileName, content, 'utf8');
+    writeFileSync(
+      resolve(
+        dirname(getOutput(cliOptions)),
+        options.getSectionLocation(section)
+      ),
+      content,
+      'utf8'
+    );
   });
 } catch (e) {
   /* istanbul ignore next */

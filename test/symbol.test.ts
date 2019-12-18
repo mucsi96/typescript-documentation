@@ -101,4 +101,25 @@ describe('symbol', () => {
       `)
     );
   });
+
+  it('creates cross section links', () => {
+    const docs = createTestDocumentation({
+      'index.ts': `
+        /**
+         * @section one
+         */
+        export type TypeInOtherSection = {};
+        export let a: TypeInOtherSection;
+      `
+    });
+    expect(docs.get('default')).toEqual(
+      removePadding(`
+        ## a
+
+        **TYPE**
+
+        <code>[TypeInOtherSection](one.md#typeinothersection)</code>
+      `)
+    );
+  });
 });
