@@ -219,7 +219,7 @@ await session.releaseActions();
 - `type`: `'pointer'`
 - `id`: `string`
 - `actions`: [PointerAction](#pointeraction)[]
-- `parameters`?: `[PointerParameters](#pointerparameters)`
+- `parameters`?: [PointerParameters](#pointerparameters)
 
 ## ActionSequence
 

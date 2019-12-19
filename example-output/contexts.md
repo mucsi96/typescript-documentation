@@ -129,7 +129,7 @@ Get the size and position on the screen of the operating system window
 
 **RETURNS**
 
-`Promise<[WindowRect](#windowrect)>`
+Promise<[WindowRect](#windowrect)>
 
 **EXAMPLES**
 

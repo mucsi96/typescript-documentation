@@ -11,7 +11,7 @@ Search for an element on the page, starting from the referenced web element.
 
 **RETURNS**
 
-`Promise<[Element](README.md#element)>`
+Promise<[Element](README.md#element)>
 
 **EXAMPLES**
 
@@ -39,7 +39,7 @@ in the DOM.
 
 **RETURNS**
 
-`Promise<[Element](README.md#element)[]>`
+Promise<[Element](README.md#element)[]>
 
 **EXAMPLES**
 
@@ -188,7 +188,7 @@ Returns the dimensions and coordinates of the referenced element
 
 **RETURNS**
 
-`Promise<[ElementRect](#elementrect)>`
+Promise<[ElementRect](#elementrect)>
 
 **EXAMPLES**
 
@@ -296,7 +296,7 @@ Search for an element on the page, starting from the document root.
 
 **RETURNS**
 
-`Promise<[Element](README.md#element)>`
+Promise<[Element](README.md#element)>
 
 **EXAMPLES**
 
@@ -323,7 +323,7 @@ in the DOM.
 
 **RETURNS**
 
-`Promise<[Element](README.md#element)[]>`
+Promise<[Element](README.md#element)[]>
 
 **EXAMPLES**
 
@@ -342,7 +342,7 @@ Get the element on the page that currently has focus.
 
 **RETURNS**
 
-`Promise<[Element](README.md#element)>`
+Promise<[Element](README.md#element)>
 
 **EXAMPLES**
 

@@ -45,14 +45,14 @@
 **PROPERTIES**
 
 - `browserName`: `string`
-- `goog:chromeOptions`?: `[ChromeOptions](#chromeoptions)`
-- `moz:firefoxOptions`?: `[FirefoxOptions](#firefoxoptions)`
-- `se:ieOptions`?: `[InternetExplorerOptions](#internetexploreroptions)`
-- `bstack:options`?: `[BrowserStackOptions](#browserstackoptions)`
+- `goog:chromeOptions`?: [ChromeOptions](#chromeoptions)
+- `moz:firefoxOptions`?: [FirefoxOptions](#firefoxoptions)
+- `se:ieOptions`?: [InternetExplorerOptions](#internetexploreroptions)
+- `bstack:options`?: [BrowserStackOptions](#browserstackoptions)
 
 ## Capabilities
 
 **PROPERTIES**
 
-- `alwaysMatch`?: `[BrowserCapability](#browsercapability)`
-- `firstMatch`?: `[BrowserCapability](#browsercapability)[]`
+- `alwaysMatch`?: [BrowserCapability](#browsercapability)
+- `firstMatch`?: [BrowserCapability](#browsercapability)[]

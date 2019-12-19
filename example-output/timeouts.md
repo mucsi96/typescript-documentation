@@ -6,7 +6,7 @@ Gets timeout durations associated with the current session.
 
 **RETURNS**
 
-`Promise<[Timeout](#timeout)>`
+Promise<[Timeout](#timeout)>
 
 **EXAMPLES**
 

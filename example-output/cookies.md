@@ -7,7 +7,7 @@ document.
 
 **RETURNS**
 
-`Promise<[Cookie](#cookie)[]>`
+Promise<[Cookie](#cookie)[]>
 
 **EXAMPLES**
 
@@ -39,7 +39,7 @@ Returns cookie based on the cookie name
 
 **RETURNS**
 
-`Promise<[Cookie](#cookie)>`
+Promise<[Cookie](#cookie)>
 
 **EXAMPLES**
 

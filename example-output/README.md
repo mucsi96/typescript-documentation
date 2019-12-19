@@ -19,7 +19,7 @@ Also we can set the browser and operating system parameters we want to interact 
 
 **RETURNS**
 
-`Promise<[Session](#session)>`
+Promise<[Session](#session)>
 
 **EXAMPLES**
 
@@ -73,7 +73,7 @@ The status contains meta information about the WebDriver server and operating sy
 
 **RETURNS**
 
-`Promise<[Status](sessions.md#status)>`
+Promise<[Status](sessions.md#status)>
 
 **EXAMPLES**
 

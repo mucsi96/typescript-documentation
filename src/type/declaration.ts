@@ -59,7 +59,7 @@ export function renderTypeDeclaration(
   const noWrap =
     !typeDeclaration ||
     typeContext.noWrap ||
-    url ||
+    /\[.*\]\(.*\)/.test(typeDeclaration) ||
     / | /.test(typeDeclaration);
 
   return [
