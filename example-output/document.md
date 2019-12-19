@@ -6,7 +6,7 @@ Returns a string serialization of the DOM of the current browsing context active
 
 **RETURNS**
 
-`Promise<string>`
+Promise<string>
 
 **EXAMPLES**
 
@@ -27,12 +27,12 @@ the result of evaluating the script is returned to the client.
 
 **PARAMETERS**
 
-- `script`: `string`
-- `args`: `any[]`
+- script: string
+- args: any[]
 
 **RETURNS**
 
-`Promise<T>`
+Promise<T>
 
 **EXAMPLES**
 
@@ -58,12 +58,12 @@ as the response.
 
 **PARAMETERS**
 
-- `script`: `string`
-- `args`: `any[]`
+- script: string
+- args: any[]
 
 **RETURNS**
 
-`Promise<T>`
+Promise<T>
 
 **EXAMPLES**
 

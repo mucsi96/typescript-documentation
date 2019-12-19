@@ -6,8 +6,8 @@ Search for an element on the page, starting from the referenced web element.
 
 **PARAMETERS**
 
-- `strategy`: [LocatorStrategy](#locatorstrategy)
-- `selector`: `string`
+- strategy: [LocatorStrategy](#locatorstrategy)
+- selector: string
 
 **RETURNS**
 
@@ -34,8 +34,8 @@ in the DOM.
 
 **PARAMETERS**
 
-- `strategy`: [LocatorStrategy](#locatorstrategy)
-- `selector`: `string`
+- strategy: [LocatorStrategy](#locatorstrategy)
+- selector: string
 
 **RETURNS**
 
@@ -60,7 +60,7 @@ This operation only makes sense on input elements of the Checkbox- and Radio But
 
 **RETURNS**
 
-`Promise<boolean>`
+Promise<boolean>
 
 **EXAMPLES**
 
@@ -80,11 +80,11 @@ Returns the attribute of the referenced web element.
 
 **PARAMETERS**
 
-- `propertyName`: `string`
+- propertyName: string
 
 **RETURNS**
 
-`Promise<string>`
+Promise<string>
 
 **EXAMPLES**
 
@@ -103,11 +103,11 @@ Returns the property of the referenced web element.
 
 **PARAMETERS**
 
-- `propertyName`: `string`
+- propertyName: string
 
 **RETURNS**
 
-`Promise<string>`
+Promise<string>
 
 **EXAMPLES**
 
@@ -126,11 +126,11 @@ Returns the computed value of the given CSS property for the element.
 
 **PARAMETERS**
 
-- `propertyName`: `string`
+- propertyName: string
 
 **RETURNS**
 
-`Promise<string>`
+Promise<string>
 
 **EXAMPLES**
 
@@ -150,7 +150,7 @@ Returns the visible text for the element.
 
 **RETURNS**
 
-`Promise<string>`
+Promise<string>
 
 **EXAMPLES**
 
@@ -169,7 +169,7 @@ Returns the tagName of a Element
 
 **RETURNS**
 
-`Promise<string>`
+Promise<string>
 
 **EXAMPLES**
 
@@ -208,7 +208,7 @@ Determines if the referenced element is enabled or not.
 
 **RETURNS**
 
-`Promise<boolean>`
+Promise<boolean>
 
 **EXAMPLES**
 
@@ -227,7 +227,7 @@ Click on an element.
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -249,7 +249,7 @@ Clear content of an element.
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -268,11 +268,11 @@ Send a sequence of key strokes to an element.
 
 **PARAMETERS**
 
-- `text`: `string`
+- text: string
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -291,8 +291,8 @@ Search for an element on the page, starting from the document root.
 
 **PARAMETERS**
 
-- `strategy`: [LocatorStrategy](#locatorstrategy)
-- `selector`: `string`
+- strategy: [LocatorStrategy](#locatorstrategy)
+- selector: string
 
 **RETURNS**
 
@@ -318,8 +318,8 @@ in the DOM.
 
 **PARAMETERS**
 
-- `strategy`: [LocatorStrategy](#locatorstrategy)
-- `selector`: `string`
+- strategy: [LocatorStrategy](#locatorstrategy)
+- selector: string
 
 **RETURNS**
 
@@ -361,10 +361,10 @@ An object defining the Element Rect.
 
 **PROPERTIES**
 
-- `x`: `number`
-- `y`: `number`
-- `width`: `number`
-- `height`: `number`
+- x: number
+- y: number
+- width: number
+- height: number
 
 ## LocatorStrategy
 
@@ -376,4 +376,4 @@ Strategy for searching element on the page
 - 'link text'
 - 'partial link text'
 - 'tag name'
-- `'xpath'`
+- 'xpath'

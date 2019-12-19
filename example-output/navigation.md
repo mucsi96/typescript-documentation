@@ -6,11 +6,11 @@ Navigate to a new URL.
 
 **PARAMETERS**
 
-- `targetUrl`: `string`
+- targetUrl: string
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -28,7 +28,7 @@ Get current page URL
 
 **RETURNS**
 
-`Promise<string>`
+Promise<string>
 
 **EXAMPLES**
 
@@ -47,7 +47,7 @@ Navigate to previous url from history
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -65,7 +65,7 @@ Navigate forward to next url from history
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -83,7 +83,7 @@ Refresh the current page
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -101,7 +101,7 @@ Get the current page title.
 
 **RETURNS**
 
-`Promise<string>`
+Promise<string>
 
 **EXAMPLES**
 

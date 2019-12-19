@@ -10,12 +10,12 @@ Also we can set the browser and operating system parameters we want to interact 
 
 **PARAMETERS**
 
-- `options`: `object`
-  - `url`: `string`
-  - `capabilities`: [Capabilities](capabilities.md#capabilities)
-  - `desiredCapabilities`?: `object`
-    - `browserstack.use_w3c`: `boolean`
-  - `headers`: `Headers` | `string[]` | `object`
+- options: object
+  - url: string
+  - capabilities: [Capabilities](capabilities.md#capabilities)
+  - desiredCapabilities?: object
+    - browserstack.use_w3c: boolean
+  - headers: Headers | string[] | object
 
 **RETURNS**
 
@@ -69,7 +69,7 @@ The status contains meta information about the WebDriver server and operating sy
 
 **PARAMETERS**
 
-- `url`: `string`
+- url: string
 
 **RETURNS**
 

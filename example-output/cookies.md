@@ -35,7 +35,7 @@ Returns cookie based on the cookie name
 
 **PARAMETERS**
 
-- `propertyName`: `string`
+- propertyName: string
 
 **RETURNS**
 
@@ -57,11 +57,11 @@ Adds a single cookie to the cookie store associated with the active document’s
 
 **PARAMETERS**
 
-- `cookie`: [Cookie](#cookie)
+- cookie: [Cookie](#cookie)
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -79,11 +79,11 @@ Delete a cookie based on its name
 
 **PARAMETERS**
 
-- `propertyName`: `string`
+- propertyName: string
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -102,7 +102,7 @@ document.
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -120,10 +120,10 @@ An object defining the cookie.
 
 **PROPERTIES**
 
-- `name`: `string`
-- `value`: `string`
-- `path`?: `string`
-- `domain`?: `string`
-- `secure`?: `boolean`
-- `httpOnly`?: `boolean`
-- `expiry`?: `number`
+- name: string
+- value: string
+- path?: string
+- domain?: string
+- secure?: boolean
+- httpOnly?: boolean
+- expiry?: number

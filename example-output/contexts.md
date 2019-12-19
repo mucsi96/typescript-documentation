@@ -6,7 +6,7 @@ Get handle of current window
 
 **RETURNS**
 
-`Promise<string>`
+Promise<string>
 
 **EXAMPLES**
 
@@ -25,7 +25,7 @@ Close the current window.
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -43,11 +43,11 @@ Change focus to another window. The window to change focus to may be specified b
 
 **PARAMETERS**
 
-- `handle`: `string`
+- handle: string
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -65,7 +65,7 @@ Get all window handles
 
 **RETURNS**
 
-`Promise<`string[]`>`
+Promise<string[]>
 
 **EXAMPLES**
 
@@ -84,11 +84,11 @@ Change focus to another frame on the page
 
 **PARAMETERS**
 
-- `target`: `null` | `number` | [Element](README.md#element)
+- target: null | number | [Element](README.md#element)
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -111,7 +111,7 @@ Change focus to parent frame on the page
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -147,11 +147,11 @@ Set the size and position on the screen of the operating system window
 
 **PARAMETERS**
 
-- `windowRect`: [WindowRect](#windowrect)
+- windowRect: [WindowRect](#windowrect)
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -169,7 +169,7 @@ Maximizes the current window
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -187,7 +187,7 @@ Minimizes the current window
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -205,7 +205,7 @@ This command increases Current window to Full-Screen
 
 **RETURNS**
 
-`Promise<void>`
+Promise<void>
 
 **EXAMPLES**
 
@@ -223,7 +223,7 @@ An object defining the Window Rect.
 
 **PROPERTIES**
 
-- `x`: `number`
-- `y`: `number`
-- `width`: `number`
-- `height`: `number`
+- x: number
+- y: number
+- width: number
+- height: number
