@@ -1,5 +1,36 @@
 # Elements
 
+## ElementRect
+
+An object defining the Element Rect.
+
+**PROPERTIES**
+
+- `x`: number
+- `y`: number
+- `width`: number
+- `height`: number
+
+## LocatorStrategy
+
+Strategy for searching element on the page
+
+**POSSIBLE VALUES**
+
+- `'css selector'`
+- `'link text'`
+- `'partial link text'`
+- `'tag name'`
+- `'xpath'`
+
+## Element
+
+This object represents a WebDriver element.
+
+**SEE ALSO**
+
+- [Screen capture](screen-capture.md)
+
 ## element.findElement(strategy, selector)
 
 Search for an element on the page, starting from the referenced web element.
@@ -11,7 +42,7 @@ Search for an element on the page, starting from the referenced web element.
 
 **RETURNS**
 
-Promise&lt;[Element](README.md#element)&gt;
+Promise&lt;[Element](#element)&gt;
 
 **EXAMPLES**
 
@@ -39,7 +70,7 @@ in the DOM.
 
 **RETURNS**
 
-Promise&lt;[Element](README.md#element)[]&gt;
+Promise&lt;[Element](#element)[]&gt;
 
 **EXAMPLES**
 
@@ -296,7 +327,7 @@ Search for an element on the page, starting from the document root.
 
 **RETURNS**
 
-Promise&lt;[Element](README.md#element)&gt;
+Promise&lt;[Element](#element)&gt;
 
 **EXAMPLES**
 
@@ -323,7 +354,7 @@ in the DOM.
 
 **RETURNS**
 
-Promise&lt;[Element](README.md#element)[]&gt;
+Promise&lt;[Element](#element)[]&gt;
 
 **EXAMPLES**
 
@@ -342,7 +373,7 @@ Get the element on the page that currently has focus.
 
 **RETURNS**
 
-Promise&lt;[Element](README.md#element)&gt;
+Promise&lt;[Element](#element)&gt;
 
 **EXAMPLES**
 
@@ -354,26 +385,3 @@ const element = await session.getActiveElement();
 **SEE ALSO**
 
 - [WebDriver spec](https://www.w3.org/TR/webdriver/#get-active-element)
-
-## ElementRect
-
-An object defining the Element Rect.
-
-**PROPERTIES**
-
-- `x`: number
-- `y`: number
-- `width`: number
-- `height`: number
-
-## LocatorStrategy
-
-Strategy for searching element on the page
-
-**POSSIBLE VALUES**
-
-- `'css selector'`
-- `'link text'`
-- `'partial link text'`
-- `'tag name'`
-- `'xpath'`

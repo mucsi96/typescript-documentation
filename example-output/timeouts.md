@@ -1,5 +1,15 @@
 # Timeouts
 
+## Timeout
+
+WebDriver Timeout configuration object
+
+**PROPERTIES**
+
+- `script?`: number
+- `pageLoad?`: number
+- `implicit?`: number
+
 ## session.getTimeout()
 
 Gets timeout durations associated with the current session.
@@ -49,13 +59,3 @@ await session.setTimeout({
 **SEE ALSO**
 
 - [WebDriver spec](https://www.w3.org/TR/webdriver/#set-timeouts)
-
-## Timeout
-
-WebDriver Timeout configuration object
-
-**PROPERTIES**
-
-- `script?`: number
-- `pageLoad?`: number
-- `implicit?`: number

@@ -1,5 +1,16 @@
 # Contexts
 
+## WindowRect
+
+An object defining the Window Rect.
+
+**PROPERTIES**
+
+- `x`: number
+- `y`: number
+- `width`: number
+- `height`: number
+
 ## session.getWindowHandle()
 
 Get handle of current window
@@ -84,7 +95,7 @@ Change focus to another frame on the page
 
 **PARAMETERS**
 
-- `target`: null | number | [Element](README.md#element)
+- `target`: null | number | [Element](elements.md#element)
 
 **RETURNS**
 
@@ -216,14 +227,3 @@ await session.fullScreenWindow();
 **SEE ALSO**
 
 - [WebDriver spec](https://www.w3.org/TR/webdriver/#fullscreen-window)
-
-## WindowRect
-
-An object defining the Window Rect.
-
-**PROPERTIES**
-
-- `x`: number
-- `y`: number
-- `width`: number
-- `height`: number

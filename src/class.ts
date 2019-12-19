@@ -28,7 +28,7 @@ export function spreadClassProperties(
         member.getName = (): string => `${classInstanceName}.${member.name}`;
         members.push(member);
         const memberSection = getSymbolSection(member);
-        if (memberSection !== section) {
+        if (memberSection !== 'default' && memberSection !== section) {
           memberSections.add(getSymbolSection(member));
         }
       }
