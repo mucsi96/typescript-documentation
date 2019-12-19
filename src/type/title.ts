@@ -49,7 +49,6 @@ export function getTypeTitle(type: Type, context: Context): string {
   }
 
   if (
-    flags & TypeFlags.EnumLiteral ||
     flags & TypeFlags.TypeParameter ||
     objectFlags & ObjectFlags.Interface ||
     objectFlags & ObjectFlags.Reference
@@ -57,8 +56,12 @@ export function getTypeTitle(type: Type, context: Context): string {
     return type.symbol && type.symbol.getName();
   }
 
+  if (flags & TypeFlags.EnumLiteral) {
+    return `\`${type.symbol && type.symbol.getName()}\``;
+  }
+
   if (type.isStringLiteral()) {
-    return `'${type.value}'`;
+    return `\`'${type.value}'\``;
   }
 
   /* istanbul ignore else */

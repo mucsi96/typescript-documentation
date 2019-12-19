@@ -372,8 +372,8 @@ Strategy for searching element on the page
 
 **POSSIBLE VALUES**
 
-- 'css selector'
-- 'link text'
-- 'partial link text'
-- 'tag name'
-- 'xpath'
+- `'css selector'`
+- `'link text'`
+- `'partial link text'`
+- `'tag name'`
+- `'xpath'`

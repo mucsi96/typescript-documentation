@@ -125,52 +125,52 @@ await session.releaseActions();
 
 **PROPERTIES**
 
-- `type`: 'pause'
+- `type`: `'pause'`
 - `duration`: number
 
 ## KeyDownAction
 
 **PROPERTIES**
 
-- `type`: 'keyDown'
+- `type`: `'keyDown'`
 - `value`: string
 
 ## KeyUpAction
 
 **PROPERTIES**
 
-- `type`: 'keyUp'
+- `type`: `'keyUp'`
 - `value`: string
 
 ## PointerMoveAction
 
 **PROPERTIES**
 
-- `type`: 'pointerMove'
+- `type`: `'pointerMove'`
 - `x`: number
 - `y`: number
 - `duration?`: number
-- `origin`: [Element](README.md#element) | 'viewport' | 'pointer'
+- `origin`: [Element](README.md#element) | `'viewport'` | `'pointer'`
 
 ## PointerUpAction
 
 **PROPERTIES**
 
-- `type`: 'pointerUp'
+- `type`: `'pointerUp'`
 - `button`: number
 
 ## PointerDownAction
 
 **PROPERTIES**
 
-- `type`: 'pointerDown'
+- `type`: `'pointerDown'`
 - `button`: number
 
 ## NullAction
 
 **PROPERTIES**
 
-- `type`: 'pause'
+- `type`: `'pause'`
 - `duration`: number
 
 ## KeyAction
@@ -194,7 +194,7 @@ await session.releaseActions();
 
 **PROPERTIES**
 
-- `type`: 'none'
+- `type`: `'none'`
 - `id`: string
 - `actions`: [PauseAction](#pauseaction)[]
 
@@ -202,7 +202,7 @@ await session.releaseActions();
 
 **PROPERTIES**
 
-- `type`: 'key'
+- `type`: `'key'`
 - `id`: string
 - `actions`: [KeyAction](#keyaction)[]
 
@@ -210,13 +210,13 @@ await session.releaseActions();
 
 **PROPERTIES**
 
-- `pointerType`: 'mouse' | 'pen' | 'touch'
+- `pointerType`: `'mouse'` | `'pen'` | `'touch'`
 
 ## PointerActionSequence
 
 **PROPERTIES**
 
-- `type`: 'pointer'
+- `type`: `'pointer'`
 - `id`: string
 - `actions`: [PointerAction](#pointeraction)[]
 - `parameters?`: [PointerParameters](#pointerparameters)
@@ -233,73 +233,73 @@ await session.releaseActions();
 
 **POSSIBLE VALUES**
 
-- NULL
-- CANCEL
-- HELP
-- BACKSPACE
-- TAB
-- CLEAR
-- RETURN
-- ENTER
-- SHIFT
-- CONTROL
-- ALT
-- PAUSE
-- ESCAPE
-- SPACE
-- PAGE_UP
-- PAGE_DOWN
-- END
-- HOME
-- LEFT
-- UP
-- RIGHT
-- DOWN
-- INSERT
-- DELETE
-- SEMICOLON
-- EQUALS
-- NUMPAD0
-- NUMPAD1
-- NUMPAD2
-- NUMPAD3
-- NUMPAD4
-- NUMPAD5
-- NUMPAD6
-- NUMPAD7
-- NUMPAD8
-- NUMPAD9
-- MULTIPLY
-- ADD
-- SEPARATOR
-- SUBTRACT
-- DECIMAL
-- DIVIDE
-- F1
-- F2
-- F3
-- F4
-- F5
-- F6
-- F7
-- F8
-- F9
-- F10
-- F11
-- F12
-- META
-- ZENKAKUHANKAKU
-- R_SHIFT
-- R_CONTROL
-- R_ALT
-- R_META
-- R_PAGEUP
-- R_PAGEDOWN
-- R_END
-- R_HOME
-- R_ARROWLEFT
-- R_ARROWUP
-- R_ARROWRIGHT
-- R_ARROWDOWN
-- R_INSERT
-- R_DELETE
+- `NULL`
+- `CANCEL`
+- `HELP`
+- `BACKSPACE`
+- `TAB`
+- `CLEAR`
+- `RETURN`
+- `ENTER`
+- `SHIFT`
+- `CONTROL`
+- `ALT`
+- `PAUSE`
+- `ESCAPE`
+- `SPACE`
+- `PAGE_UP`
+- `PAGE_DOWN`
+- `END`
+- `HOME`
+- `LEFT`
+- `UP`
+- `RIGHT`
+- `DOWN`
+- `INSERT`
+- `DELETE`
+- `SEMICOLON`
+- `EQUALS`
+- `NUMPAD0`
+- `NUMPAD1`
+- `NUMPAD2`
+- `NUMPAD3`
+- `NUMPAD4`
+- `NUMPAD5`
+- `NUMPAD6`
+- `NUMPAD7`
+- `NUMPAD8`
+- `NUMPAD9`
+- `MULTIPLY`
+- `ADD`
+- `SEPARATOR`
+- `SUBTRACT`
+- `DECIMAL`
+- `DIVIDE`
+- `F1`
+- `F2`
+- `F3`
+- `F4`
+- `F5`
+- `F6`
+- `F7`
+- `F8`
+- `F9`
+- `F10`
+- `F11`
+- `F12`
+- `META`
+- `ZENKAKUHANKAKU`
+- `R_SHIFT`
+- `R_CONTROL`
+- `R_ALT`
+- `R_META`
+- `R_PAGEUP`
+- `R_PAGEDOWN`
+- `R_END`
+- `R_HOME`
+- `R_ARROWLEFT`
+- `R_ARROWUP`
+- `R_ARROWRIGHT`
+- `R_ARROWDOWN`
+- `R_INSERT`
+- `R_DELETE`
