@@ -1,4 +1,4 @@
 root: ./example-output/
 
 structure:
-  readme: ./example-output/index.md
+  readme: ./index.md
