@@ -1,25 +1,21 @@
-## newSession(options)
+# index
 
-Before we can send any command to the browser we drive we need to create a [WebDriver](https://www.w3.org/TR/webdriver) session.
-This should be always the first step of interaction through the protocol.
-After executing this command the browser will be started and ready to receive the commands.
-As part of session creation we have to provide the url of WebDriver protocol compliant server.
-This can be a locally running browser driver server ([Chromedriver](http://chromedriver.chromium.org), [Geckodriver](https://firefox-source-docs.mozilla.org/testing/geckodriver), etc.),
-[Selenium Server or Grid](https://www.seleniumhq.org) or cloud provider url ([BrowserStack](https://www.browserstack.com), [Sauce Labs](https://saucelabs.com), .etc.).
-Also we can set the browser and operating system parameters we want to interact with.
+## newSession\(options\)
+
+Before we can send any command to the browser we drive we need to create a [WebDriver](https://www.w3.org/TR/webdriver) session. This should be always the first step of interaction through the protocol. After executing this command the browser will be started and ready to receive the commands. As part of session creation we have to provide the url of WebDriver protocol compliant server. This can be a locally running browser driver server \([Chromedriver](http://chromedriver.chromium.org), [Geckodriver](https://firefox-source-docs.mozilla.org/testing/geckodriver), etc.\), [Selenium Server or Grid](https://www.seleniumhq.org) or cloud provider url \([BrowserStack](https://www.browserstack.com), [Sauce Labs](https://saucelabs.com), .etc.\). Also we can set the browser and operating system parameters we want to interact with.
 
 **PARAMETERS**
 
-- <code>options: object</code>
-  - <code>url: string</code>
-  - <code>capabilities: [Capabilities](capabilities.md#capabilities)</code>
-  - <code>desiredCapabilities?: object</code>
-    - <code>browserstack.use_w3c: boolean</code>
-  - <code>headers: Headers | string[] | object</code>
+* `options: object`
+  * `url: string`
+  * `capabilities:` [`Capabilities`](capabilities.md#capabilities)
+  * `desiredCapabilities?: object`
+    * `browserstack.use_w3c: boolean`
+  * `headers: Headers | string[] | object`
 
 **RETURNS**
 
-<code>Promise\<[Session](#session)\></code>
+`Promise\<`[`Session`](index.md#session)`>`
 
 **EXAMPLES**
 
@@ -59,21 +55,19 @@ const session = await newSession({
 
 **SEE ALSO**
 
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#new-session)
+* [WebDriver spec](https://www.w3.org/TR/webdriver/#new-session)
 
-## status(url)
+## status\(url\)
 
-To be able to verify if the WebDriver server is ready for new session creation sometimes it can be useful to query it's status.
-This function queries the WebDriver server's current status.
-The status contains meta information about the WebDriver server and operating system.
+To be able to verify if the WebDriver server is ready for new session creation sometimes it can be useful to query it's status. This function queries the WebDriver server's current status. The status contains meta information about the WebDriver server and operating system.
 
 **PARAMETERS**
 
-- <code>url: string</code>
+* `url: string`
 
 **RETURNS**
 
-<code>Promise\<[Status](sessions.md#status)\></code>
+`Promise\<`[`Status`](sessions.md#status)`>`
 
 **EXAMPLES**
 
@@ -89,7 +83,7 @@ const status = await status('http://localhost:4444');
 
 **SEE ALSO**
 
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#status)
+* [WebDriver spec](https://www.w3.org/TR/webdriver/#status)
 
 ## Element
 
@@ -97,8 +91,8 @@ This object represents a WebDriver element.
 
 **SEE ALSO**
 
-- [Elements](elements.md)
-- [Screen capture](screen-capture.md)
+* [Elements](elements.md)
+* [Screen capture](screen-capture.md)
 
 ## Session
 
@@ -106,13 +100,14 @@ This object represents a WebDriver session.
 
 **SEE ALSO**
 
-- [Actions](actions.md)
-- [Contexts](contexts.md)
-- [Cookies](cookies.md)
-- [Document](document.md)
-- [Elements](elements.md)
-- [Navigation](navigation.md)
-- [Screen capture](screen-capture.md)
-- [Sessions](sessions.md)
-- [Timeouts](timeouts.md)
-- [User prompts](user-prompts.md)
+* [Actions](actions.md)
+* [Contexts](contexts.md)
+* [Cookies](cookies.md)
+* [Document](document.md)
+* [Elements](elements.md)
+* [Navigation](navigation.md)
+* [Screen capture](screen-capture.md)
+* [Sessions](sessions.md)
+* [Timeouts](timeouts.md)
+* [User prompts](user-prompts.md)
+

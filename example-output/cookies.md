@@ -1,13 +1,12 @@
 # Cookies
 
-## session.getAllCookies()
+## session.getAllCookies\(\)
 
-Returns all cookies associated with the address of the current browsing context’s active
-document.
+Returns all cookies associated with the address of the current browsing context’s active document.
 
 **RETURNS**
 
-<code>Promise\<[Cookie](#cookie)[]\></code>
+`Promise\<`[`Cookie`](cookies.md#cookie)`[]>`
 
 **EXAMPLES**
 
@@ -27,19 +26,19 @@ const cookies = await session.getAllCookies();
 
 **SEE ALSO**
 
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#get-all-cookies)
+* [WebDriver spec](https://www.w3.org/TR/webdriver/#get-all-cookies)
 
-## session.getNamedCookie(propertyName)
+## session.getNamedCookie\(propertyName\)
 
 Returns cookie based on the cookie name
 
 **PARAMETERS**
 
-- <code>propertyName: string</code>
+* `propertyName: string`
 
 **RETURNS**
 
-<code>Promise\<[Cookie](#cookie)\></code>
+`Promise\<`[`Cookie`](cookies.md#cookie)`>`
 
 **EXAMPLES**
 
@@ -49,19 +48,19 @@ const cookie = await session.getNamedCookie('cookieName');
 
 **SEE ALSO**
 
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#get-named-cookie)
+* [WebDriver spec](https://www.w3.org/TR/webdriver/#get-named-cookie)
 
-## session.addCookie(cookie)
+## session.addCookie\(cookie\)
 
 Adds a single cookie to the cookie store associated with the active document’s address.
 
 **PARAMETERS**
 
-- <code>cookie: [Cookie](#cookie)</code>
+* `cookie:` [`Cookie`](cookies.md#cookie)
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise\`
 
 **EXAMPLES**
 
@@ -71,19 +70,19 @@ await session.addCookie({ name: 'test cookie', value: 'test value' });
 
 **SEE ALSO**
 
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#add-cookie)
+* [WebDriver spec](https://www.w3.org/TR/webdriver/#add-cookie)
 
-## session.deleteCookie(propertyName)
+## session.deleteCookie\(propertyName\)
 
 Delete a cookie based on its name
 
 **PARAMETERS**
 
-- <code>propertyName: string</code>
+* `propertyName: string`
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise\`
 
 **EXAMPLES**
 
@@ -93,16 +92,15 @@ await session.deleteCookie('cookieName');
 
 **SEE ALSO**
 
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#delete-cookie)
+* [WebDriver spec](https://www.w3.org/TR/webdriver/#delete-cookie)
 
-## session.deleteAllCookies()
+## session.deleteAllCookies\(\)
 
-Delete all cookies associated with the address of the current browsing context’s active
-document.
+Delete all cookies associated with the address of the current browsing context’s active document.
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise\`
 
 **EXAMPLES**
 
@@ -112,7 +110,7 @@ await session.deleteAllCookies();
 
 **SEE ALSO**
 
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#delete-all-cookies)
+* [WebDriver spec](https://www.w3.org/TR/webdriver/#delete-all-cookies)
 
 ## Cookie
 
@@ -120,10 +118,11 @@ An object defining the cookie.
 
 **PROPERTIES**
 
-- <code>name: string</code>
-- <code>value: string</code>
-- <code>path?: string</code>
-- <code>domain?: string</code>
-- <code>secure?: boolean</code>
-- <code>httpOnly?: boolean</code>
-- <code>expiry?: number</code>
+* `name: string`
+* `value: string`
+* `path?: string`
+* `domain?: string`
+* `secure?: boolean`
+* `httpOnly?: boolean`
+* `expiry?: number`
+

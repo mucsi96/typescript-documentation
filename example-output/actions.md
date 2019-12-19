@@ -1,16 +1,16 @@
 # Actions
 
-## session.performActions(actionSequences)
+## session.performActions\(actionSequences\)
 
 Sends virtualised device input to the web browser like keyboard or pointer events in a series of actions.
 
 **PARAMETERS**
 
-- <code>actionSequences: [ActionSequence](#actionsequence)[]</code>
+* `actionSequences:` [`ActionSequence`](actions.md#actionsequence)`[]`
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise\`
 
 **EXAMPLES**
 
@@ -93,15 +93,15 @@ await session.performActions([
 
 **SEE ALSO**
 
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#perform-actions)
+* [WebDriver spec](https://www.w3.org/TR/webdriver/#perform-actions)
 
-## session.releaseActions()
+## session.releaseActions\(\)
 
 Release all the keys and pointer buttons that are currently depressed
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise\`
 
 **EXAMPLES**
 
@@ -119,187 +119,188 @@ await session.releaseActions();
 
 **SEE ALSO**
 
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#release-actions)
+* [WebDriver spec](https://www.w3.org/TR/webdriver/#release-actions)
 
 ## PauseAction
 
 **PROPERTIES**
 
-- <code>type: 'pause'</code>
-- <code>duration: number</code>
+* `type: 'pause'`
+* `duration: number`
 
 ## KeyDownAction
 
 **PROPERTIES**
 
-- <code>type: 'keyDown'</code>
-- <code>value: string</code>
+* `type: 'keyDown'`
+* `value: string`
 
 ## KeyUpAction
 
 **PROPERTIES**
 
-- <code>type: 'keyUp'</code>
-- <code>value: string</code>
+* `type: 'keyUp'`
+* `value: string`
 
 ## PointerMoveAction
 
 **PROPERTIES**
 
-- <code>type: 'pointerMove'</code>
-- <code>x: number</code>
-- <code>y: number</code>
-- <code>duration?: number</code>
-- <code>origin: [Element](index.md#element) | 'viewport' | 'pointer'</code>
+* `type: 'pointerMove'`
+* `x: number`
+* `y: number`
+* `duration?: number`
+* `origin:` [`Element`](index.md#element) `| 'viewport' | 'pointer'`
 
 ## PointerUpAction
 
 **PROPERTIES**
 
-- <code>type: 'pointerUp'</code>
-- <code>button: number</code>
+* `type: 'pointerUp'`
+* `button: number`
 
 ## PointerDownAction
 
 **PROPERTIES**
 
-- <code>type: 'pointerDown'</code>
-- <code>button: number</code>
+* `type: 'pointerDown'`
+* `button: number`
 
 ## NullAction
 
 **PROPERTIES**
 
-- <code>type: 'pause'</code>
-- <code>duration: number</code>
+* `type: 'pause'`
+* `duration: number`
 
 ## KeyAction
 
 **POSSIBLE VALUES**
 
-- <code>[PauseAction](#pauseaction)</code>
-- <code>[KeyDownAction](#keydownaction)</code>
-- <code>[KeyUpAction](#keyupaction)</code>
+* [`PauseAction`](actions.md#pauseaction)
+* [`KeyDownAction`](actions.md#keydownaction)
+* [`KeyUpAction`](actions.md#keyupaction)
 
 ## PointerAction
 
 **POSSIBLE VALUES**
 
-- <code>[PauseAction](#pauseaction)</code>
-- <code>[PointerMoveAction](#pointermoveaction)</code>
-- <code>[PointerUpAction](#pointerupaction)</code>
-- <code>[PointerDownAction](#pointerdownaction)</code>
+* [`PauseAction`](actions.md#pauseaction)
+* [`PointerMoveAction`](actions.md#pointermoveaction)
+* [`PointerUpAction`](actions.md#pointerupaction)
+* [`PointerDownAction`](actions.md#pointerdownaction)
 
 ## NullActionSequence
 
 **PROPERTIES**
 
-- <code>type: 'none'</code>
-- <code>id: string</code>
-- <code>actions: [PauseAction](#pauseaction)[]</code>
+* `type: 'none'`
+* `id: string`
+* `actions:` [`PauseAction`](actions.md#pauseaction)`[]`
 
 ## KeyActionSequence
 
 **PROPERTIES**
 
-- <code>type: 'key'</code>
-- <code>id: string</code>
-- <code>actions: [KeyAction](#keyaction)[]</code>
+* `type: 'key'`
+* `id: string`
+* `actions:` [`KeyAction`](actions.md#keyaction)`[]`
 
 ## PointerParameters
 
 **PROPERTIES**
 
-- <code>pointerType: 'mouse' | 'pen' | 'touch'</code>
+* `pointerType: 'mouse' | 'pen' | 'touch'`
 
 ## PointerActionSequence
 
 **PROPERTIES**
 
-- <code>type: 'pointer'</code>
-- <code>id: string</code>
-- <code>actions: [PointerAction](#pointeraction)[]</code>
-- <code>parameters?: [PointerParameters](#pointerparameters)</code>
+* `type: 'pointer'`
+* `id: string`
+* `actions:` [`PointerAction`](actions.md#pointeraction)`[]`
+* `parameters?:` [`PointerParameters`](actions.md#pointerparameters)
 
 ## ActionSequence
 
 **POSSIBLE VALUES**
 
-- <code>[NullActionSequence](#nullactionsequence)</code>
-- <code>[KeyActionSequence](#keyactionsequence)</code>
-- <code>[PointerActionSequence](#pointeractionsequence)</code>
+* [`NullActionSequence`](actions.md#nullactionsequence)
+* [`KeyActionSequence`](actions.md#keyactionsequence)
+* [`PointerActionSequence`](actions.md#pointeractionsequence)
 
 ## Key
 
 **POSSIBLE VALUES**
 
-- <code>NULL</code>
-- <code>CANCEL</code>
-- <code>HELP</code>
-- <code>BACKSPACE</code>
-- <code>TAB</code>
-- <code>CLEAR</code>
-- <code>RETURN</code>
-- <code>ENTER</code>
-- <code>SHIFT</code>
-- <code>CONTROL</code>
-- <code>ALT</code>
-- <code>PAUSE</code>
-- <code>ESCAPE</code>
-- <code>SPACE</code>
-- <code>PAGE_UP</code>
-- <code>PAGE_DOWN</code>
-- <code>END</code>
-- <code>HOME</code>
-- <code>LEFT</code>
-- <code>UP</code>
-- <code>RIGHT</code>
-- <code>DOWN</code>
-- <code>INSERT</code>
-- <code>DELETE</code>
-- <code>SEMICOLON</code>
-- <code>EQUALS</code>
-- <code>NUMPAD0</code>
-- <code>NUMPAD1</code>
-- <code>NUMPAD2</code>
-- <code>NUMPAD3</code>
-- <code>NUMPAD4</code>
-- <code>NUMPAD5</code>
-- <code>NUMPAD6</code>
-- <code>NUMPAD7</code>
-- <code>NUMPAD8</code>
-- <code>NUMPAD9</code>
-- <code>MULTIPLY</code>
-- <code>ADD</code>
-- <code>SEPARATOR</code>
-- <code>SUBTRACT</code>
-- <code>DECIMAL</code>
-- <code>DIVIDE</code>
-- <code>F1</code>
-- <code>F2</code>
-- <code>F3</code>
-- <code>F4</code>
-- <code>F5</code>
-- <code>F6</code>
-- <code>F7</code>
-- <code>F8</code>
-- <code>F9</code>
-- <code>F10</code>
-- <code>F11</code>
-- <code>F12</code>
-- <code>META</code>
-- <code>ZENKAKUHANKAKU</code>
-- <code>R_SHIFT</code>
-- <code>R_CONTROL</code>
-- <code>R_ALT</code>
-- <code>R_META</code>
-- <code>R_PAGEUP</code>
-- <code>R_PAGEDOWN</code>
-- <code>R_END</code>
-- <code>R_HOME</code>
-- <code>R_ARROWLEFT</code>
-- <code>R_ARROWUP</code>
-- <code>R_ARROWRIGHT</code>
-- <code>R_ARROWDOWN</code>
-- <code>R_INSERT</code>
-- <code>R_DELETE</code>
+* `NULL`
+* `CANCEL`
+* `HELP`
+* `BACKSPACE`
+* `TAB`
+* `CLEAR`
+* `RETURN`
+* `ENTER`
+* `SHIFT`
+* `CONTROL`
+* `ALT`
+* `PAUSE`
+* `ESCAPE`
+* `SPACE`
+* `PAGE_UP`
+* `PAGE_DOWN`
+* `END`
+* `HOME`
+* `LEFT`
+* `UP`
+* `RIGHT`
+* `DOWN`
+* `INSERT`
+* `DELETE`
+* `SEMICOLON`
+* `EQUALS`
+* `NUMPAD0`
+* `NUMPAD1`
+* `NUMPAD2`
+* `NUMPAD3`
+* `NUMPAD4`
+* `NUMPAD5`
+* `NUMPAD6`
+* `NUMPAD7`
+* `NUMPAD8`
+* `NUMPAD9`
+* `MULTIPLY`
+* `ADD`
+* `SEPARATOR`
+* `SUBTRACT`
+* `DECIMAL`
+* `DIVIDE`
+* `F1`
+* `F2`
+* `F3`
+* `F4`
+* `F5`
+* `F6`
+* `F7`
+* `F8`
+* `F9`
+* `F10`
+* `F11`
+* `F12`
+* `META`
+* `ZENKAKUHANKAKU`
+* `R_SHIFT`
+* `R_CONTROL`
+* `R_ALT`
+* `R_META`
+* `R_PAGEUP`
+* `R_PAGEDOWN`
+* `R_END`
+* `R_HOME`
+* `R_ARROWLEFT`
+* `R_ARROWUP`
+* `R_ARROWRIGHT`
+* `R_ARROWDOWN`
+* `R_INSERT`
+* `R_DELETE`
+

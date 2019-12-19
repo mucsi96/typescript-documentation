@@ -1,16 +1,16 @@
 # Navigation
 
-## session.navigateTo(targetUrl)
+## session.navigateTo\(targetUrl\)
 
 Navigate to a new URL.
 
 **PARAMETERS**
 
-- <code>targetUrl: string</code>
+* `targetUrl: string`
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise\`
 
 **EXAMPLES**
 
@@ -20,15 +20,15 @@ await session.navigateTo('http://localhost:8080');
 
 **SEE ALSO**
 
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#navigate-to)
+* [WebDriver spec](https://www.w3.org/TR/webdriver/#navigate-to)
 
-## session.getCurrentUrl()
+## session.getCurrentUrl\(\)
 
 Get current page URL
 
 **RETURNS**
 
-<code>Promise\<string\></code>
+`Promise\`
 
 **EXAMPLES**
 
@@ -39,15 +39,15 @@ const currentUrl = await session.getCurrentUrl();
 
 **SEE ALSO**
 
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#get-current-url)
+* [WebDriver spec](https://www.w3.org/TR/webdriver/#get-current-url)
 
-## session.back()
+## session.back\(\)
 
 Navigate to previous url from history
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise\`
 
 **EXAMPLES**
 
@@ -57,15 +57,15 @@ await session.back();
 
 **SEE ALSO**
 
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#back)
+* [WebDriver spec](https://www.w3.org/TR/webdriver/#back)
 
-## session.forward()
+## session.forward\(\)
 
 Navigate forward to next url from history
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise\`
 
 **EXAMPLES**
 
@@ -75,15 +75,15 @@ await session.forward();
 
 **SEE ALSO**
 
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#forward)
+* [WebDriver spec](https://www.w3.org/TR/webdriver/#forward)
 
-## session.refresh()
+## session.refresh\(\)
 
 Refresh the current page
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise\`
 
 **EXAMPLES**
 
@@ -93,15 +93,15 @@ await session.refresh();
 
 **SEE ALSO**
 
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#refresh)
+* [WebDriver spec](https://www.w3.org/TR/webdriver/#refresh)
 
-## session.getTitle()
+## session.getTitle\(\)
 
 Get the current page title.
 
 **RETURNS**
 
-<code>Promise\<string\></code>
+`Promise\`
 
 **EXAMPLES**
 
@@ -112,4 +112,5 @@ const title = await session.getTitle();
 
 **SEE ALSO**
 
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#get-title)
+* [WebDriver spec](https://www.w3.org/TR/webdriver/#get-title)
+

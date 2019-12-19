@@ -1,12 +1,12 @@
 # Sessions
 
-## session.close()
+## session.close\(\)
 
 Close the session.
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise\`
 
 **EXAMPLES**
 
@@ -32,21 +32,21 @@ let session;
 
 **SEE ALSO**
 
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#delete-session)
+* [WebDriver spec](https://www.w3.org/TR/webdriver/#delete-session)
 
 ## StatusOfOS
 
 **PROPERTIES**
 
-- <code>name: string</code>
-- <code>version: string</code>
-- <code>arch: string</code>
+* `name: string`
+* `version: string`
+* `arch: string`
 
 ## StatusOfWebDriver
 
 **PROPERTIES**
 
-- <code>version: string</code>
+* `version: string`
 
 ## Status
 
@@ -54,7 +54,8 @@ WebDriver status object
 
 **PROPERTIES**
 
-- <code>message: string</code>
-- <code>ready: boolean</code>
-- <code>os: [StatusOfOS](#statusofos)</code>
-- <code>build: [StatusOfWebDriver](#statusofwebdriver)</code>
+* `message: string`
+* `ready: boolean`
+* `os:` [`StatusOfOS`](sessions.md#statusofos)
+* `build:` [`StatusOfWebDriver`](sessions.md#statusofwebdriver)
+
