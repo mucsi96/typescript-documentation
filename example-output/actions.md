@@ -6,7 +6,7 @@ Sends virtualised device input to the web browser like keyboard or pointer event
 
 **PARAMETERS**
 
-- actionSequences: [ActionSequence](#actionsequence)[]
+- `actionSequences`: [ActionSequence](#actionsequence)[]
 
 **RETURNS**
 
@@ -125,53 +125,53 @@ await session.releaseActions();
 
 **PROPERTIES**
 
-- type: 'pause'
-- duration: number
+- `type`: 'pause'
+- `duration`: number
 
 ## KeyDownAction
 
 **PROPERTIES**
 
-- type: 'keyDown'
-- value: string
+- `type`: 'keyDown'
+- `value`: string
 
 ## KeyUpAction
 
 **PROPERTIES**
 
-- type: 'keyUp'
-- value: string
+- `type`: 'keyUp'
+- `value`: string
 
 ## PointerMoveAction
 
 **PROPERTIES**
 
-- type: 'pointerMove'
-- x: number
-- y: number
-- duration?: number
-- origin: [Element](README.md#element) | 'viewport' | 'pointer'
+- `type`: 'pointerMove'
+- `x`: number
+- `y`: number
+- `duration?`: number
+- `origin`: [Element](README.md#element) | 'viewport' | 'pointer'
 
 ## PointerUpAction
 
 **PROPERTIES**
 
-- type: 'pointerUp'
-- button: number
+- `type`: 'pointerUp'
+- `button`: number
 
 ## PointerDownAction
 
 **PROPERTIES**
 
-- type: 'pointerDown'
-- button: number
+- `type`: 'pointerDown'
+- `button`: number
 
 ## NullAction
 
 **PROPERTIES**
 
-- type: 'pause'
-- duration: number
+- `type`: 'pause'
+- `duration`: number
 
 ## KeyAction
 
@@ -194,32 +194,32 @@ await session.releaseActions();
 
 **PROPERTIES**
 
-- type: 'none'
-- id: string
-- actions: [PauseAction](#pauseaction)[]
+- `type`: 'none'
+- `id`: string
+- `actions`: [PauseAction](#pauseaction)[]
 
 ## KeyActionSequence
 
 **PROPERTIES**
 
-- type: 'key'
-- id: string
-- actions: [KeyAction](#keyaction)[]
+- `type`: 'key'
+- `id`: string
+- `actions`: [KeyAction](#keyaction)[]
 
 ## PointerParameters
 
 **PROPERTIES**
 
-- pointerType: 'mouse' | 'pen' | 'touch'
+- `pointerType`: 'mouse' | 'pen' | 'touch'
 
 ## PointerActionSequence
 
 **PROPERTIES**
 
-- type: 'pointer'
-- id: string
-- actions: [PointerAction](#pointeraction)[]
-- parameters?: [PointerParameters](#pointerparameters)
+- `type`: 'pointer'
+- `id`: string
+- `actions`: [PointerAction](#pointeraction)[]
+- `parameters?`: [PointerParameters](#pointerparameters)
 
 ## ActionSequence
 

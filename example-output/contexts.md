@@ -43,7 +43,7 @@ Change focus to another window. The window to change focus to may be specified b
 
 **PARAMETERS**
 
-- handle: string
+- `handle`: string
 
 **RETURNS**
 
@@ -84,7 +84,7 @@ Change focus to another frame on the page
 
 **PARAMETERS**
 
-- target: null | number | [Element](README.md#element)
+- `target`: null | number | [Element](README.md#element)
 
 **RETURNS**
 
@@ -147,7 +147,7 @@ Set the size and position on the screen of the operating system window
 
 **PARAMETERS**
 
-- windowRect: [WindowRect](#windowrect)
+- `windowRect`: [WindowRect](#windowrect)
 
 **RETURNS**
 
@@ -223,7 +223,7 @@ An object defining the Window Rect.
 
 **PROPERTIES**
 
-- x: number
-- y: number
-- width: number
-- height: number
+- `x`: number
+- `y`: number
+- `width`: number
+- `height`: number

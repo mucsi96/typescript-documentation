@@ -30,7 +30,7 @@ they are aborted and a |Timeout| error is returned to the client.
 
 **PARAMETERS**
 
-- timeout: [Timeout](#timeout)
+- `timeout`: [Timeout](#timeout)
 
 **RETURNS**
 
@@ -56,6 +56,6 @@ WebDriver Timeout configuration object
 
 **PROPERTIES**
 
-- script?: number
-- pageLoad?: number
-- implicit?: number
+- `script?`: number
+- `pageLoad?`: number
+- `implicit?`: number

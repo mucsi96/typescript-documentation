@@ -27,8 +27,8 @@ the result of evaluating the script is returned to the client.
 
 **PARAMETERS**
 
-- script: string
-- args: any[]
+- `script`: string
+- `args`: any[]
 
 **RETURNS**
 
@@ -58,8 +58,8 @@ as the response.
 
 **PARAMETERS**
 
-- script: string
-- args: any[]
+- `script`: string
+- `args`: any[]
 
 **RETURNS**
 

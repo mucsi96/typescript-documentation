@@ -60,7 +60,7 @@ Sets the text field of a prompt to the given value.
 
 **PARAMETERS**
 
-- propertyName: string
+- `propertyName`: string
 
 **RETURNS**
 

@@ -1,7 +1,7 @@
 import { Type, TypeReference } from 'typescript';
 import { renderType } from '.';
 import { Context } from '../context';
-import { link } from '../markdown';
+import { inlineCode, link } from '../markdown';
 import { getSymbolSection } from '../utils';
 import { TypeContext } from './context';
 import { getTypeTitle } from './title';
@@ -64,7 +64,9 @@ export function renderTypeDeclaration(
 
   return [
     typeContext.name &&
-      `${typeContext.name}${isOptionalType(type) ? '?' : ''}: `,
+      `${inlineCode(
+        `${typeContext.name}${isOptionalType(type) ? '?' : ''}`
+      )}: `,
     typeDeclaration
   ].join('');
 }
