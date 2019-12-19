@@ -7,7 +7,7 @@ document.
 
 **RETURNS**
 
-Promise<[Cookie](#cookie)[]>
+Promise&lt;[Cookie](#cookie)[]&gt;
 
 **EXAMPLES**
 
@@ -39,7 +39,7 @@ Returns cookie based on the cookie name
 
 **RETURNS**
 
-Promise<[Cookie](#cookie)>
+Promise&lt;[Cookie](#cookie)&gt;
 
 **EXAMPLES**
 
@@ -61,7 +61,7 @@ Adds a single cookie to the cookie store associated with the active document’s
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -83,7 +83,7 @@ Delete a cookie based on its name
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -102,7 +102,7 @@ document.
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 

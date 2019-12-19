@@ -6,7 +6,7 @@ Get handle of current window
 
 **RETURNS**
 
-Promise<string>
+Promise&lt;string&gt;
 
 **EXAMPLES**
 
@@ -25,7 +25,7 @@ Close the current window.
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -47,7 +47,7 @@ Change focus to another window. The window to change focus to may be specified b
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -65,7 +65,7 @@ Get all window handles
 
 **RETURNS**
 
-Promise<string[]>
+Promise&lt;string[]&gt;
 
 **EXAMPLES**
 
@@ -88,7 +88,7 @@ Change focus to another frame on the page
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -111,7 +111,7 @@ Change focus to parent frame on the page
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -129,7 +129,7 @@ Get the size and position on the screen of the operating system window
 
 **RETURNS**
 
-Promise<[WindowRect](#windowrect)>
+Promise&lt;[WindowRect](#windowrect)&gt;
 
 **EXAMPLES**
 
@@ -151,7 +151,7 @@ Set the size and position on the screen of the operating system window
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -169,7 +169,7 @@ Maximizes the current window
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -187,7 +187,7 @@ Minimizes the current window
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -205,7 +205,7 @@ This command increases Current window to Full-Screen
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 

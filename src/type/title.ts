@@ -1,5 +1,6 @@
 import { ObjectFlags, Type, TypeFlags, TypeReference } from 'typescript';
 import { Context } from '../context';
+import { inlineCode } from '../markdown';
 import { findExactMatchingTypeFlag, inspectObject } from '../utils';
 import { renderTypeDeclaration } from './declaration';
 import { isOptionalBoolean } from './utils';
@@ -41,9 +42,7 @@ export function getTypeTitle(type: Type, context: Context): string {
       type.types
         .filter(type => !(type.getFlags() & TypeFlags.Undefined))
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        .map((type, _index, types) =>
-          renderTypeDeclaration(type, context, { noWrap: types.length === 1 })
-        )
+        .map(type => renderTypeDeclaration(type, context))
         .join(' | ')
     );
   }
@@ -57,11 +56,11 @@ export function getTypeTitle(type: Type, context: Context): string {
   }
 
   if (flags & TypeFlags.EnumLiteral) {
-    return `\`${type.symbol && type.symbol.getName()}\``;
+    return inlineCode(type.symbol && type.symbol.getName());
   }
 
   if (type.isStringLiteral()) {
-    return `\`'${type.value}'\``;
+    return inlineCode(`'${type.value}'`);
   }
 
   /* istanbul ignore else */

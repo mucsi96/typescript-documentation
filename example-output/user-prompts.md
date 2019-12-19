@@ -6,7 +6,7 @@ Dismiss the alert in current page
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -24,7 +24,7 @@ Accept the alert in current page
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -42,7 +42,7 @@ Returns the text from an alert
 
 **RETURNS**
 
-Promise<string>
+Promise&lt;string&gt;
 
 **EXAMPLES**
 
@@ -64,7 +64,7 @@ Sets the text field of a prompt to the given value.
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 

@@ -10,7 +10,7 @@ Sends virtualised device input to the web browser like keyboard or pointer event
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -101,7 +101,7 @@ Release all the keys and pointer buttons that are currently depressed
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 

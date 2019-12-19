@@ -6,7 +6,7 @@ Gets timeout durations associated with the current session.
 
 **RETURNS**
 
-Promise<[Timeout](#timeout)>
+Promise&lt;[Timeout](#timeout)&gt;
 
 **EXAMPLES**
 
@@ -34,7 +34,7 @@ they are aborted and a |Timeout| error is returned to the client.
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 

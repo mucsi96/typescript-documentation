@@ -33,7 +33,7 @@ function getReferenceUrl(type: Type, context: Context): string | undefined {
 export function renderTypeDeclaration(
   type: Type,
   context: Context,
-  typeContext: TypeContext
+  typeContext: TypeContext = {}
 ): string {
   const typeReference = type as TypeReference;
   const arrayType = isArrayType(type) && getArrayType(type);
@@ -47,20 +47,15 @@ export function renderTypeDeclaration(
 
   const title = getTypeTitle(type, context);
   const typeArguments = (typeReference.typeArguments || [])
-    .map(typeArgument => renderType(typeArgument, context, { noWrap: true }))
+    .map(typeArgument => renderType(typeArgument, context))
     .join(', ');
   const url = getReferenceUrl(type, context);
 
   const typeDeclaration = [
     url ? link(title, url) : title,
-    ...(typeArguments ? [`<${typeArguments}>`] : []),
+    ...(typeArguments ? [`&lt;${typeArguments}&gt;`] : []),
     ...(typeContext.isArray ? ['[]'] : [])
   ].join('');
-  const noWrap =
-    !typeDeclaration ||
-    typeContext.noWrap ||
-    /\[.*\]\(.*\)/.test(typeDeclaration) ||
-    / | /.test(typeDeclaration);
 
   return [
     typeContext.name &&

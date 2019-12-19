@@ -6,7 +6,7 @@ Takes a screenshot of the visible region encompassed by the bounding rectangle o
 
 **RETURNS**
 
-Promise<Buffer>
+Promise&lt;Buffer&gt;
 
 **EXAMPLES**
 
@@ -25,7 +25,7 @@ Takes a screenshot of the top-level browsing context’s viewport.
 
 **RETURNS**
 
-Promise<Buffer>
+Promise&lt;Buffer&gt;
 
 **EXAMPLES**
 

@@ -6,7 +6,7 @@ Returns a string serialization of the DOM of the current browsing context active
 
 **RETURNS**
 
-Promise<string>
+Promise&lt;string&gt;
 
 **EXAMPLES**
 
@@ -32,7 +32,7 @@ the result of evaluating the script is returned to the client.
 
 **RETURNS**
 
-Promise<T>
+Promise&lt;T&gt;
 
 **EXAMPLES**
 
@@ -63,7 +63,7 @@ as the response.
 
 **RETURNS**
 
-Promise<T>
+Promise&lt;T&gt;
 
 **EXAMPLES**
 

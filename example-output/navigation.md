@@ -10,7 +10,7 @@ Navigate to a new URL.
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -28,7 +28,7 @@ Get current page URL
 
 **RETURNS**
 
-Promise<string>
+Promise&lt;string&gt;
 
 **EXAMPLES**
 
@@ -47,7 +47,7 @@ Navigate to previous url from history
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -65,7 +65,7 @@ Navigate forward to next url from history
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -83,7 +83,7 @@ Refresh the current page
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -101,7 +101,7 @@ Get the current page title.
 
 **RETURNS**
 
-Promise<string>
+Promise&lt;string&gt;
 
 **EXAMPLES**
 

@@ -11,7 +11,7 @@ Search for an element on the page, starting from the referenced web element.
 
 **RETURNS**
 
-Promise<[Element](README.md#element)>
+Promise&lt;[Element](README.md#element)&gt;
 
 **EXAMPLES**
 
@@ -39,7 +39,7 @@ in the DOM.
 
 **RETURNS**
 
-Promise<[Element](README.md#element)[]>
+Promise&lt;[Element](README.md#element)[]&gt;
 
 **EXAMPLES**
 
@@ -60,7 +60,7 @@ This operation only makes sense on input elements of the Checkbox- and Radio But
 
 **RETURNS**
 
-Promise<boolean>
+Promise&lt;boolean&gt;
 
 **EXAMPLES**
 
@@ -84,7 +84,7 @@ Returns the attribute of the referenced web element.
 
 **RETURNS**
 
-Promise<string>
+Promise&lt;string&gt;
 
 **EXAMPLES**
 
@@ -107,7 +107,7 @@ Returns the property of the referenced web element.
 
 **RETURNS**
 
-Promise<string>
+Promise&lt;string&gt;
 
 **EXAMPLES**
 
@@ -130,7 +130,7 @@ Returns the computed value of the given CSS property for the element.
 
 **RETURNS**
 
-Promise<string>
+Promise&lt;string&gt;
 
 **EXAMPLES**
 
@@ -150,7 +150,7 @@ Returns the visible text for the element.
 
 **RETURNS**
 
-Promise<string>
+Promise&lt;string&gt;
 
 **EXAMPLES**
 
@@ -169,7 +169,7 @@ Returns the tagName of a Element
 
 **RETURNS**
 
-Promise<string>
+Promise&lt;string&gt;
 
 **EXAMPLES**
 
@@ -188,7 +188,7 @@ Returns the dimensions and coordinates of the referenced element
 
 **RETURNS**
 
-Promise<[ElementRect](#elementrect)>
+Promise&lt;[ElementRect](#elementrect)&gt;
 
 **EXAMPLES**
 
@@ -208,7 +208,7 @@ Determines if the referenced element is enabled or not.
 
 **RETURNS**
 
-Promise<boolean>
+Promise&lt;boolean&gt;
 
 **EXAMPLES**
 
@@ -227,7 +227,7 @@ Click on an element.
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -249,7 +249,7 @@ Clear content of an element.
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -272,7 +272,7 @@ Send a sequence of key strokes to an element.
 
 **RETURNS**
 
-Promise<void>
+Promise&lt;void&gt;
 
 **EXAMPLES**
 
@@ -296,7 +296,7 @@ Search for an element on the page, starting from the document root.
 
 **RETURNS**
 
-Promise<[Element](README.md#element)>
+Promise&lt;[Element](README.md#element)&gt;
 
 **EXAMPLES**
 
@@ -323,7 +323,7 @@ in the DOM.
 
 **RETURNS**
 
-Promise<[Element](README.md#element)[]>
+Promise&lt;[Element](README.md#element)[]&gt;
 
 **EXAMPLES**
 
@@ -342,7 +342,7 @@ Get the element on the page that currently has focus.
 
 **RETURNS**
 
-Promise<[Element](README.md#element)>
+Promise&lt;[Element](README.md#element)&gt;
 
 **EXAMPLES**
 
