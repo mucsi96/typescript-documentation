@@ -95,6 +95,24 @@ const status = await status('http://localhost:4444');
 
 This object represents a WebDriver element.
 
+**SEE ALSO**
+
+- [Elements](elements.md)
+- [Screen capture](screen-capture.md)
+
 ## Session
 
 This object represents a WebDriver session.
+
+**SEE ALSO**
+
+- [Actions](actions.md)
+- [Contexts](contexts.md)
+- [Cookies](cookies.md)
+- [Document](document.md)
+- [Elements](elements.md)
+- [Navigation](navigation.md)
+- [Screen capture](screen-capture.md)
+- [Sessions](sessions.md)
+- [Timeouts](timeouts.md)
+- [User prompts](user-prompts.md)

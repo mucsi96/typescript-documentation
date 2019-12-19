@@ -45,24 +45,24 @@ export function createDocumentation(options: Options): Documentation {
     .getExportsOfModule(type)
     .filter(symbol => !isInternalSymbol(symbol));
 
-  return spreadClassProperties(exportedSymbols).reduce<Documentation>(
-    (acc, symbol) => {
-      const section = getSymbolSection(symbol);
-      const output = renderSymbol(symbol, {
-        typeChecker,
-        exportedSymbols,
-        section,
-        getSectionLocation: options.getSectionLocation
-      });
+  return spreadClassProperties(
+    exportedSymbols,
+    options.getSectionLocation
+  ).reduce<Documentation>((acc, symbol) => {
+    const section = getSymbolSection(symbol);
+    const output = renderSymbol(symbol, {
+      typeChecker,
+      exportedSymbols,
+      section,
+      getSectionLocation: options.getSectionLocation
+    });
 
-      if (acc.has(section)) {
-        acc.set(section, joinSections([acc.get(section) || '', output]));
-      } else {
-        acc.set(section, output);
-      }
+    if (acc.has(section)) {
+      acc.set(section, joinSections([acc.get(section) || '', output]));
+    } else {
+      acc.set(section, output);
+    }
 
-      return acc;
-    },
-    new Map<string, string>()
-  );
+    return acc;
+  }, new Map<string, string>());
 }
