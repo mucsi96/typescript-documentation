@@ -6,7 +6,7 @@ Gets timeout durations associated with the current session.
 
 **RETURNS**
 
-<code>Promise\<[Timeout](#timeout)\></code>
+`Promise<[Timeout](#timeout)>`
 
 **EXAMPLES**
 
@@ -30,11 +30,11 @@ they are aborted and a |Timeout| error is returned to the client.
 
 **PARAMETERS**
 
-- <code>timeout: [Timeout](#timeout)</code>
+- `timeout`: [Timeout](#timeout)
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise<void>`
 
 **EXAMPLES**
 
@@ -56,6 +56,6 @@ WebDriver Timeout configuration object
 
 **PROPERTIES**
 
-- <code>script?: number</code>
-- <code>pageLoad?: number</code>
-- <code>implicit?: number</code>
+- `script`?: `number`
+- `pageLoad`?: `number`
+- `implicit`?: `number`

@@ -6,7 +6,7 @@ Close the session.
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise<void>`
 
 **EXAMPLES**
 
@@ -38,15 +38,15 @@ let session;
 
 **PROPERTIES**
 
-- <code>name: string</code>
-- <code>version: string</code>
-- <code>arch: string</code>
+- `name`: `string`
+- `version`: `string`
+- `arch`: `string`
 
 ## StatusOfWebDriver
 
 **PROPERTIES**
 
-- <code>version: string</code>
+- `version`: `string`
 
 ## Status
 
@@ -54,7 +54,7 @@ WebDriver status object
 
 **PROPERTIES**
 
-- <code>message: string</code>
-- <code>ready: boolean</code>
-- <code>os: [StatusOfOS](#statusofos)</code>
-- <code>build: [StatusOfWebDriver](#statusofwebdriver)</code>
+- `message`: `string`
+- `ready`: `boolean`
+- `os`: [StatusOfOS](#statusofos)
+- `build`: [StatusOfWebDriver](#statusofwebdriver)

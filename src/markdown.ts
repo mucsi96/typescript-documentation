@@ -15,7 +15,7 @@ export function code(content: string): string {
 }
 
 export function inlineCode(content: string): string {
-  return wrap(content, '<code>', '</code>');
+  return wrap(content, '`', '`');
 }
 
 export function subSection(name: string): string {

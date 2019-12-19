@@ -41,7 +41,6 @@ export function renderTypeDeclaration(
   if (arrayType) {
     return renderType(arrayType, context, {
       isArray: true,
-      noWrap: typeContext.noWrap,
       name: typeContext.name
     });
   }
@@ -52,13 +51,20 @@ export function renderTypeDeclaration(
     .join(', ');
   const url = getReferenceUrl(type, context);
 
-  const result = [
-    typeContext.name &&
-      `${typeContext.name}${isOptionalType(type) ? '?' : ''}: `,
+  const typeDeclaration = [
     url ? link(title, url) : title,
-    ...(typeArguments ? [`\\<${typeArguments}\\>`] : []),
+    ...(typeArguments ? [`<${typeArguments}>`] : []),
     ...(typeContext.isArray ? ['[]'] : [])
   ].join('');
+  const noWrap =
+    !typeDeclaration ||
+    typeContext.noWrap ||
+    url ||
+    / | /.test(typeDeclaration);
 
-  return !result || typeContext.noWrap ? result : inlineCode(result);
+  return [
+    typeContext.name &&
+      `${inlineCode(typeContext.name)}${isOptionalType(type) ? '?' : ''}: `,
+    !typeDeclaration || noWrap ? typeDeclaration : inlineCode(typeDeclaration)
+  ].join('');
 }

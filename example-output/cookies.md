@@ -7,7 +7,7 @@ document.
 
 **RETURNS**
 
-<code>Promise\<[Cookie](#cookie)[]\></code>
+`Promise<[Cookie](#cookie)[]>`
 
 **EXAMPLES**
 
@@ -35,11 +35,11 @@ Returns cookie based on the cookie name
 
 **PARAMETERS**
 
-- <code>propertyName: string</code>
+- `propertyName`: `string`
 
 **RETURNS**
 
-<code>Promise\<[Cookie](#cookie)\></code>
+`Promise<[Cookie](#cookie)>`
 
 **EXAMPLES**
 
@@ -57,11 +57,11 @@ Adds a single cookie to the cookie store associated with the active document’s
 
 **PARAMETERS**
 
-- <code>cookie: [Cookie](#cookie)</code>
+- `cookie`: [Cookie](#cookie)
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise<void>`
 
 **EXAMPLES**
 
@@ -79,11 +79,11 @@ Delete a cookie based on its name
 
 **PARAMETERS**
 
-- <code>propertyName: string</code>
+- `propertyName`: `string`
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise<void>`
 
 **EXAMPLES**
 
@@ -102,7 +102,7 @@ document.
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise<void>`
 
 **EXAMPLES**
 
@@ -120,10 +120,10 @@ An object defining the cookie.
 
 **PROPERTIES**
 
-- <code>name: string</code>
-- <code>value: string</code>
-- <code>path?: string</code>
-- <code>domain?: string</code>
-- <code>secure?: boolean</code>
-- <code>httpOnly?: boolean</code>
-- <code>expiry?: number</code>
+- `name`: `string`
+- `value`: `string`
+- `path`?: `string`
+- `domain`?: `string`
+- `secure`?: `boolean`
+- `httpOnly`?: `boolean`
+- `expiry`?: `number`

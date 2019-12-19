@@ -6,7 +6,7 @@ Dismiss the alert in current page
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise<void>`
 
 **EXAMPLES**
 
@@ -24,7 +24,7 @@ Accept the alert in current page
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise<void>`
 
 **EXAMPLES**
 
@@ -42,7 +42,7 @@ Returns the text from an alert
 
 **RETURNS**
 
-<code>Promise\<string\></code>
+`Promise<string>`
 
 **EXAMPLES**
 
@@ -60,11 +60,11 @@ Sets the text field of a prompt to the given value.
 
 **PARAMETERS**
 
-- <code>propertyName: string</code>
+- `propertyName`: `string`
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise<void>`
 
 **EXAMPLES**
 

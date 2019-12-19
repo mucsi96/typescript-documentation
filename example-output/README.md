@@ -1,5 +1,3 @@
-# API docs
-
 ## newSession(options)
 
 Before we can send any command to the browser we drive we need to create a [WebDriver](https://www.w3.org/TR/webdriver) session.
@@ -12,16 +10,16 @@ Also we can set the browser and operating system parameters we want to interact 
 
 **PARAMETERS**
 
-- <code>options: object</code>
-  - <code>url: string</code>
-  - <code>capabilities: [Capabilities](capabilities.md#capabilities)</code>
-  - <code>desiredCapabilities?: object</code>
-    - <code>browserstack.use_w3c: boolean</code>
-  - <code>headers: Headers | string[] | object</code>
+- `options`: `object`
+  - `url`: `string`
+  - `capabilities`: [Capabilities](capabilities.md#capabilities)
+  - `desiredCapabilities`?: `object`
+    - `browserstack.use_w3c`: `boolean`
+  - `headers`: `Headers` | `string[]` | `object`
 
 **RETURNS**
 
-<code>Promise\<[Session](#session)\></code>
+`Promise<[Session](#session)>`
 
 **EXAMPLES**
 
@@ -71,11 +69,11 @@ The status contains meta information about the WebDriver server and operating sy
 
 **PARAMETERS**
 
-- <code>url: string</code>
+- `url`: `string`
 
 **RETURNS**
 
-<code>Promise\<[Status](sessions.md#status)\></code>
+`Promise<[Status](sessions.md#status)>`
 
 **EXAMPLES**
 

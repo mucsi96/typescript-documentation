@@ -1,8 +1,8 @@
-import { Type, TypeReference, TypeFlags, ObjectFlags } from 'typescript';
+import { ObjectFlags, Type, TypeFlags, TypeReference } from 'typescript';
 import { Context } from '../context';
-import { inspectObject, findExactMatchingTypeFlag } from '../utils';
-import { isOptionalBoolean } from './utils';
+import { findExactMatchingTypeFlag, inspectObject } from '../utils';
 import { renderTypeDeclaration } from './declaration';
+import { isOptionalBoolean } from './utils';
 
 export function getTypeTitle(type: Type, context: Context): string {
   const flags = type.getFlags();
@@ -41,7 +41,9 @@ export function getTypeTitle(type: Type, context: Context): string {
       type.types
         .filter(type => !(type.getFlags() & TypeFlags.Undefined))
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        .map(type => renderTypeDeclaration(type, context, { noWrap: true }))
+        .map((type, _index, types) =>
+          renderTypeDeclaration(type, context, { noWrap: types.length === 1 })
+        )
         .join(' | ')
     );
   }

@@ -6,12 +6,12 @@ Search for an element on the page, starting from the referenced web element.
 
 **PARAMETERS**
 
-- <code>strategy: [LocatorStrategy](#locatorstrategy)</code>
-- <code>selector: string</code>
+- `strategy`: [LocatorStrategy](#locatorstrategy)
+- `selector`: `string`
 
 **RETURNS**
 
-<code>Promise\<[Element](README.md#element)\></code>
+`Promise<[Element](README.md#element)>`
 
 **EXAMPLES**
 
@@ -34,12 +34,12 @@ in the DOM.
 
 **PARAMETERS**
 
-- <code>strategy: [LocatorStrategy](#locatorstrategy)</code>
-- <code>selector: string</code>
+- `strategy`: [LocatorStrategy](#locatorstrategy)
+- `selector`: `string`
 
 **RETURNS**
 
-<code>Promise\<[Element](README.md#element)[]\></code>
+`Promise<[Element](README.md#element)[]>`
 
 **EXAMPLES**
 
@@ -60,7 +60,7 @@ This operation only makes sense on input elements of the Checkbox- and Radio But
 
 **RETURNS**
 
-<code>Promise\<boolean\></code>
+`Promise<boolean>`
 
 **EXAMPLES**
 
@@ -80,11 +80,11 @@ Returns the attribute of the referenced web element.
 
 **PARAMETERS**
 
-- <code>propertyName: string</code>
+- `propertyName`: `string`
 
 **RETURNS**
 
-<code>Promise\<string\></code>
+`Promise<string>`
 
 **EXAMPLES**
 
@@ -103,11 +103,11 @@ Returns the property of the referenced web element.
 
 **PARAMETERS**
 
-- <code>propertyName: string</code>
+- `propertyName`: `string`
 
 **RETURNS**
 
-<code>Promise\<string\></code>
+`Promise<string>`
 
 **EXAMPLES**
 
@@ -126,11 +126,11 @@ Returns the computed value of the given CSS property for the element.
 
 **PARAMETERS**
 
-- <code>propertyName: string</code>
+- `propertyName`: `string`
 
 **RETURNS**
 
-<code>Promise\<string\></code>
+`Promise<string>`
 
 **EXAMPLES**
 
@@ -150,7 +150,7 @@ Returns the visible text for the element.
 
 **RETURNS**
 
-<code>Promise\<string\></code>
+`Promise<string>`
 
 **EXAMPLES**
 
@@ -169,7 +169,7 @@ Returns the tagName of a Element
 
 **RETURNS**
 
-<code>Promise\<string\></code>
+`Promise<string>`
 
 **EXAMPLES**
 
@@ -188,7 +188,7 @@ Returns the dimensions and coordinates of the referenced element
 
 **RETURNS**
 
-<code>Promise\<[ElementRect](#elementrect)\></code>
+`Promise<[ElementRect](#elementrect)>`
 
 **EXAMPLES**
 
@@ -208,7 +208,7 @@ Determines if the referenced element is enabled or not.
 
 **RETURNS**
 
-<code>Promise\<boolean\></code>
+`Promise<boolean>`
 
 **EXAMPLES**
 
@@ -227,7 +227,7 @@ Click on an element.
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise<void>`
 
 **EXAMPLES**
 
@@ -249,7 +249,7 @@ Clear content of an element.
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise<void>`
 
 **EXAMPLES**
 
@@ -268,11 +268,11 @@ Send a sequence of key strokes to an element.
 
 **PARAMETERS**
 
-- <code>text: string</code>
+- `text`: `string`
 
 **RETURNS**
 
-<code>Promise\<void\></code>
+`Promise<void>`
 
 **EXAMPLES**
 
@@ -291,12 +291,12 @@ Search for an element on the page, starting from the document root.
 
 **PARAMETERS**
 
-- <code>strategy: [LocatorStrategy](#locatorstrategy)</code>
-- <code>selector: string</code>
+- `strategy`: [LocatorStrategy](#locatorstrategy)
+- `selector`: `string`
 
 **RETURNS**
 
-<code>Promise\<[Element](README.md#element)\></code>
+`Promise<[Element](README.md#element)>`
 
 **EXAMPLES**
 
@@ -318,12 +318,12 @@ in the DOM.
 
 **PARAMETERS**
 
-- <code>strategy: [LocatorStrategy](#locatorstrategy)</code>
-- <code>selector: string</code>
+- `strategy`: [LocatorStrategy](#locatorstrategy)
+- `selector`: `string`
 
 **RETURNS**
 
-<code>Promise\<[Element](README.md#element)[]\></code>
+`Promise<[Element](README.md#element)[]>`
 
 **EXAMPLES**
 
@@ -342,7 +342,7 @@ Get the element on the page that currently has focus.
 
 **RETURNS**
 
-<code>Promise\<[Element](README.md#element)\></code>
+`Promise<[Element](README.md#element)>`
 
 **EXAMPLES**
 
@@ -361,10 +361,10 @@ An object defining the Element Rect.
 
 **PROPERTIES**
 
-- <code>x: number</code>
-- <code>y: number</code>
-- <code>width: number</code>
-- <code>height: number</code>
+- `x`: `number`
+- `y`: `number`
+- `width`: `number`
+- `height`: `number`
 
 ## LocatorStrategy
 
@@ -372,8 +372,8 @@ Strategy for searching element on the page
 
 **POSSIBLE VALUES**
 
-- <code>'css selector'</code>
-- <code>'link text'</code>
-- <code>'partial link text'</code>
-- <code>'tag name'</code>
-- <code>'xpath'</code>
+- 'css selector'
+- 'link text'
+- 'partial link text'
+- 'tag name'
+- `'xpath'`
