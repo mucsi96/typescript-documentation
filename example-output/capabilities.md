@@ -4,56 +4,55 @@
 
 **PROPERTIES**
 
-* `w3c?: boolean`
-* `binary?: string`
-* `args?: string[]`
+- <code>w3c?: boolean</code>
+- <code>binary?: string</code>
+- <code>args?: string[]</code>
 
 ## FirefoxOptions
 
 **PROPERTIES**
 
-* `log?: object`
-  * `level?: string`
-* `args?: string[]`
+- <code>log?: object</code>
+  - <code>level?: string</code>
+- <code>args?: string[]</code>
 
 ## InternetExplorerOptions
 
 **PROPERTIES**
 
-* `ignoreProtectedModeSettings: boolean`
-* `ignoreZoomSetting: boolean`
-* `ie.ensureCleanSession: boolean`
+- <code>ignoreProtectedModeSettings: boolean</code>
+- <code>ignoreZoomSetting: boolean</code>
+- <code>ie.ensureCleanSession: boolean</code>
 
 ## BrowserStackOptions
 
 **PROPERTIES**
 
-* `os?: string`
-* `osVersion?: string`
-* `sessionName?: string`
-* `buildName?: string`
-* `projectName?: string`
-* `debug?: boolean`
-* `networkLogs?: boolean`
-* `local?: boolean`
-* `safari?: object`
-  * `enablePopups?: boolean`
-  * `allowAllCookies?: boolean`
+- <code>os?: string</code>
+- <code>osVersion?: string</code>
+- <code>sessionName?: string</code>
+- <code>buildName?: string</code>
+- <code>projectName?: string</code>
+- <code>debug?: boolean</code>
+- <code>networkLogs?: boolean</code>
+- <code>local?: boolean</code>
+- <code>safari?: object</code>
+  - <code>enablePopups?: boolean</code>
+  - <code>allowAllCookies?: boolean</code>
 
 ## BrowserCapability
 
 **PROPERTIES**
 
-* `browserName: string`
-* `goog:chromeOptions?:` [`ChromeOptions`](capabilities.md#chromeoptions)
-* `moz:firefoxOptions?:` [`FirefoxOptions`](capabilities.md#firefoxoptions)
-* `se:ieOptions?:` [`InternetExplorerOptions`](capabilities.md#internetexploreroptions)
-* `bstack:options?:` [`BrowserStackOptions`](capabilities.md#browserstackoptions)
+- <code>browserName: string</code>
+- <code>goog:chromeOptions?: [ChromeOptions](#chromeoptions)</code>
+- <code>moz:firefoxOptions?: [FirefoxOptions](#firefoxoptions)</code>
+- <code>se:ieOptions?: [InternetExplorerOptions](#internetexploreroptions)</code>
+- <code>bstack:options?: [BrowserStackOptions](#browserstackoptions)</code>
 
 ## Capabilities
 
 **PROPERTIES**
 
-* `alwaysMatch?:` [`BrowserCapability`](capabilities.md#browsercapability)
-* `firstMatch?:` [`BrowserCapability`](capabilities.md#browsercapability)`[]`
-
+- <code>alwaysMatch?: [BrowserCapability](#browsercapability)</code>
+- <code>firstMatch?: [BrowserCapability](#browsercapability)[]</code>

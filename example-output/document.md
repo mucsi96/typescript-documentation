@@ -1,12 +1,12 @@
 # Document
 
-## session.getPageSource\(\)
+## session.getPageSource()
 
 Returns a string serialization of the DOM of the current browsing context active document.
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<string\></code>
 
 **EXAMPLES**
 
@@ -17,20 +17,22 @@ const source = await session.getPageSource();
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#getting-page-source)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#getting-page-source)
 
-## session.executeScript\\(script, args\)
+## session.executeScript\<T\>(script, args)
 
-Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame. The executed script is assumed to be synchronous and the result of evaluating the script is returned to the client.
+Inject a snippet of JavaScript into the page for execution in the context of the
+currently selected frame. The executed script is assumed to be synchronous and
+the result of evaluating the script is returned to the client.
 
 **PARAMETERS**
 
-* `script: string`
-* `args: any[]`
+- <code>script: string</code>
+- <code>args: any[]</code>
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<T\></code>
 
 **EXAMPLES**
 
@@ -45,20 +47,23 @@ const message = await session.executeScript(script, ['WebDriver']);
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#execute-script)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#execute-script)
 
-## session.executeAsyncScript\\(script, args\)
+## session.executeAsyncScript\<T\>(script, args)
 
-causes JavaScript to execute as an anonymous function. Unlike the Execute Script command, the result of the function is ignored. Instead an additional argument is provided as the final argument to the function. This is a function that, when called, returns its first argument as the response.
+causes JavaScript to execute as an anonymous function. Unlike the Execute Script command, the
+result of the function is ignored. Instead an additional argument is provided as the final
+argument to the function. This is a function that, when called, returns its first argument
+as the response.
 
 **PARAMETERS**
 
-* `script: string`
-* `args: any[]`
+- <code>script: string</code>
+- <code>args: any[]</code>
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<T\></code>
 
 **EXAMPLES**
 
@@ -73,5 +78,4 @@ const message = await session.executeAsyncScript(script, [5, 3]);
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#execute-async-script)
-
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#execute-async-script)

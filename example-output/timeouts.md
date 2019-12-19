@@ -1,12 +1,12 @@
 # Timeouts
 
-## session.getTimeout\(\)
+## session.getTimeout()
 
 Gets timeout durations associated with the current session.
 
 **RETURNS**
 
-`Promise\<`[`Timeout`](timeouts.md#timeout)`>`
+<code>Promise\<[Timeout](#timeout)\></code>
 
 **EXAMPLES**
 
@@ -21,19 +21,20 @@ const timeout = await session.getTimeout();
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#get-timeouts)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#get-timeouts)
 
-## session.setTimeout\(timeout\)
+## session.setTimeout(timeout)
 
-Configure the amount of time that a particular type of operation can execute for before they are aborted and a \|Timeout\| error is returned to the client.
+Configure the amount of time that a particular type of operation can execute for before
+they are aborted and a |Timeout| error is returned to the client.
 
 **PARAMETERS**
 
-* `timeout:` [`Timeout`](timeouts.md#timeout)
+- <code>timeout: [Timeout](#timeout)</code>
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<void\></code>
 
 **EXAMPLES**
 
@@ -47,7 +48,7 @@ await session.setTimeout({
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#set-timeouts)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#set-timeouts)
 
 ## Timeout
 
@@ -55,7 +56,6 @@ WebDriver Timeout configuration object
 
 **PROPERTIES**
 
-* `script?: number`
-* `pageLoad?: number`
-* `implicit?: number`
-
+- <code>script?: number</code>
+- <code>pageLoad?: number</code>
+- <code>implicit?: number</code>

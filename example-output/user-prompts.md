@@ -1,12 +1,12 @@
 # User prompts
 
-## session.dismissAlert\(\)
+## session.dismissAlert()
 
 Dismiss the alert in current page
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<void\></code>
 
 **EXAMPLES**
 
@@ -16,15 +16,15 @@ await session.dismissAlert();
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#dismiss-alert)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#dismiss-alert)
 
-## session.acceptAlert\(\)
+## session.acceptAlert()
 
 Accept the alert in current page
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<void\></code>
 
 **EXAMPLES**
 
@@ -34,15 +34,15 @@ await session.acceptAlert();
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#accept-alert)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#accept-alert)
 
-## session.getAlertText\(\)
+## session.getAlertText()
 
 Returns the text from an alert
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<string\></code>
 
 **EXAMPLES**
 
@@ -52,19 +52,19 @@ const alertText = await session.getAlertText();
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#get-alert-text)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#get-alert-text)
 
-## session.sendAlertText\(propertyName\)
+## session.sendAlertText(propertyName)
 
 Sets the text field of a prompt to the given value.
 
 **PARAMETERS**
 
-* `propertyName: string`
+- <code>propertyName: string</code>
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<void\></code>
 
 **EXAMPLES**
 
@@ -74,5 +74,4 @@ await session.sendAlertText('Test');
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#send-alert-text)
-
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#send-alert-text)

@@ -1,12 +1,12 @@
 # Contexts
 
-## session.getWindowHandle\(\)
+## session.getWindowHandle()
 
 Get handle of current window
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<string\></code>
 
 **EXAMPLES**
 
@@ -17,15 +17,15 @@ const handle = await session.getWindowHandle();
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#get-window-handle)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#get-window-handle)
 
-## session.closeWindow\(\)
+## session.closeWindow()
 
 Close the current window.
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<void\></code>
 
 **EXAMPLES**
 
@@ -35,19 +35,19 @@ await session.closeWindow();
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#close-window)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#close-window)
 
-## session.switchToWindow\(handle\)
+## session.switchToWindow(handle)
 
 Change focus to another window. The window to change focus to may be specified by it's server assigned window handle.
 
 **PARAMETERS**
 
-* `handle: string`
+- <code>handle: string</code>
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<void\></code>
 
 **EXAMPLES**
 
@@ -57,15 +57,15 @@ await session.switchToWindow('CDwindow-7321145136535301DE771CCBD9555CEA');
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#switch-to-window)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#switch-to-window)
 
-## session.getWindowHandles\(\)
+## session.getWindowHandles()
 
 Get all window handles
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<string[]\></code>
 
 **EXAMPLES**
 
@@ -76,19 +76,19 @@ const handles = await session.getWindowHandles();
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#get-window-handles)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#get-window-handles)
 
-## session.switchToFrame\(target\)
+## session.switchToFrame(target)
 
 Change focus to another frame on the page
 
 **PARAMETERS**
 
-* `target: null | number |` [`Element`](index.md#element)
+- <code>target: null | number | [Element](README.md#element)</code>
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<void\></code>
 
 **EXAMPLES**
 
@@ -103,15 +103,15 @@ await session.switchToFrame(null);
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#switch-to-frame)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#switch-to-frame)
 
-## session.switchToParentFrame\(\)
+## session.switchToParentFrame()
 
 Change focus to parent frame on the page
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<void\></code>
 
 **EXAMPLES**
 
@@ -121,15 +121,15 @@ await session.switchToParentFrame();
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#switch-to-frame)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#switch-to-frame)
 
-## session.getWindowRect\(\)
+## session.getWindowRect()
 
 Get the size and position on the screen of the operating system window
 
 **RETURNS**
 
-`Promise\<`[`WindowRect`](contexts.md#windowrect)`>`
+<code>Promise\<[WindowRect](#windowrect)\></code>
 
 **EXAMPLES**
 
@@ -139,19 +139,19 @@ await session.getWindowRect();
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#get-window-rect)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#get-window-rect)
 
-## session.setWindowRect\(windowRect\)
+## session.setWindowRect(windowRect)
 
 Set the size and position on the screen of the operating system window
 
 **PARAMETERS**
 
-* `windowRect:` [`WindowRect`](contexts.md#windowrect)
+- <code>windowRect: [WindowRect](#windowrect)</code>
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<void\></code>
 
 **EXAMPLES**
 
@@ -161,15 +161,15 @@ await session.setWindowRect();
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#set-window-rect)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#set-window-rect)
 
-## session.maximizeWindow\(\)
+## session.maximizeWindow()
 
 Maximizes the current window
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<void\></code>
 
 **EXAMPLES**
 
@@ -179,15 +179,15 @@ await session.maximizeWindow();
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#maximize-window)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#maximize-window)
 
-## session.minimizeWindow\(\)
+## session.minimizeWindow()
 
 Minimizes the current window
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<void\></code>
 
 **EXAMPLES**
 
@@ -197,15 +197,15 @@ await session.minimizeWindow();
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#minimize-window)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#minimize-window)
 
-## session.fullScreenWindow\(\)
+## session.fullScreenWindow()
 
 This command increases Current window to Full-Screen
 
 **RETURNS**
 
-`Promise\`
+<code>Promise\<void\></code>
 
 **EXAMPLES**
 
@@ -215,7 +215,7 @@ await session.fullScreenWindow();
 
 **SEE ALSO**
 
-* [WebDriver spec](https://www.w3.org/TR/webdriver/#fullscreen-window)
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#fullscreen-window)
 
 ## WindowRect
 
@@ -223,8 +223,7 @@ An object defining the Window Rect.
 
 **PROPERTIES**
 
-* `x: number`
-* `y: number`
-* `width: number`
-* `height: number`
-
+- <code>x: number</code>
+- <code>y: number</code>
+- <code>width: number</code>
+- <code>height: number</code>
