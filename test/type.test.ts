@@ -11,7 +11,7 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>string | number</code>
+        string | number
       `
     });
   });
@@ -27,7 +27,7 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>SimpleObjectType</code>
+        SimpleObjectType
       `
     });
   });
@@ -45,7 +45,7 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>[SimpleObjectType](#simpleobjecttype)</code>
+        [SimpleObjectType](#simpleobjecttype)
       `
     });
   });
@@ -64,7 +64,7 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>SimpleObjectType</code>
+        SimpleObjectType
       `
     });
   });
@@ -80,14 +80,14 @@ describe('type', () => {
 
         **POSSIBLE VALUES**
 
-        - <code>string</code>
-        - <code>number</code>
+        - string
+        - number
 
         ## testVariable
 
         **TYPE**
 
-        <code>[UnionType](#uniontype)</code>
+        [UnionType](#uniontype)
 
       `
     });
@@ -103,7 +103,7 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>any</code>
+        any
       `
     });
   });
@@ -119,7 +119,7 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>InterfaceType</code>
+        InterfaceType
       `
     });
   });
@@ -137,7 +137,7 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>[InterfaceType](#interfacetype)</code>
+        [InterfaceType](#interfacetype)
       `
     });
   });
@@ -156,7 +156,7 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>InterfaceType</code>
+        InterfaceType
       `
     });
   });
@@ -171,7 +171,7 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>'test string literal'</code>
+        \`'test string literal'\`
       `
     });
   });
@@ -186,7 +186,7 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>null</code>
+        null
       `
     });
   });
@@ -201,7 +201,7 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>boolean</code>
+        boolean
       `
     });
   });
@@ -216,7 +216,7 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>string[]</code>
+        string[]
       `
     });
   });
@@ -231,7 +231,7 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>Promise\\<string\\></code>
+        Promise&lt;string&gt;
       `
     });
   });
@@ -246,7 +246,7 @@ describe('type', () => {
 
       **RETURNS**
 
-      <code>Promise\\<T\\></code>
+      Promise&lt;T&gt;
       `
     });
   });
@@ -264,7 +264,7 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>[SimpleObjectType](#simpleobjecttype)[]</code>
+        [SimpleObjectType](#simpleobjecttype)[]
       `
     });
   });
@@ -279,8 +279,8 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>object</code>
-        - <code>a: string</code>
+        object
+        - \`a\`: string
       `
     });
   });
@@ -295,9 +295,9 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>object</code>
-        - <code>a: object</code>
-          - <code>b: string</code>
+        object
+        - \`a\`: object
+          - \`b\`: string
       `
     });
   });
@@ -312,9 +312,9 @@ describe('type', () => {
 
         **TYPE**
 
-        <code>object</code>
-        - <code>a?: object</code>
-          - <code>b: string</code>
+        object
+        - \`a?\`: object
+          - \`b\`: string
       `
     });
   });

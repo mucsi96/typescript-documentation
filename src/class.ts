@@ -1,10 +1,36 @@
 import { JSDocTagInfo, Symbol, SymbolFlags } from 'typescript';
 import { renderAdditionalLinks } from './additionalLinks';
-import { Context } from './context';
+import { DependencyContext, RenderContext } from './context';
 import { renderDescription } from './description';
 import { renderExamples } from './examples';
 import { heading, joinSections } from './markdown';
+import { getSymbolDependencies } from './symbol';
 import { getSymbolSection, isInternalSymbol } from './utils';
+
+export function getClassDependencies(
+  symbol: Symbol,
+  context: DependencyContext
+): Symbol[] {
+  const members: Symbol[] = [];
+
+  if (!symbol.members || !context.exportedSymbols.includes(symbol)) {
+    return [];
+  }
+
+  symbol.members.forEach(member => {
+    if (!isInternalSymbol(member)) {
+      members.push(member);
+    }
+  });
+
+  return members.reduce<Symbol[]>(
+    (dependencies, member) => [
+      ...dependencies,
+      ...getSymbolDependencies(member, context)
+    ],
+    []
+  );
+}
 
 export function spreadClassProperties(
   symbols: Symbol[],
@@ -52,7 +78,7 @@ export function spreadClassProperties(
   }, []);
 }
 
-export function renderClass(symbol: Symbol, context: Context): string {
+export function renderClass(symbol: Symbol, context: RenderContext): string {
   const name = symbol.getName();
 
   return joinSections([

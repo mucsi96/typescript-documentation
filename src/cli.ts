@@ -106,7 +106,7 @@ try {
   });
 } catch (e) {
   /* istanbul ignore next */
-  console.log(e.message);
+  console.log(e.stack);
   /* istanbul ignore next */
   process.exit(1);
 }

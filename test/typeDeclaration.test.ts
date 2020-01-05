@@ -29,8 +29,8 @@ describe('type declarations', () => {
 
         **PROPERTIES**
 
-        - <code>a: string</code>
-        - <code>b?: number</code>
+        - \`a\`: string
+        - \`b?\`: number
 
         **EXAMPLES**
 
@@ -101,8 +101,8 @@ describe('type declarations', () => {
 
         **POSSIBLE VALUES**
 
-        - <code>string</code>
-        - <code>number</code>
+        - string
+        - number
       `
     });
   });
@@ -119,7 +119,7 @@ describe('type declarations', () => {
 
         **PROPERTIES**
 
-        - <code>a?: boolean</code>
+        - \`a?\`: boolean
       `
     });
   });
@@ -138,8 +138,8 @@ describe('type declarations', () => {
 
         **PROPERTIES**
 
-        - <code>a: object</code>
-          - <code>b: string</code>
+        - \`a\`: object
+          - \`b\`: string
       `
     });
   });
@@ -156,7 +156,7 @@ describe('type declarations', () => {
 
         **PROPERTIES**
 
-        - <code>a: [TypeWithAnonymous](#typewithanonymous)</code>
+        - \`a\`: [TypeWithAnonymous](#typewithanonymous)
       `
     });
   });
@@ -173,7 +173,7 @@ describe('type declarations', () => {
 
         **PROPERTIES**
 
-        - <code>a: string[]</code>
+        - \`a\`: string[]
       `
     });
   });

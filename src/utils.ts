@@ -157,3 +157,5 @@ export function inspectObject(type: any): string {
 
   return inspect(obj, false, 1, true);
 }
+
+export class SupportError extends Error {}

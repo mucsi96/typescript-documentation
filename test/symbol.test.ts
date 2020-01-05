@@ -17,13 +17,13 @@ describe('symbol', () => {
 
         **TYPE**
 
-        <code>string</code>
+        string
 
         ## a
 
         **TYPE**
 
-        <code>number</code>
+        number
       `
     });
   });
@@ -44,7 +44,7 @@ describe('symbol', () => {
 
         **TYPE**
 
-        <code>string</code>
+        string
       `)
     );
 
@@ -54,7 +54,7 @@ describe('symbol', () => {
 
         **TYPE**
 
-        <code>number</code>
+        number
       `)
     );
   });
@@ -78,6 +78,10 @@ describe('symbol', () => {
     expect(docs.get('one')).toEqual(
       removePadding(`
         ## SimpleClass
+
+        **SEE ALSO**
+
+        - [two](two.md)
       `)
     );
 
@@ -87,7 +91,7 @@ describe('symbol', () => {
 
         **RETURNS**
 
-        <code>void</code>
+        void
       `)
     );
 
@@ -97,7 +101,7 @@ describe('symbol', () => {
 
         **RETURNS**
 
-        <code>void</code>
+        void
       `)
     );
   });
@@ -118,7 +122,7 @@ describe('symbol', () => {
 
         **TYPE**
 
-        <code>[TypeInOtherSection](one.md#typeinothersection)</code>
+        [TypeInOtherSection](one.md#typeinothersection)
       `)
     );
   });

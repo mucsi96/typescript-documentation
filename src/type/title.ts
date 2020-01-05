@@ -1,11 +1,15 @@
 import { ObjectFlags, Type, TypeFlags, TypeReference } from 'typescript';
-import { Context } from '../context';
+import { RenderContext } from '../context';
 import { inlineCode } from '../markdown';
-import { findExactMatchingTypeFlag, inspectObject } from '../utils';
+import {
+  findExactMatchingTypeFlag,
+  inspectObject,
+  SupportError
+} from '../utils';
 import { renderTypeDeclaration } from './declaration';
 import { isOptionalBoolean } from './utils';
 
-export function getTypeTitle(type: Type, context: Context): string {
+export function getTypeTitle(type: Type, context: RenderContext): string {
   const flags = type.getFlags();
   const objectFlags = (type as TypeReference).objectFlags;
 
@@ -69,7 +73,7 @@ export function getTypeTitle(type: Type, context: Context): string {
   }
 
   /* istanbul ignore next */
-  throw new Error(
+  throw new SupportError(
     `Not supported type ${inspectObject(
       type
     )} with flags "${findExactMatchingTypeFlag(flags)}"`

@@ -26,8 +26,8 @@ describe('enumerations', () => {
 
         **POSSIBLE VALUES**
 
-        - <code>ONE</code>
-        - <code>TWO</code>
+        - \`ONE\`
+        - \`TWO\`
 
         **EXAMPLES**
 
@@ -59,8 +59,8 @@ describe('enumerations', () => {
 
         **POSSIBLE VALUES**
 
-        - <code>ONE</code>
-        - <code>TWO</code>
+        - \`ONE\`
+        - \`TWO\`
       `
     });
   });

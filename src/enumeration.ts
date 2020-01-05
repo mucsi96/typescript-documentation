@@ -1,6 +1,6 @@
 import { Symbol, UnionType } from 'typescript';
 import { renderAdditionalLinks } from './additionalLinks';
-import { Context } from './context';
+import { RenderContext } from './context';
 import { renderDescription } from './description';
 import { renderExamples } from './examples';
 import {
@@ -12,7 +12,10 @@ import {
 } from './markdown';
 import { renderType } from './type';
 
-function renderEnumerationItems(type: UnionType, context: Context): string {
+function renderEnumerationItems(
+  type: UnionType,
+  context: RenderContext
+): string {
   return joinSections([
     subSection('Possible values'),
     joinLines(type.types.map(type => listItem(renderType(type, context))))
@@ -22,7 +25,7 @@ function renderEnumerationItems(type: UnionType, context: Context): string {
 export function renderEnumeration(
   symbol: Symbol,
   type: UnionType,
-  context: Context
+  context: RenderContext
 ): string {
   return joinSections([
     heading(symbol.getName(), 2),

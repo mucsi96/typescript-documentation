@@ -72,7 +72,7 @@ describe('classes', () => {
 
         **RETURNS**
 
-        <code>void</code>
+        void
 
         **EXAMPLES**
 
@@ -98,12 +98,12 @@ describe('classes', () => {
 
         **PARAMETERS**
 
-        - <code>a: string</code>
-        - <code>b: number</code>
+        - \`a\`: string
+        - \`b\`: number
 
         **RETURNS**
 
-        <code>string</code>
+        string
       `
     });
   });
@@ -128,18 +128,18 @@ describe('classes', () => {
 
         **RETURNS**
 
-        <code>void</code>
+        void
 
         ## simpleClass.simpleMethod2(a, b)
 
         **PARAMETERS**
 
-        - <code>a: string</code>
-        - <code>b: number</code>
+        - \`a\`: string
+        - \`b\`: number
 
         **RETURNS**
 
-        <code>string</code>
+        string
       `
     });
   });

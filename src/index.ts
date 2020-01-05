@@ -1,6 +1,7 @@
 import { CompilerOptions, createProgram } from 'typescript';
 import { spreadClassProperties } from './class';
 import { joinSections } from './markdown';
+import { getModuleDependencies } from './module';
 import { renderSymbol } from './symbol';
 import {
   createCompilerHost,
@@ -18,9 +19,9 @@ export type Options = {
 export type Documentation = Map<string, string>;
 
 export function createDocumentation(options: Options): Documentation {
-  const { compilerOptions, entry, sourceCode } = options;
+  const { compilerOptions, entry: entryFileName, sourceCode } = options;
   const program = createProgram({
-    rootNames: [entry],
+    rootNames: [entryFileName],
     options: compilerOptions,
     ...(sourceCode && {
       host: createCompilerHost(sourceCode)
@@ -28,31 +29,36 @@ export function createDocumentation(options: Options): Documentation {
   });
 
   const typeChecker = program.getTypeChecker();
-  const root = program.getSourceFile(entry);
+  const entrySourceFile = program.getSourceFile(entryFileName);
 
   /* istanbul ignore next */
-  if (!root) {
-    throw new Error(`Cannot find entry ${entry}`);
+  if (!entrySourceFile) {
+    throw new Error(`Cannot find entry ${entryFileName}`);
   }
 
-  const type = typeChecker.getSymbolAtLocation(root);
+  const entryModuleSymbol = typeChecker.getSymbolAtLocation(entrySourceFile);
 
-  if (!type) {
+  if (!entryModuleSymbol) {
     return new Map<string, string>();
   }
-
   const exportedSymbols = typeChecker
-    .getExportsOfModule(type)
+    .getExportsOfModule(entryModuleSymbol)
     .filter(symbol => !isInternalSymbol(symbol));
 
-  return spreadClassProperties(
+  const symbolsToRender = getModuleDependencies(entryModuleSymbol, {
+    typeChecker,
     exportedSymbols,
+    resolutionPath: []
+  }).filter((child, index, all) => all.indexOf(child) === index);
+
+  return spreadClassProperties(
+    symbolsToRender,
     options.getSectionLocation
   ).reduce<Documentation>((acc, symbol) => {
     const section = getSymbolSection(symbol);
     const output = renderSymbol(symbol, {
       typeChecker,
-      exportedSymbols,
+      exportedSymbols: symbolsToRender,
       section,
       getSectionLocation: options.getSectionLocation
     });

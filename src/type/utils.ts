@@ -2,24 +2,32 @@ import {
   ObjectFlags,
   Symbol,
   Type,
+  TypeChecker,
   TypeFlags,
   TypeReference
 } from 'typescript';
-import { Context } from '../context';
+import { RenderContext } from '../context';
+import { SupportError } from '../utils';
 
-export function getSymbolsType(symbol: Symbol, context: Context): Type {
+export function getSymbolsType(symbol: Symbol, typeChecker: TypeChecker): Type {
   const declarations = symbol.getDeclarations();
 
   /* istanbul ignore if */
   if (!declarations) {
-    throw new Error(`No declaration found for symbol ${symbol.getName()}`);
+    throw new SupportError(
+      `No declaration found for symbol ${symbol.getName()}`
+    );
   }
 
-  return context.typeChecker.getTypeOfSymbolAtLocation(symbol, declarations[0]);
+  return typeChecker.getTypeOfSymbolAtLocation(symbol, declarations[0]);
 }
 
-export function isFunctionSymbol(symbol: Symbol, context: Context): boolean {
-  return !!getSymbolsType(symbol, context).getCallSignatures().length;
+export function isFunctionSymbol(
+  symbol: Symbol,
+  context: RenderContext
+): boolean {
+  return !!getSymbolsType(symbol, context.typeChecker).getCallSignatures()
+    .length;
 }
 
 export function getNonOptionalType(type: Type): Type {
@@ -64,7 +72,7 @@ export function getArrayType(type: Type): Type | undefined {
 
 export function getExportedSymbolByType(
   type: Type,
-  context: Context
+  context: RenderContext
 ): Symbol | undefined {
   const isExportedTypeAlias =
     type.aliasSymbol && context.exportedSymbols.includes(type.aliasSymbol);

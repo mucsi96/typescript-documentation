@@ -1,6 +1,6 @@
 import { Type, TypeReference } from 'typescript';
 import { renderType } from '.';
-import { Context } from '../context';
+import { RenderContext } from '../context';
 import { inlineCode, link } from '../markdown';
 import { getSymbolSection } from '../utils';
 import { TypeContext } from './context';
@@ -12,7 +12,10 @@ import {
   isOptionalType
 } from './utils';
 
-function getReferenceUrl(type: Type, context: Context): string | undefined {
+function getReferenceUrl(
+  type: Type,
+  context: RenderContext
+): string | undefined {
   const exportedSymbol = getExportedSymbolByType(type, context);
 
   if (!exportedSymbol) {
@@ -32,7 +35,7 @@ function getReferenceUrl(type: Type, context: Context): string | undefined {
 
 export function renderTypeDeclaration(
   type: Type,
-  context: Context,
+  context: RenderContext,
   typeContext: TypeContext = {}
 ): string {
   const typeReference = type as TypeReference;

@@ -28,12 +28,12 @@ describe('functions', () => {
 
         **PARAMETERS**
 
-        - <code>a: string</code>
-        - <code>b?: number</code>
+        - \`a\`: string
+        - \`b?\`: number
 
         **RETURNS**
 
-        <code>string</code>
+        string
 
         **EXAMPLES**
 
@@ -67,12 +67,12 @@ describe('functions', () => {
 
         **PARAMETERS**
 
-        - <code>a: string</code>
-        - <code>b: number</code>
+        - \`a\`: string
+        - \`b\`: number
 
         **RETURNS**
 
-        <code>string</code>
+        string
       `
     });
   });
@@ -114,12 +114,12 @@ describe('functions', () => {
 
         **PARAMETERS**
 
-        - <code>a: object</code>
-          - <code>b: string</code>
+        - \`a\`: object
+          - \`b\`: string
 
         **RETURNS**
 
-        <code>void</code>
+        void
       `
     });
   });

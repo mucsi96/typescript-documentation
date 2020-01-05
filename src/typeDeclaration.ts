@@ -1,6 +1,6 @@
 import { Symbol, Type, TypeFlags } from 'typescript';
 import { renderAdditionalLinks } from './additionalLinks';
-import { Context } from './context';
+import { RenderContext } from './context';
 import { renderDescription } from './description';
 import { renderExamples } from './examples';
 import { heading, joinSections, subSection } from './markdown';
@@ -23,7 +23,7 @@ function renderContentTitle(type: Type): string {
 export function renderTypeDeclaration(
   symbol: Symbol,
   type: Type,
-  context: Context
+  context: RenderContext
 ): string {
   return joinSections([
     heading(symbol.getName(), 2),

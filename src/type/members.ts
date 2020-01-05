@@ -1,12 +1,12 @@
-import { Type, Symbol, __String } from 'typescript';
-import { Context } from '../context';
-import { getSymbolsType } from './utils';
-import { joinLines, listItem } from '../markdown';
+import { Symbol, Type, TypeChecker, __String } from 'typescript';
 import { renderType } from '.';
+import { RenderContext } from '../context';
+import { joinLines, listItem } from '../markdown';
+import { getSymbolsType } from './utils';
 
-function getTypeMembers(
+export function getTypeMembers(
   type: Type,
-  context: Context
+  typeChecker: TypeChecker
 ): { name?: string; type: Type }[] {
   if (type.symbol && type.symbol.members) {
     const membersList: { name: string; type: Type }[] = [];
@@ -14,7 +14,7 @@ function getTypeMembers(
     type.symbol.members.forEach((value: Symbol, key: __String) => {
       membersList.push({
         name: key.toString(),
-        type: getSymbolsType(value, context)
+        type: getSymbolsType(value, typeChecker)
       });
     });
 
@@ -32,11 +32,11 @@ function getTypeMembers(
 
 export function renderTypeMembers(
   type: Type,
-  context: Context,
+  context: RenderContext,
   nestingLevel = 1
 ): string {
   return joinLines(
-    getTypeMembers(type, context).map(({ name, type }) =>
+    getTypeMembers(type, context.typeChecker).map(({ name, type }) =>
       listItem(
         renderType(type, context, {
           name,
