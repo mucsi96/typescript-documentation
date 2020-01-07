@@ -22,14 +22,6 @@ export function getSymbolsType(symbol: Symbol, typeChecker: TypeChecker): Type {
   return typeChecker.getTypeOfSymbolAtLocation(symbol, declarations[0]);
 }
 
-export function isFunctionSymbol(
-  symbol: Symbol,
-  context: RenderContext
-): boolean {
-  return !!getSymbolsType(symbol, context.typeChecker).getCallSignatures()
-    .length;
-}
-
 export function getNonOptionalType(type: Type): Type {
   return (
     (type.isUnion() &&

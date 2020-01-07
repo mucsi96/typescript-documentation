@@ -1,19 +1,5 @@
 # Cookies
 
-## Cookie
-
-An object defining the cookie.
-
-**PROPERTIES**
-
-- `name`: string
-- `value`: string
-- `path?`: string
-- `domain?`: string
-- `secure?`: boolean
-- `httpOnly?`: boolean
-- `expiry?`: number
-
 ## session.getAllCookies()
 
 Returns all cookies associated with the address of the current browsing context’s active
@@ -127,3 +113,17 @@ await session.deleteAllCookies();
 **SEE ALSO**
 
 - [WebDriver spec](https://www.w3.org/TR/webdriver/#delete-all-cookies)
+
+## Cookie
+
+An object defining the cookie.
+
+**PROPERTIES**
+
+- `name`: string
+- `value`: string
+- `path?`: string
+- `domain?`: string
+- `secure?`: boolean
+- `httpOnly?`: boolean
+- `expiry?`: number

@@ -31,9 +31,14 @@ export function getFunctionDependencies(
           []
         );
 
+      const returnType = signature.getReturnType();
+      const returnTypeSymbol = returnType.getSymbol();
+
       return [
         ...dependencies,
-        ...getTypeDependencies(signature.getReturnType(), context),
+        ...(returnTypeSymbol
+          ? getTypeDependencies(returnTypeSymbol, returnType, context)
+          : []),
         ...parameterDependencies
       ];
     }, []);

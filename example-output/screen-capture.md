@@ -1,8 +1,8 @@
 # Screen capture
 
-## element.takeScreenshot()
+## session.takeScreenshot()
 
-Takes a screenshot of the visible region encompassed by the bounding rectangle of an element
+Takes a screenshot of the top-level browsing context’s viewport.
 
 **RETURNS**
 
@@ -19,9 +19,9 @@ const screenshot = await session.takeScreenshot();
 
 - [WebDriver spec](https://www.w3.org/TR/webdriver/#take-screenshot)
 
-## session.takeScreenshot()
+## element.takeScreenshot()
 
-Takes a screenshot of the top-level browsing context’s viewport.
+Takes a screenshot of the visible region encompassed by the bounding rectangle of an element
 
 **RETURNS**
 

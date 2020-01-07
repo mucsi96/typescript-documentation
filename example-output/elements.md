@@ -1,27 +1,74 @@
 # Elements
 
-## ElementRect
+## session.findElement(strategy, selector)
 
-An object defining the Element Rect.
+Search for an element on the page, starting from the document root.
 
-**PROPERTIES**
+**PARAMETERS**
 
-- `x`: number
-- `y`: number
-- `width`: number
-- `height`: number
+- `strategy`: [LocatorStrategy](#locatorstrategy)
+- `selector`: string
 
-## LocatorStrategy
+**RETURNS**
 
-Strategy for searching element on the page
+Promise&lt;[Element](#element)&gt;
 
-**POSSIBLE VALUES**
+**EXAMPLES**
 
-- `'css selector'`
-- `'link text'`
-- `'partial link text'`
-- `'tag name'`
-- `'xpath'`
+```typescript
+const element = await session.findElement('css selector', 'h2');
+// element = <webdriver element>
+```
+
+**SEE ALSO**
+
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#find-element)
+
+## session.findElements(strategy, selector)
+
+Search for multiple elements on the page, starting from the document root. The located
+elements will be returned as a WebElement JSON objects. The table below lists the locator
+strategies that each server should support. Elements should be returned in the order located
+in the DOM.
+
+**PARAMETERS**
+
+- `strategy`: [LocatorStrategy](#locatorstrategy)
+- `selector`: string
+
+**RETURNS**
+
+Promise&lt;[Element](#element)[]&gt;
+
+**EXAMPLES**
+
+```typescript
+const elements = await session.findElements('css selector', 'h2');
+// elements = [<webdriver element>]
+```
+
+**SEE ALSO**
+
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#find-elements)
+
+## session.getActiveElement()
+
+Get the element on the page that currently has focus.
+
+**RETURNS**
+
+Promise&lt;[Element](#element)&gt;
+
+**EXAMPLES**
+
+```typescript
+const element = await session.getActiveElement();
+// element = <webdriver element>
+```
+
+**SEE ALSO**
+
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#get-active-element)
 
 ## Element
 
@@ -316,72 +363,25 @@ await input.sendKeys('Hello World');
 
 - [WebDriver spec](https://www.w3.org/TR/webdriver/#element-send-keys)
 
-## session.findElement(strategy, selector)
+## LocatorStrategy
 
-Search for an element on the page, starting from the document root.
+Strategy for searching element on the page
 
-**PARAMETERS**
+**POSSIBLE VALUES**
 
-- `strategy`: [LocatorStrategy](#locatorstrategy)
-- `selector`: string
+- `'css selector'`
+- `'link text'`
+- `'partial link text'`
+- `'tag name'`
+- `'xpath'`
 
-**RETURNS**
+## ElementRect
 
-Promise&lt;[Element](#element)&gt;
+An object defining the Element Rect.
 
-**EXAMPLES**
+**PROPERTIES**
 
-```typescript
-const element = await session.findElement('css selector', 'h2');
-// element = <webdriver element>
-```
-
-**SEE ALSO**
-
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#find-element)
-
-## session.findElements(strategy, selector)
-
-Search for multiple elements on the page, starting from the document root. The located
-elements will be returned as a WebElement JSON objects. The table below lists the locator
-strategies that each server should support. Elements should be returned in the order located
-in the DOM.
-
-**PARAMETERS**
-
-- `strategy`: [LocatorStrategy](#locatorstrategy)
-- `selector`: string
-
-**RETURNS**
-
-Promise&lt;[Element](#element)[]&gt;
-
-**EXAMPLES**
-
-```typescript
-const elements = await session.findElements('css selector', 'h2');
-// elements = [<webdriver element>]
-```
-
-**SEE ALSO**
-
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#find-elements)
-
-## session.getActiveElement()
-
-Get the element on the page that currently has focus.
-
-**RETURNS**
-
-Promise&lt;[Element](#element)&gt;
-
-**EXAMPLES**
-
-```typescript
-const element = await session.getActiveElement();
-// element = <webdriver element>
-```
-
-**SEE ALSO**
-
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#get-active-element)
+- `x`: number
+- `y`: number
+- `width`: number
+- `height`: number

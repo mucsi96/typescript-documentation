@@ -1,16 +1,5 @@
 # Contexts
 
-## WindowRect
-
-An object defining the Window Rect.
-
-**PROPERTIES**
-
-- `x`: number
-- `y`: number
-- `width`: number
-- `height`: number
-
 ## session.getWindowHandle()
 
 Get handle of current window
@@ -227,3 +216,14 @@ await session.fullScreenWindow();
 **SEE ALSO**
 
 - [WebDriver spec](https://www.w3.org/TR/webdriver/#fullscreen-window)
+
+## WindowRect
+
+An object defining the Window Rect.
+
+**PROPERTIES**
+
+- `x`: number
+- `y`: number
+- `width`: number
+- `height`: number

@@ -72,6 +72,7 @@ function getOptions(cliOptions: CLIOptions): Options {
   try {
     mkdirSync(dirname(getOutput(cliOptions)));
   } catch {
+    /* istanbul ignore next */
     1;
   }
 

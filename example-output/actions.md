@@ -1,5 +1,126 @@
 # Actions
 
+## session.performActions(actionSequences)
+
+Sends virtualised device input to the web browser like keyboard or pointer events in a series of actions.
+
+**PARAMETERS**
+
+- `actionSequences`: [ActionSequence](#actionsequence)[]
+
+**RETURNS**
+
+Promise&lt;void&gt;
+
+**EXAMPLES**
+
+```typescript
+await session.performActions([
+  {
+    type: 'none',
+    id: 'none_id',
+    actions: [{ type: 'pause', duration: 0 }]
+  },
+  {
+    type: 'pointer',
+    id: 'click on b field',
+    actions: [
+      { type: 'pause', duration: 0 },
+      { type: 'pointerMove', x: 118, y: 121 },
+      { type: 'pointerDown', button: 0 },
+      { type: 'pointerUp', button: 0 }
+    ]
+  }
+]);
+```
+
+```typescript
+await session.performActions([
+  {
+    type: 'key',
+    id: 'type in 15',
+    actions: [
+      { type: 'pause', duration: 100 },
+      { type: 'keyDown', value: '1' },
+      { type: 'keyUp', value: '1' },
+      { type: 'keyDown', value: '5' },
+      { type: 'keyUp', value: '5' }
+    ]
+  }
+]);
+```
+
+```typescript
+await session.performActions([
+  {
+    type: 'pointer',
+    id: 'click on add button',
+    actions: [
+      {
+        type: 'pointerMove',
+        x: 1,
+        y: 1,
+        origin: await session.findElement('css selector', '#add')
+      },
+      { type: 'pointerDown', button: 0 },
+      { type: 'pointerUp', button: 0 }
+    ],
+    parameters: {
+      pointerType: 'mouse'
+    }
+  }
+]);
+```
+
+```typescript
+await session.performActions([
+  {
+    type: 'key',
+    id: 'key id',
+    actions: [
+      { type: 'keyDown', value: 'a' },
+      { type: 'keyUp', value: 'a' },
+      { type: 'keyDown', value: 'b' },
+      { type: 'keyUp', value: 'b' },
+      { type: 'keyDown', value: Key.LEFT },
+      { type: 'keyUp', value: Key.LEFT },
+      { type: 'keyDown', value: Key.DELETE },
+      { type: 'keyUp', value: Key.DELETE }
+    ]
+  }
+]);
+```
+
+**SEE ALSO**
+
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#perform-actions)
+
+## session.releaseActions()
+
+Release all the keys and pointer buttons that are currently depressed
+
+**RETURNS**
+
+Promise&lt;void&gt;
+
+**EXAMPLES**
+
+```typescript
+await session.performActions([
+  {
+    type: 'key',
+    id: 'key id',
+    actions: [{ type: 'keyDown', value: 'a' }]
+  }
+]);
+await session.releaseActions();
+// Now 'a' key was pressed
+```
+
+**SEE ALSO**
+
+- [WebDriver spec](https://www.w3.org/TR/webdriver/#release-actions)
+
 ## PauseAction
 
 **PROPERTIES**
@@ -29,7 +150,7 @@
 - `x`: number
 - `y`: number
 - `duration?`: number
-- `origin`: `'viewport'` | `'pointer'` | [Element](elements.md#element)
+- `origin`: [Element](elements.md#element) | `'viewport'` | `'pointer'`
 
 ## PointerUpAction
 
@@ -182,124 +303,3 @@
 - `R_ARROWDOWN`
 - `R_INSERT`
 - `R_DELETE`
-
-## session.performActions(actionSequences)
-
-Sends virtualised device input to the web browser like keyboard or pointer events in a series of actions.
-
-**PARAMETERS**
-
-- `actionSequences`: [ActionSequence](#actionsequence)[]
-
-**RETURNS**
-
-Promise&lt;void&gt;
-
-**EXAMPLES**
-
-```typescript
-await session.performActions([
-  {
-    type: 'none',
-    id: 'none_id',
-    actions: [{ type: 'pause', duration: 0 }]
-  },
-  {
-    type: 'pointer',
-    id: 'click on b field',
-    actions: [
-      { type: 'pause', duration: 0 },
-      { type: 'pointerMove', x: 118, y: 121 },
-      { type: 'pointerDown', button: 0 },
-      { type: 'pointerUp', button: 0 }
-    ]
-  }
-]);
-```
-
-```typescript
-await session.performActions([
-  {
-    type: 'key',
-    id: 'type in 15',
-    actions: [
-      { type: 'pause', duration: 100 },
-      { type: 'keyDown', value: '1' },
-      { type: 'keyUp', value: '1' },
-      { type: 'keyDown', value: '5' },
-      { type: 'keyUp', value: '5' }
-    ]
-  }
-]);
-```
-
-```typescript
-await session.performActions([
-  {
-    type: 'pointer',
-    id: 'click on add button',
-    actions: [
-      {
-        type: 'pointerMove',
-        x: 1,
-        y: 1,
-        origin: await session.findElement('css selector', '#add')
-      },
-      { type: 'pointerDown', button: 0 },
-      { type: 'pointerUp', button: 0 }
-    ],
-    parameters: {
-      pointerType: 'mouse'
-    }
-  }
-]);
-```
-
-```typescript
-await session.performActions([
-  {
-    type: 'key',
-    id: 'key id',
-    actions: [
-      { type: 'keyDown', value: 'a' },
-      { type: 'keyUp', value: 'a' },
-      { type: 'keyDown', value: 'b' },
-      { type: 'keyUp', value: 'b' },
-      { type: 'keyDown', value: Key.LEFT },
-      { type: 'keyUp', value: Key.LEFT },
-      { type: 'keyDown', value: Key.DELETE },
-      { type: 'keyUp', value: Key.DELETE }
-    ]
-  }
-]);
-```
-
-**SEE ALSO**
-
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#perform-actions)
-
-## session.releaseActions()
-
-Release all the keys and pointer buttons that are currently depressed
-
-**RETURNS**
-
-Promise&lt;void&gt;
-
-**EXAMPLES**
-
-```typescript
-await session.performActions([
-  {
-    type: 'key',
-    id: 'key id',
-    actions: [{ type: 'keyDown', value: 'a' }]
-  }
-]);
-await session.releaseActions();
-// Now 'a' key was pressed
-```
-
-**SEE ALSO**
-
-- [WebDriver spec](https://www.w3.org/TR/webdriver/#release-actions)

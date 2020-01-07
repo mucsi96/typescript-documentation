@@ -45,26 +45,32 @@ export function createDocumentation(options: Options): Documentation {
     .getExportsOfModule(entryModuleSymbol)
     .filter(symbol => !isInternalSymbol(symbol));
 
-  const symbolsToRender = getModuleDependencies(entryModuleSymbol, {
+  let symbolsInTopologicalOrder = getModuleDependencies(entryModuleSymbol, {
     typeChecker,
     exportedSymbols,
     resolutionPath: []
   }).filter((child, index, all) => all.indexOf(child) === index);
 
+  symbolsInTopologicalOrder = symbolsInTopologicalOrder.concat(
+    exportedSymbols.filter(
+      symbol => !symbolsInTopologicalOrder.includes(symbol)
+    )
+  );
+
   return spreadClassProperties(
-    symbolsToRender,
+    symbolsInTopologicalOrder,
     options.getSectionLocation
   ).reduce<Documentation>((acc, symbol) => {
     const section = getSymbolSection(symbol);
     const output = renderSymbol(symbol, {
       typeChecker,
-      exportedSymbols: symbolsToRender,
+      exportedSymbols: symbolsInTopologicalOrder,
       section,
       getSectionLocation: options.getSectionLocation
     });
 
     if (acc.has(section)) {
-      acc.set(section, joinSections([acc.get(section) || '', output]));
+      acc.set(section, joinSections([acc.get(section) as string, output]));
     } else {
       acc.set(section, output);
     }

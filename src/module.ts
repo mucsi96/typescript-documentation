@@ -8,11 +8,14 @@ export function getModuleDependencies(
 ): Symbol[] {
   const moduleExports: Symbol[] = [];
 
-  symbol.exports?.forEach(exportedSymbol => {
-    if (context.exportedSymbols.includes(exportedSymbol)) {
-      moduleExports.push(exportedSymbol);
-    }
-  });
+  /* istanbul ignore else */
+  if (symbol.exports) {
+    symbol.exports.forEach(exportedSymbol => {
+      if (context.exportedSymbols.includes(exportedSymbol)) {
+        moduleExports.push(exportedSymbol);
+      }
+    });
+  }
 
   return moduleExports.reduce(
     (dependencies, child) => [

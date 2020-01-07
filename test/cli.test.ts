@@ -6,15 +6,13 @@ import { rewiremock } from './utils';
 
 type CLIResult = {
   options: Options;
-  outputFile: string | undefined;
-  outputContent: string | undefined;
+  output: { [file: string]: string };
 };
 
 function runCLI(): CLIResult {
   const result: CLIResult = {
     options: {} as Options,
-    outputFile: undefined,
-    outputContent: undefined
+    output: {}
   };
 
   rewiremock.proxy('../src/cli', {
@@ -23,14 +21,16 @@ function runCLI(): CLIResult {
         result.options = options;
         const docs = new Map<string, string>();
         docs.set('default', 'test docs');
+        docs.set('section1', 'test section');
         return docs;
       }
     },
     fs: {
       writeFileSync: (file: string, content: string): void => {
-        result.outputFile = file;
-        result.outputContent = content;
-      }
+        result.output[file] = content;
+      },
+      //eslint-disable-next-line @typescript-eslint/no-empty-function
+      mkdirSync: (): void => {}
     },
     typescript: {
       ...ts,
@@ -119,23 +119,34 @@ describe('CLI', () => {
 
   it('reads output file from command line options (long)', () => {
     process.argv = ['node', 'typescript-documentation', '--output', 'test.md'];
-    expect(runCLI().outputFile).toEqual(resolve(process.cwd(), 'test.md'));
+    expect(runCLI().output[resolve(process.cwd(), 'test.md')]).toEqual(
+      'test docs'
+    );
   });
 
   it('reads output file from command line options (short)', () => {
     process.argv = ['node', 'typescript-documentation', '-o', 'test.md'];
-    expect(runCLI().outputFile).toEqual(resolve(process.cwd(), 'test.md'));
+    expect(runCLI().output[resolve(process.cwd(), 'test.md')]).toEqual(
+      'test docs'
+    );
   });
 
   it('reads output file from command line options (absolute)', () => {
     const path = resolve(process.cwd(), 'test.md');
     process.argv = ['node', 'typescript-documentation', '--output', path];
-    expect(runCLI().outputFile).toEqual(path);
+    expect(runCLI().output[path]).toEqual('test docs');
   });
 
   it('writes markdown to provided output file', () => {
     const path = resolve(process.cwd(), 'test.md');
     process.argv = ['node', 'typescript-documentation', '--output', path];
-    expect(runCLI().outputFile).toEqual(path);
+    expect(runCLI().output[path]).toEqual('test docs');
+  });
+
+  it('writes sections to separate output files', () => {
+    process.argv = ['node', 'typescript-documentation', '--output', 'test.md'];
+    expect(runCLI().output[resolve(process.cwd(), 'section1.md')]).toEqual(
+      '# section1\n\ntest section'
+    );
   });
 });

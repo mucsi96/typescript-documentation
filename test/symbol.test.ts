@@ -28,6 +28,64 @@ describe('symbol', () => {
     });
   });
 
+  it('documents dependencies in topological order', () => {
+    testDocumentation({
+      'dependency.ts': `
+        export type SimpleTypeA = {};
+        export type SimpleTypeB = {};
+        export type SimpleTypeC = { c: SimpleTypeB };
+      `,
+      'index.ts': `
+        import { SimpleTypeC } from './dependency';
+        export let testVariable: SimpleTypeC;
+        export * from './dependency';
+      `,
+      markdown: `
+        ## testVariable
+
+        **TYPE**
+
+        [SimpleTypeC](#simpletypec)
+
+        ## SimpleTypeC
+
+        **PROPERTIES**
+
+        - \`c\`: [SimpleTypeB](#simpletypeb)
+
+        ## SimpleTypeB
+
+        ## SimpleTypeA
+      `
+    });
+  });
+
+  it('doesn`t document internal dependencies ', () => {
+    testDocumentation({
+      'dependency.ts': `
+        export type SimpleTypeB = {};
+        /**
+         * @internal
+         */
+        export type SimpleTypeC = { c: SimpleTypeB };
+      `,
+      'index.ts': `
+        import { SimpleTypeC } from './dependency';
+        export let testVariable: SimpleTypeC;
+        export * from './dependency';
+      `,
+      markdown: `
+        ## testVariable
+
+        **TYPE**
+
+        SimpleTypeC
+
+        ## SimpleTypeB
+      `
+    });
+  });
+
   it('documents sections', () => {
     const docs = createTestDocumentation({
       'index.ts': `
@@ -72,6 +130,11 @@ describe('symbol', () => {
            * @section two
            */
           public simpleMethod2(): void {}
+
+          /**
+           * @section two
+           */
+          public simpleMethod3(): void {}
         }
       `
     });
@@ -98,6 +161,12 @@ describe('symbol', () => {
     expect(docs.get('two')).toEqual(
       removePadding(`
         ## simpleClass.simpleMethod2()
+
+        **RETURNS**
+
+        void
+
+        ## simpleClass.simpleMethod3()
 
         **RETURNS**
 

@@ -77,6 +77,34 @@ describe('functions', () => {
     });
   });
 
+  it('documents as dependency', () => {
+    testDocumentation({
+      'dependency.ts': `
+        export function simpleFunction(): void {}
+      `,
+      'index.ts': `
+        export * from './dependency';
+      `,
+      markdown: `
+        ## simpleFunction()
+
+        **RETURNS**
+
+        void
+      `
+    });
+  });
+
+  it('doesn`t documents as dependency if not exported', () => {
+    testDocumentation({
+      'dependency.ts': `
+        export function simpleFunction(): void {}
+      `,
+      'index.ts': ``,
+      markdown: ``
+    });
+  });
+
   it('doesn`t document not exported functions', () => {
     testDocumentation({
       'index.ts': `
@@ -120,6 +148,68 @@ describe('functions', () => {
         **RETURNS**
 
         void
+      `
+    });
+  });
+
+  it('documents function return type as dependency', () => {
+    testDocumentation({
+      'dependency.ts': `
+        export let a: boolean;
+        export type SimpleType = {};
+      `,
+      'index.ts': `
+        import { SimpleType } from './dependency';
+        export function simpleFunction(): SimpleType {}
+        export * from './dependency';
+      `,
+      markdown: `
+        ## simpleFunction()
+
+        **RETURNS**
+
+        [SimpleType](#simpletype)
+
+        ## SimpleType
+
+        ## a
+
+        **TYPE**
+
+        boolean
+      `
+    });
+  });
+
+  it('documents function parameter type as dependency', () => {
+    testDocumentation({
+      'dependency.ts': `
+        export let a: boolean;
+        export type SimpleType = {};
+      `,
+      'index.ts': `
+        import { SimpleType } from './dependency';
+        export function simpleFunction(a: SimpleType): void {}
+        export * from './dependency';
+      `,
+      markdown: `
+        ## simpleFunction(a)
+
+        **PARAMETERS**
+
+        - \`a\`: [SimpleType](#simpletype)
+
+        **RETURNS**
+
+        void
+
+        ## SimpleType
+
+        ## a
+
+        **TYPE**
+
+        boolean
       `
     });
   });

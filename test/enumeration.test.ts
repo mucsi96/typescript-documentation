@@ -65,6 +65,54 @@ describe('enumerations', () => {
     });
   });
 
+  it('documents as dependency', () => {
+    testDocumentation({
+      'dependency.ts': `
+        export enum SimpleEnum { ONE, TWO };
+      `,
+      'index.ts': `
+        import { SimpleEnum } from './dependency';
+
+        export let testVariable: SimpleEnum;
+        export * from './dependency';
+      `,
+      markdown: `
+        ## testVariable
+
+        **TYPE**
+
+        [SimpleEnum](#simpleenum)
+
+        ## SimpleEnum
+
+        **POSSIBLE VALUES**
+
+        - \`ONE\`
+        - \`TWO\`
+      `
+    });
+  });
+
+  it('doesn`t documents as dependency if not exported', () => {
+    testDocumentation({
+      'dependency.ts': `
+        export enum SimpleEnum { ONE, TWO };
+      `,
+      'index.ts': `
+        import { SimpleEnum } from './dependency';
+
+        export let testVariable: SimpleEnum;
+      `,
+      markdown: `
+        ## testVariable
+
+        **TYPE**
+
+        SimpleEnum
+      `
+    });
+  });
+
   it('doesn`t document not exported enumerations', () => {
     testDocumentation({
       'index.ts': `

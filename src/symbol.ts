@@ -4,9 +4,7 @@ import { DependencyContext, RenderContext } from './context';
 import { renderEnumeration } from './enumeration';
 import { getFunctionDependencies, renderFunction } from './function';
 import { joinSections } from './markdown';
-import { getModuleDependencies } from './module';
-import { getTypeDependencies } from './type';
-import { getSymbolsType } from './type/utils';
+import { getTypeDependencies, getTypeLiteralDependencies } from './type';
 import { renderTypeDeclaration } from './typeDeclaration';
 import {
   findExactMatchingSymbolFlags,
@@ -35,6 +33,7 @@ function renderDeclaration(
     return renderClass(symbol, context);
   }
 
+  /* istanbul ignore next */
   if (flags & SymbolFlags.Property || flags & SymbolFlags.Constructor) {
     return '';
   }
@@ -70,16 +69,17 @@ export function getSymbolDependencies(
     resolutionPath: [...context.resolutionPath, symbol]
   };
 
-  if (flags & SymbolFlags.Module) {
-    return getModuleDependencies(symbol, newContext);
-  }
-
-  const declarations = symbol.getDeclarations() || [];
+  const declarations =
+    symbol.getDeclarations() || /* istanbul ignore next */ [];
 
   return declarations.reduce<Symbol[]>((dependencies, declaration) => {
     const type = context.typeChecker.getTypeAtLocation(declaration);
 
-    if (type.getFlags() & TypeFlags.Any || flags & SymbolFlags.TypeParameter) {
+    if (
+      type.getFlags() & TypeFlags.Any ||
+      flags & SymbolFlags.TypeParameter ||
+      flags & SymbolFlags.RegularEnum
+    ) {
       return dependencies;
     }
 
@@ -91,24 +91,31 @@ export function getSymbolDependencies(
       return [...dependencies, ...getFunctionDependencies(type, newContext)];
     }
 
+    if (flags & SymbolFlags.TypeLiteral || flags & SymbolFlags.Interface) {
+      /* istanbul ignore next */
+      if (flags & SymbolFlags.Transient) {
+        return [];
+      }
+
+      return [
+        ...dependencies,
+        ...getTypeLiteralDependencies(symbol, newContext)
+      ];
+    }
+
     if (
       flags & SymbolFlags.FunctionScopedVariable ||
       flags & SymbolFlags.BlockScopedVariable ||
       flags & SymbolFlags.TypeAlias ||
-      flags & SymbolFlags.TypeLiteral ||
-      flags & SymbolFlags.Property ||
-      flags & SymbolFlags.Interface ||
-      flags & SymbolFlags.RegularEnum
+      flags & SymbolFlags.Property
     ) {
       return [
         ...dependencies,
-        ...getTypeDependencies(
-          getSymbolsType(symbol, context.typeChecker),
-          newContext
-        )
+        ...getTypeDependencies(symbol, type, newContext)
       ];
     }
 
+    /* istanbul ignore else */
     if (flags & SymbolFlags.Class) {
       return [...dependencies, ...getClassDependencies(symbol, newContext)];
     }
@@ -136,6 +143,7 @@ export function renderSymbol(symbol: Symbol, context: RenderContext): string {
             context
           );
         } catch (error) {
+          /* istanbul ignore next */
           if (error instanceof SupportError) {
             /* istanbul ignore next */
             throw new Error(
@@ -144,6 +152,7 @@ export function renderSymbol(symbol: Symbol, context: RenderContext): string {
               )
             );
           } else {
+            /* istanbul ignore next */
             throw error;
           }
         }

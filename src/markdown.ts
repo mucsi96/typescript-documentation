@@ -33,7 +33,3 @@ export function listItem(text: string, level = 1): string {
 export function link(text: string, link: string): string {
   return `[${text}](${link})`;
 }
-
-export function reference(text: string): string {
-  return link(text, `#${text.toLowerCase().replace(/[^a-z\d]+/g, '')}`);
-}

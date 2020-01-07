@@ -10,7 +10,7 @@ import { joinLines } from '../markdown';
 import { getSymbolDependencies } from '../symbol';
 import { TypeContext } from './context';
 import { renderTypeDeclaration } from './declaration';
-import { getTypeMembers, renderTypeMembers } from './members';
+import { renderTypeMembers } from './members';
 import { getNonOptionalType } from './utils';
 
 function hasMembers(type: Type): boolean {
@@ -24,20 +24,50 @@ function hasMembers(type: Type): boolean {
   );
 }
 
-function isTransientType(type: Type): boolean {
-  const symbol = type.getSymbol();
+export function getTypeLiteralDependencies(
+  symbol: Symbol,
+  context: DependencyContext
+): Symbol[] {
+  const members: Symbol[] = [];
 
-  if (!symbol) {
-    return false;
+  /* istanbul ignore else */
+  if (symbol.members) {
+    symbol.members.forEach(member => {
+      members.push(member);
+    });
   }
 
-  return !!(symbol.getFlags() & SymbolFlags.Transient);
+  return members.reduce<Symbol[]>(
+    (dependencies, member) => [
+      ...dependencies,
+      ...getSymbolDependencies(member, context)
+    ],
+    []
+  );
 }
 
 export function getTypeDependencies(
+  symbol: Symbol,
   type: Type,
   context: DependencyContext
 ): Symbol[] {
+  const flags = symbol.getFlags();
+
+  if (!(flags & SymbolFlags.TypeAlias) && type.aliasSymbol) {
+    return [
+      ...(context.exportedSymbols.includes(type.aliasSymbol)
+        ? [type.aliasSymbol]
+        : []),
+      ...getSymbolDependencies(type.aliasSymbol, context)
+    ];
+  }
+
+  const typeSymbol = type.getSymbol();
+
+  if (!typeSymbol) {
+    return [];
+  }
+
   const typeReference = type as TypeReference;
   const typeArguments = typeReference.typeArguments || [];
   const typeArgumetDependencies = typeArguments.reduce<Symbol[]>(
@@ -46,32 +76,16 @@ export function getTypeDependencies(
 
       return [
         ...dependnecies,
-        ...(symbol ? getSymbolDependencies(symbol, context) : [])
+        ...(symbol ? getTypeDependencies(symbol, typeArgument, context) : [])
       ];
     },
     []
   );
 
-  const memberDependencies = isTransientType(type)
-    ? []
-    : getTypeMembers(type, context.typeChecker).reduce<Symbol[]>(
-        (dependnecies, { type }) => {
-          const symbol = type.getSymbol();
-
-          return [
-            ...dependnecies,
-            ...(symbol ? getSymbolDependencies(symbol, context) : [])
-          ];
-        },
-        []
-      );
-
   return [
-    ...(type.aliasSymbol && context.exportedSymbols.includes(type.aliasSymbol)
-      ? [type.aliasSymbol, ...getSymbolDependencies(type.aliasSymbol, context)]
-      : []),
-    ...typeArgumetDependencies,
-    ...memberDependencies
+    ...(context.exportedSymbols.includes(typeSymbol) ? [typeSymbol] : []),
+    ...getSymbolDependencies(typeSymbol, context),
+    ...typeArgumetDependencies
   ];
 }
 

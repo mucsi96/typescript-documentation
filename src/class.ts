@@ -13,15 +13,14 @@ export function getClassDependencies(
 ): Symbol[] {
   const members: Symbol[] = [];
 
-  if (!symbol.members || !context.exportedSymbols.includes(symbol)) {
-    return [];
+  /* istanbul ignore else */
+  if (symbol.members) {
+    symbol.members.forEach(member => {
+      if (!isInternalSymbol(member)) {
+        members.push(member);
+      }
+    });
   }
-
-  symbol.members.forEach(member => {
-    if (!isInternalSymbol(member)) {
-      members.push(member);
-    }
-  });
 
   return members.reduce<Symbol[]>(
     (dependencies, member) => [

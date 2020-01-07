@@ -144,6 +144,63 @@ describe('classes', () => {
     });
   });
 
+  it('documents as dependency', () => {
+    testDocumentation({
+      'dependency.ts': `
+        export class SimpleClass {
+          public simpleMethod1(): void {
+            return;
+          }
+        }
+      `,
+      'index.ts': `
+        import { SimpleClass } from './dependency';
+
+        export let testVariable: SimpleClass;
+        export * from './dependency';
+      `,
+      markdown: `
+        ## testVariable
+
+        **TYPE**
+
+        [SimpleClass](#simpleclass)
+
+        ## SimpleClass
+
+        ## simpleClass.simpleMethod1()
+
+        **RETURNS**
+
+        void
+      `
+    });
+  });
+
+  it('doesn`t documents as dependency if not exported', () => {
+    testDocumentation({
+      'dependency.ts': `
+        export class SimpleClass {
+          public simpleMethod1(): void {
+            return;
+          }
+        }
+      `,
+      'index.ts': `
+        import { SimpleClass } from './dependency';
+
+        export let testVariable: SimpleClass;
+      `,
+      markdown: `
+        ## testVariable
+
+        **TYPE**
+
+        SimpleClass
+      `
+    });
+  });
+
   it('doesn`t document not exported classes', () => {
     testDocumentation({
       'index.ts': `
@@ -176,6 +233,17 @@ describe('classes', () => {
             return;
           }
         }
+      `,
+      markdown: `
+        ## SimpleClass
+      `
+    });
+  });
+
+  it('documents empty class', () => {
+    testDocumentation({
+      'index.ts': `
+        export class SimpleClass {}
       `,
       markdown: `
         ## SimpleClass

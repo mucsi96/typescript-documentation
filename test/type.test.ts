@@ -318,4 +318,62 @@ describe('type', () => {
       `
     });
   });
+
+  it('documents array type as dependency', () => {
+    testDocumentation({
+      'dependency.ts': `
+        export let a: boolean;
+        export type SimpleType = {};
+      `,
+      'index.ts': `
+        import { SimpleType } from './dependency';
+        export let testVariable: SimpleType[];
+        export * from './dependency';
+      `,
+      markdown: `
+      ## testVariable
+
+      **TYPE**
+
+      [SimpleType](#simpletype)[]
+
+      ## SimpleType
+
+      ## a
+
+      **TYPE**
+
+      boolean
+      `
+    });
+  });
+
+  it('documents type parameter as dependency', () => {
+    testDocumentation({
+      'dependency.ts': `
+        export let a: boolean;
+        export type SimpleType = {};
+      `,
+      'index.ts': `
+        import { SimpleType } from './dependency';
+        export let testVariable: Promise<SimpleType>;
+        export * from './dependency';
+      `,
+      markdown: `
+      ## testVariable
+
+      **TYPE**
+
+      Promise&lt;[SimpleType](#simpletype)&gt;
+
+      ## SimpleType
+
+      ## a
+
+      **TYPE**
+
+      boolean
+      `
+    });
+  });
 });
