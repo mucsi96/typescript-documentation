@@ -8,8 +8,6 @@
 
 Generate markdown API documentation directly from TypeScript source code.
 
-# :construction: Work in progress...
-
 # Documenting variables
 
 _Example input:_
@@ -39,7 +37,7 @@ line 2
 
 **TYPE**
 
-`number`
+number
 
 **EXAMPLES**
 
@@ -89,12 +87,12 @@ line 2
 
 **PARAMETERS**
 
-- `a: string`
-- `b?: number`
+- `a`: string
+- `b?`: number
 
 **RETURNS**
 
-`string`
+string
 
 **EXAMPLES**
 
@@ -188,7 +186,7 @@ line 2
 
 **RETURNS**
 
-`void`
+void
 
 **EXAMPLES**
 
@@ -214,12 +212,12 @@ line 2
 
 **PARAMETERS**
 
-- `a: string`
-- `b: number`
+- `a`: string
+- `b`: number
 
 **RETURNS**
 
-`string`
+string
 
 # Documenting types
 
@@ -253,8 +251,8 @@ line 2
 
 **PROPERTIES**
 
-- `a: string`
-- `b?: number`
+- `a`: string
+- `b?`: number
 
 **EXAMPLES**
 
