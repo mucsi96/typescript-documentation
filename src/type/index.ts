@@ -47,13 +47,18 @@ export function getTypeLiteralDependencies(
 }
 
 export function getTypeDependencies(
-  symbol: Symbol,
+  symbol: Symbol | undefined,
   type: Type,
   context: DependencyContext
 ): Symbol[] {
-  const flags = symbol.getFlags();
+  const symbolFlags = symbol ? symbol.getFlags() : 0;
+  const typeSymbol = type.getSymbol();
 
-  if (!(flags & SymbolFlags.TypeAlias) && type.aliasSymbol) {
+  if (typeSymbol && typeSymbol.getFlags() & SymbolFlags.Enum) {
+    return [];
+  }
+
+  if (!(symbolFlags & SymbolFlags.TypeAlias) && type.aliasSymbol) {
     return [
       ...(context.exportedSymbols.includes(type.aliasSymbol)
         ? [type.aliasSymbol]
@@ -62,7 +67,15 @@ export function getTypeDependencies(
     ];
   }
 
-  const typeSymbol = type.getSymbol();
+  if (type.isUnion()) {
+    return type.types.reduce<Symbol[]>(
+      (dependencies, type) => [
+        ...dependencies,
+        ...getTypeDependencies(undefined, type, context)
+      ],
+      []
+    );
+  }
 
   if (!typeSymbol) {
     return [];
@@ -76,7 +89,7 @@ export function getTypeDependencies(
 
       return [
         ...dependnecies,
-        ...(symbol ? getTypeDependencies(symbol, typeArgument, context) : [])
+        ...getTypeDependencies(symbol, typeArgument, context)
       ];
     },
     []

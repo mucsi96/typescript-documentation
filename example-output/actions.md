@@ -121,12 +121,44 @@ await session.releaseActions();
 
 - [WebDriver spec](https://www.w3.org/TR/webdriver/#release-actions)
 
+## ActionSequence
+
+**POSSIBLE VALUES**
+
+- [NullActionSequence](#nullactionsequence)
+- [KeyActionSequence](#keyactionsequence)
+- [PointerActionSequence](#pointeractionsequence)
+
+## NullActionSequence
+
+**PROPERTIES**
+
+- `type`: `'none'`
+- `id`: string
+- `actions`: [PauseAction](#pauseaction)[]
+
 ## PauseAction
 
 **PROPERTIES**
 
 - `type`: `'pause'`
 - `duration`: number
+
+## KeyActionSequence
+
+**PROPERTIES**
+
+- `type`: `'key'`
+- `id`: string
+- `actions`: [KeyAction](#keyaction)[]
+
+## KeyAction
+
+**POSSIBLE VALUES**
+
+- [PauseAction](#pauseaction)
+- [KeyDownAction](#keydownaction)
+- [KeyUpAction](#keyupaction)
 
 ## KeyDownAction
 
@@ -142,6 +174,24 @@ await session.releaseActions();
 - `type`: `'keyUp'`
 - `value`: string
 
+## PointerActionSequence
+
+**PROPERTIES**
+
+- `type`: `'pointer'`
+- `id`: string
+- `actions`: [PointerAction](#pointeraction)[]
+- `parameters?`: [PointerParameters](#pointerparameters)
+
+## PointerAction
+
+**POSSIBLE VALUES**
+
+- [PauseAction](#pauseaction)
+- [PointerMoveAction](#pointermoveaction)
+- [PointerUpAction](#pointerupaction)
+- [PointerDownAction](#pointerdownaction)
+
 ## PointerMoveAction
 
 **PROPERTIES**
@@ -150,7 +200,7 @@ await session.releaseActions();
 - `x`: number
 - `y`: number
 - `duration?`: number
-- `origin`: [Element](elements.md#element) | `'viewport'` | `'pointer'`
+- `origin`: [Element](elements.md#element) | `'pointer'` | `'viewport'`
 
 ## PointerUpAction
 
@@ -166,68 +216,18 @@ await session.releaseActions();
 - `type`: `'pointerDown'`
 - `button`: number
 
-## NullAction
-
-**PROPERTIES**
-
-- `type`: `'pause'`
-- `duration`: number
-
-## KeyAction
-
-**POSSIBLE VALUES**
-
-- [PauseAction](#pauseaction)
-- [KeyDownAction](#keydownaction)
-- [KeyUpAction](#keyupaction)
-
-## PointerAction
-
-**POSSIBLE VALUES**
-
-- [PauseAction](#pauseaction)
-- [PointerMoveAction](#pointermoveaction)
-- [PointerUpAction](#pointerupaction)
-- [PointerDownAction](#pointerdownaction)
-
-## NullActionSequence
-
-**PROPERTIES**
-
-- `type`: `'none'`
-- `id`: string
-- `actions`: [PauseAction](#pauseaction)[]
-
-## KeyActionSequence
-
-**PROPERTIES**
-
-- `type`: `'key'`
-- `id`: string
-- `actions`: [KeyAction](#keyaction)[]
-
 ## PointerParameters
 
 **PROPERTIES**
 
 - `pointerType`: `'mouse'` | `'pen'` | `'touch'`
 
-## PointerActionSequence
+## NullAction
 
 **PROPERTIES**
 
-- `type`: `'pointer'`
-- `id`: string
-- `actions`: [PointerAction](#pointeraction)[]
-- `parameters?`: [PointerParameters](#pointerparameters)
-
-## ActionSequence
-
-**POSSIBLE VALUES**
-
-- [NullActionSequence](#nullactionsequence)
-- [KeyActionSequence](#keyactionsequence)
-- [PointerActionSequence](#pointeractionsequence)
+- `type`: `'pause'`
+- `duration`: number
 
 ## Key
 

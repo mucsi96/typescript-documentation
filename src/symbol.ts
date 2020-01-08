@@ -117,6 +117,10 @@ export function getSymbolDependencies(
 
     /* istanbul ignore else */
     if (flags & SymbolFlags.Class) {
+      if (!context.exportedSymbols.includes(symbol)) {
+        return dependencies;
+      }
+
       return [...dependencies, ...getClassDependencies(symbol, newContext)];
     }
 

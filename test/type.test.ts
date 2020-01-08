@@ -376,4 +376,36 @@ describe('type', () => {
       `
     });
   });
+
+  it('documents union type dependencies', () => {
+    testDocumentation({
+      'dependency.ts': `
+        export let a: boolean;
+        export type SimpleTypeA = {};
+        export type SimpleTypeB = {};
+      `,
+      'index.ts': `
+        import { SimpleTypeA, SimpleTypeB } from './dependency';
+        export let testVariable: SimpleTypeA | SimpleTypeB;
+        export * from './dependency';
+      `,
+      markdown: `
+      ## testVariable
+
+      **TYPE**
+
+      [SimpleTypeA](#simpletypea) | [SimpleTypeB](#simpletypeb)
+
+      ## SimpleTypeA
+
+      ## SimpleTypeB
+
+      ## a
+
+      **TYPE**
+
+      boolean
+      `
+    });
+  });
 });

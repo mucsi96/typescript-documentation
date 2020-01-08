@@ -7,6 +7,16 @@
 - `alwaysMatch?`: [BrowserCapability](#browsercapability)
 - `firstMatch?`: [BrowserCapability](#browsercapability)[]
 
+## BrowserCapability
+
+**PROPERTIES**
+
+- `browserName`: string
+- `goog:chromeOptions?`: [ChromeOptions](#chromeoptions)
+- `moz:firefoxOptions?`: [FirefoxOptions](#firefoxoptions)
+- `se:ieOptions?`: [InternetExplorerOptions](#internetexploreroptions)
+- `bstack:options?`: [BrowserStackOptions](#browserstackoptions)
+
 ## ChromeOptions
 
 **PROPERTIES**
@@ -46,13 +56,3 @@
 - `safari?`: object
   - `enablePopups?`: boolean
   - `allowAllCookies?`: boolean
-
-## BrowserCapability
-
-**PROPERTIES**
-
-- `browserName`: string
-- `goog:chromeOptions?`: [ChromeOptions](#chromeoptions)
-- `moz:firefoxOptions?`: [FirefoxOptions](#firefoxoptions)
-- `se:ieOptions?`: [InternetExplorerOptions](#internetexploreroptions)
-- `bstack:options?`: [BrowserStackOptions](#browserstackoptions)

@@ -36,9 +36,7 @@ export function getFunctionDependencies(
 
       return [
         ...dependencies,
-        ...(returnTypeSymbol
-          ? getTypeDependencies(returnTypeSymbol, returnType, context)
-          : []),
+        ...getTypeDependencies(returnTypeSymbol, returnType, context),
         ...parameterDependencies
       ];
     }, []);
