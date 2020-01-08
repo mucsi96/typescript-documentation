@@ -1,12 +1,28 @@
 # typescript-documentation
 
-[![npm version](https://badge.fury.io/js/%40mucsi96%2Ftypescript-documentation.svg)](https://www.npmjs.com/package/@mucsi96/typescript-documentation)
+[![npm version](https://badge.fury.io/js/typescript-documentation.svg)](https://www.npmjs.com/package/typescript-documentation)
 [![Build Status](https://github.com/mucsi96/typescript-documentation/workflows/Build/badge.svg)](https://github.com/mucsi96/typescript-documentation/actions?query=workflow%3ABuild+branch%3Amaster)
 [![Coverage Status](https://coveralls.io/repos/github/mucsi96/typescript-documentation/badge.svg?branch=master)](https://coveralls.io/github/mucsi96/typescript-documentation?branch=master)
-[![npm](https://img.shields.io/npm/dw/@mucsi96/typescript-documentation)](https://www.npmjs.com/package/@mucsi96/typescript-documentation)
+[![npm](https://img.shields.io/npm/dw/typescript-documentation)](https://www.npmjs.com/package/typescript-documentation)
 [![github](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://github.com/mucsi96/typescript-documentation)
 
 Generate markdown API documentation directly from TypeScript source code.
+
+# Usage
+
+```
+npm i typescript-documentation
+```
+
+```
+> typescript-documentation [options]
+
+Options:
+  -p, --project <tsconfig file>  relative or absolute path to a tsconfig.json file (default: "./tsconfig.json")
+  -e, --entry <main file>        entry/main file of project (default: "./src/index.ts")
+  -o, --output <markdown file>   markdown documentation output file location (default: "./output.md")
+  -h, --help                     output usage information
+```
 
 # Documenting variables
 
