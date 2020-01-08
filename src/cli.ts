@@ -96,6 +96,11 @@ try {
     const content =
       section === 'default' ? text : joinSections([heading(section, 1), text]);
 
+    /* istanbul ignore next */
+    if (!content) {
+      return;
+    }
+
     writeFileSync(
       resolve(
         dirname(getOutput(cliOptions)),
