@@ -24,6 +24,8 @@ Options:
   -h, --help                     output usage information
 ```
 
+[https://mucsi96.gitbook.io/w3c-webdriver/](Live example output)
+
 # Documenting variables
 
 _Example input:_

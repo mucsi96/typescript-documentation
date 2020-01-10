@@ -68,7 +68,7 @@ export function getTypeTitle(type: Type, context: RenderContext): string {
   }
 
   /* istanbul ignore else */
-  if (objectFlags & ObjectFlags.Anonymous) {
+  if (objectFlags & ObjectFlags.Anonymous || flags & TypeFlags.NonPrimitive) {
     return 'object';
   }
 

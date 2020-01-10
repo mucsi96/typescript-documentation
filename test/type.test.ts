@@ -32,6 +32,21 @@ describe('type', () => {
     });
   });
 
+  it('documents general objects', () => {
+    testDocumentation({
+      'index.ts': `
+        export let testVariable: object;
+      `,
+      markdown: `
+        ## testVariable
+
+        **TYPE**
+
+        object
+      `
+    });
+  });
+
   it('documents exported objects', () => {
     testDocumentation({
       'index.ts': `
