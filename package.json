@@ -1,6 +1,6 @@
 {
   "name": "typescript-documentation",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generate markdown API documentation directly from TypeScript source code",
   "license": "MIT",
   "main": "./lib/index.js",
@@ -24,7 +24,6 @@
     "build:compile": "babel src --out-dir lib --extensions \".ts\" --ignore \"**/*.test.ts\"",
     "build": "npm run clean && npm run build:declarations && npm run build:compile",
     "prepack": "npm run build",
-    "publish": "npm publish --access public",
     "update:dependencies": "npx npm-check-updates -u"
   },
   "keywords": [
