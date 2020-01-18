@@ -44,7 +44,8 @@ export function renderTypeDeclaration(
   if (arrayType) {
     return renderType(arrayType, context, {
       isArray: true,
-      name: typeContext.name
+      name: typeContext.name,
+      description: typeContext.description
     });
   }
 
@@ -60,11 +61,15 @@ export function renderTypeDeclaration(
     ...(typeContext.isArray ? ['[]'] : [])
   ].join('');
 
-  return [
+  const nameAndDeclaration = [
     typeContext.name &&
       `${inlineCode(
         `${typeContext.name}${isOptionalType(type) ? '?' : ''}`
       )}: `,
     typeDeclaration
   ].join('');
+
+  return [nameAndDeclaration, typeContext.description]
+    .filter(Boolean)
+    .join(' - ');
 }
