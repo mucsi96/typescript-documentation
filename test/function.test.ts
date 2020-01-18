@@ -15,6 +15,8 @@ describe('functions', () => {
          * @example
          * example 2 line 1
          * example 2 line 2
+         * @param a first parameter description
+         * @param b second parameter description
          */
         export function simpleFunction(a: string, b?: number): string {
           return a;
@@ -28,8 +30,8 @@ describe('functions', () => {
 
         **PARAMETERS**
 
-        - \`a\`: string
-        - \`b?\`: number
+        - \`a\`: string - first parameter description
+        - \`b?\`: number - second parameter description
 
         **RETURNS**
 

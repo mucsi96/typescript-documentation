@@ -42,17 +42,47 @@ export function getFunctionDependencies(
     }, []);
 }
 
+function getParameterDescription(
+  name: string,
+  signature: Signature
+): string | undefined | null {
+  const paramDescriptonRegex = new RegExp(`${name} (.*)`);
+  return signature
+    .getJsDocTags()
+    .filter(tag => tag.name === 'param')
+    .map(tag => {
+      /* istanbul ignore next */
+      if (!tag.text) {
+        return null;
+      }
+
+      const match = paramDescriptonRegex.exec(tag.text);
+
+      return match && match[1];
+    })
+    .find(description => description);
+}
+
 function renderFunctionParameter(
   parameter: Symbol,
+  signature: Signature,
   context: RenderContext
 ): string {
   const name = parameter.getName();
   const type = getSymbolsType(parameter, context.typeChecker);
-  return listItem(renderType(type, context, { name, nestingLevel: 2 }));
+  return listItem(
+    [
+      renderType(type, context, { name, nestingLevel: 2 }),
+      getParameterDescription(name, signature)
+    ]
+      .filter(Boolean)
+      .join(' - ')
+  );
 }
 
 function renderFunctionParameters(
   parameters: Symbol[],
+  signature: Signature,
   context: RenderContext
 ): string {
   if (!parameters.length) {
@@ -62,7 +92,9 @@ function renderFunctionParameters(
   return joinSections([
     subSection('Parameters'),
     joinLines(
-      parameters.map(parameter => renderFunctionParameter(parameter, context))
+      parameters.map(parameter =>
+        renderFunctionParameter(parameter, signature, context)
+      )
     )
   ]);
 }
@@ -85,7 +117,7 @@ export function renderFunctionSignature(
       2
     ),
     renderDescription(signature.getDocumentationComment(context.typeChecker)),
-    renderFunctionParameters(parameters, context),
+    renderFunctionParameters(parameters, signature, context),
     subSection('Returns'),
     renderType(signature.getReturnType(), context),
     renderExamples(signature.getJsDocTags()),
