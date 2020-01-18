@@ -51,6 +51,7 @@ function getParameterDescription(
     .getJsDocTags()
     .filter(tag => tag.name === 'param')
     .map(tag => {
+      /* istanbul ignore next */
       if (!tag.text) {
         return null;
       }
