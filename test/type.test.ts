@@ -334,6 +334,33 @@ describe('type', () => {
     });
   });
 
+  it('documents nested anonymous types with optional properties with descriptions', () => {
+    testDocumentation({
+      'index.ts': `
+        export let testVariable: {
+          /**
+           * first property description
+           */
+          a?: {
+            /**
+             * second property description
+             */
+            b: string
+          }
+        };
+      `,
+      markdown: `
+        ## testVariable
+
+        **TYPE**
+
+        object
+        - \`a?\`: object - first property description
+          - \`b\`: string - second property description
+      `
+    });
+  });
+
   it('documents array type as dependency', () => {
     testDocumentation({
       'dependency.ts': `
