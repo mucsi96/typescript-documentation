@@ -69,14 +69,14 @@ function renderFunctionParameter(
   context: RenderContext
 ): string {
   const name = parameter.getName();
+  const description = getParameterDescription(name, signature);
   const type = getSymbolsType(parameter, context.typeChecker);
   return listItem(
-    [
-      renderType(type, context, { name, nestingLevel: 2 }),
-      getParameterDescription(name, signature)
-    ]
-      .filter(Boolean)
-      .join(' - ')
+    renderType(type, context, {
+      name,
+      nestingLevel: 2,
+      ...(description && { description })
+    })
   );
 }
 
@@ -112,7 +112,7 @@ export function renderFunctionSignature(
   return joinSections([
     heading(
       `${name}${
-        typeParameters ? `\\<${typeParameters}\\>` : ''
+        typeParameters ? `&lt;${typeParameters}&gt;` : ''
       }(${parameters.map(({ name }) => name).join(', ')})`,
       2
     ),

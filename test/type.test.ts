@@ -257,7 +257,7 @@ describe('type', () => {
         export function simpleFunction<T>(): Promise<T> {}
       `,
       markdown: `
-      ## simpleFunction\\<T\\>()
+      ## simpleFunction&lt;T&gt;()
 
       **RETURNS**
 
