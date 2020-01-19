@@ -13,7 +13,7 @@ function isLink(
   return !!value;
 }
 
-function getAddtionalLinks(
+function getAdditionalLinks(
   tags: JSDocTagInfo[]
 ): { href: string; text: string }[] {
   return tags
@@ -24,7 +24,7 @@ function getAddtionalLinks(
 }
 
 export function renderAdditionalLinks(tags: JSDocTagInfo[]): string {
-  const additionalLinks = getAddtionalLinks(tags);
+  const additionalLinks = getAdditionalLinks(tags);
 
   if (!additionalLinks.length) {
     return '';

@@ -93,7 +93,7 @@ describe('enumerations', () => {
     });
   });
 
-  it('doesn`t documents as dependency if not exported', () => {
+  it(`doesn't documents as dependency if not exported`, () => {
     testDocumentation({
       'dependency.ts': `
         export enum SimpleEnum { ONE, TWO };
@@ -113,7 +113,7 @@ describe('enumerations', () => {
     });
   });
 
-  it('doesn`t document not exported enumerations', () => {
+  it(`doesn't document not exported enumerations`, () => {
     testDocumentation({
       'index.ts': `
         enum SimpleEnum { ONE, TWO };
@@ -122,7 +122,7 @@ describe('enumerations', () => {
     });
   });
 
-  it('doesn`t document internal enumerations', () => {
+  it(`doesn't document internal enumerations`, () => {
     testDocumentation({
       'index.ts': `
         /**

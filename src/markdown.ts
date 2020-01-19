@@ -1,5 +1,5 @@
-function wrap(content: string, prefix: string, sufix = prefix): string {
-  return content && [prefix, content, sufix].join('');
+function wrap(content: string, prefix: string, suffix = prefix): string {
+  return content && [prefix, content, suffix].join('');
 }
 
 export function joinLines(lines: string[]): string {

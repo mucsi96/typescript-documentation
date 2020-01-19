@@ -65,7 +65,7 @@ describe('type', () => {
     });
   });
 
-  it('doesn`t documents internal objects', () => {
+  it(`doesn't documents internal objects`, () => {
     testDocumentation({
       'index.ts': `
         /**
@@ -157,7 +157,7 @@ describe('type', () => {
     });
   });
 
-  it('doesn`t documents internal interfaces', () => {
+  it(`doesn't documents internal interfaces`, () => {
     testDocumentation({
       'index.ts': `
         /**

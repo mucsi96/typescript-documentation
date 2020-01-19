@@ -83,12 +83,12 @@ export function getTypeDependencies(
 
   const typeReference = type as TypeReference;
   const typeArguments = typeReference.typeArguments || [];
-  const typeArgumetDependencies = typeArguments.reduce<Symbol[]>(
-    (dependnecies, typeArgument) => {
+  const typeArgumentDependencies = typeArguments.reduce<Symbol[]>(
+    (dependencies, typeArgument) => {
       const symbol = typeArgument.getSymbol();
 
       return [
-        ...dependnecies,
+        ...dependencies,
         ...getTypeDependencies(symbol, typeArgument, context)
       ];
     },
@@ -98,7 +98,7 @@ export function getTypeDependencies(
   return [
     ...(context.exportedSymbols.includes(typeSymbol) ? [typeSymbol] : []),
     ...getSymbolDependencies(typeSymbol, context),
-    ...typeArgumetDependencies
+    ...typeArgumentDependencies
   ];
 }
 

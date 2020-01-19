@@ -46,7 +46,7 @@ function getParameterDescription(
   name: string,
   signature: Signature
 ): string | undefined | null {
-  const paramDescriptonRegex = new RegExp(`${name} (.*)`);
+  const paramDescriptionRegex = new RegExp(`${name} (.*)`);
   return signature
     .getJsDocTags()
     .filter(tag => tag.name === 'param')
@@ -56,7 +56,7 @@ function getParameterDescription(
         return null;
       }
 
-      const match = paramDescriptonRegex.exec(tag.text);
+      const match = paramDescriptionRegex.exec(tag.text);
 
       return match && match[1];
     })
