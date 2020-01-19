@@ -31,11 +31,12 @@ jobs:
             const { readFileSync } = require('fs');
             const { resolve } = require('path');
 
+            const baseBranch = 'master';
             const branch = `update-dependencies-${new Date().toISOString().replace(/[T:]/g,'-').split('.')[0]}`;
 
             const latest = await github.git.getRef({
               ...context.repo,
-              `heads/master`
+              ref: `heads/${baseBranch}`
             });
             console.log(latest);
 
@@ -69,6 +70,6 @@ jobs:
               ...context.repo,
               title: branch.replace(/-/g,' '),
               head: branch,
-              base: 'master'
+              base: baseBranch
             });
             console.log(pullRequest);
