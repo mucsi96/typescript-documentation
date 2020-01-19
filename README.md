@@ -90,6 +90,8 @@ _Example input:_
  * @example
  * example 2 line 1
  * example 2 line 2
+ * @param a first parameter description
+ * @param b second parameter description
  */
 export function simpleFunction(a: string, b?: number): string {
   return a;
@@ -105,8 +107,8 @@ line 2
 
 **PARAMETERS**
 
-- `a`: string
-- `b?`: number
+- `a`: string - first parameter description
+- `b?`: number - second parameter description
 
 **RETURNS**
 
@@ -166,6 +168,8 @@ export class SimpleClass {
   /**
    * simpleMethod2 description
    * line 2
+   * @param a first parameter description
+   * @param b second parameter description
    */
   public simpleMethod2(a: string, b: number): string {
     return a + b;
@@ -230,8 +234,8 @@ line 2
 
 **PARAMETERS**
 
-- `a`: string
-- `b`: number
+- `a`: string - first parameter description
+- `b`: number - second parameter description
 
 **RETURNS**
 
@@ -255,7 +259,15 @@ _Example input:_
  * example 2 line 2
  */
 export type SimpleType = {
+  /**
+   * first property description
+   */
+
   a: string;
+  /**
+   * second property description
+   */
+
   b?: number;
 };
 ```
@@ -269,8 +281,8 @@ line 2
 
 **PROPERTIES**
 
-- `a`: string
-- `b?`: number
+- `a`: string - first property description
+- `b?`: number - second property description
 
 **EXAMPLES**
 
