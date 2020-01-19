@@ -21,7 +21,6 @@ jobs:
       - name: Raise pull request
         uses: actions/github-script@0.4.0
         with:
-          debug: true
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const { readFileSync } = require('fs');
@@ -30,42 +29,38 @@ jobs:
             const baseBranch = 'master';
             const branch = `update-dependencies-${new Date().toISOString().replace(/[T:]/g,'-').split('.')[0]}`;
 
-            const latest = await github.git.getRef({
+            const baseBranchRef = await github.git.getRef({
               ...context.repo,
               ref: `heads/${baseBranch}`
             });
-            console.log(latest);
+            const parentSha = baseBranchRef.data.object.sha;
 
             const tree = await github.git.createTree({
               ...context.repo,
-              base_tree: latest.data.object.sha,
+              base_tree: parentSha,
               tree: ['package.json', 'package-lock.json'].map(path => ({
                 path,
                 mode: '100644',
                 content: readFileSync(resolve(process.cwd(), path), 'utf8')
               }))
             });
-            console.log(tree);
 
             const commit = await github.git.createCommit({
               ...context.repo,
               message: 'Update dependencies',
               tree: tree.data.sha,
-              parents: [latest.data.object.sha]
-            })
-            console.log(commit);
+              parents: [parentSha]
+            });
 
-            const push = await github.git.createRef({
+            await github.git.createRef({
               ...context.repo,
               ref: `refs/heads/${branch}`,
               sha: commit.data.sha
-            })
-            console.log(push);
+            });
 
-            const pullRequest = await github.pulls.create({
+            await github.pulls.create({
               ...context.repo,
               title: branch.replace(/-/g,' '),
               head: branch,
               base: baseBranch
             });
-            console.log(pullRequest);
