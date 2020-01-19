@@ -42,7 +42,7 @@ jobs:
 
             const tree = await github.git.createTree({
               ...context.repo,
-              base_tree: context.sha,
+              base_tree: latest.data.object.sha,
               tree: ['package.json', 'package-lock.json'].map(path => ({
                 path,
                 mode: '100644',
@@ -55,7 +55,7 @@ jobs:
               ...context.repo,
               message: 'Update dependencies',
               tree: tree.data.sha,
-              parents: [context.sha]
+              parents: [latest.data.object.sha]
             })
             console.log(commit);
 
