@@ -64,7 +64,7 @@ describe('type declarations', () => {
     });
   });
 
-  it('doesn`t document not exported types', () => {
+  it(`doesn't document not exported types`, () => {
     testDocumentation({
       'index.ts': `
       type SimpleType = {
@@ -76,7 +76,7 @@ describe('type declarations', () => {
     });
   });
 
-  it('doesn`t document internal types', () => {
+  it(`doesn't document internal types`, () => {
     testDocumentation({
       'index.ts': `
       /**

@@ -177,7 +177,7 @@ describe('classes', () => {
     });
   });
 
-  it('doesn`t documents as dependency if not exported', () => {
+  it(`doesn't documents as dependency if not exported`, () => {
     testDocumentation({
       'dependency.ts': `
         export class SimpleClass {
@@ -201,7 +201,7 @@ describe('classes', () => {
     });
   });
 
-  it('doesn`t document not exported classes', () => {
+  it(`doesn't document not exported classes`, () => {
     testDocumentation({
       'index.ts': `
         class SimpleClass {}
@@ -210,7 +210,7 @@ describe('classes', () => {
     });
   });
 
-  it('doesn`t document internal classes', () => {
+  it(`doesn't document internal classes`, () => {
     testDocumentation({
       'index.ts': `
         /**
@@ -222,7 +222,7 @@ describe('classes', () => {
     });
   });
 
-  it('doesn`t document internal methods', () => {
+  it(`doesn't document internal methods`, () => {
     testDocumentation({
       'index.ts': `
         export class SimpleClass {

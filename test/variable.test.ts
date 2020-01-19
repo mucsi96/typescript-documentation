@@ -63,7 +63,7 @@ describe('variables', () => {
     });
   });
 
-  it('doesn`t document not exported variables', () => {
+  it(`doesn't document not exported variables`, () => {
     testDocumentation({
       'index.ts': `
         const simpleVariable = 1;
@@ -72,7 +72,7 @@ describe('variables', () => {
     });
   });
 
-  it('doesn`t document internal variables', () => {
+  it(`doesn't document internal variables`, () => {
     testDocumentation({
       'index.ts': `
         /**

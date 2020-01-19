@@ -97,7 +97,7 @@ describe('functions', () => {
     });
   });
 
-  it('doesn`t documents as dependency if not exported', () => {
+  it(`doesn't documents as dependency if not exported`, () => {
     testDocumentation({
       'dependency.ts': `
         export function simpleFunction(): void {}
@@ -107,7 +107,7 @@ describe('functions', () => {
     });
   });
 
-  it('doesn`t document not exported functions', () => {
+  it(`doesn't document not exported functions`, () => {
     testDocumentation({
       'index.ts': `
         function simpleFunction(a: string, b: number): string {
@@ -118,7 +118,7 @@ describe('functions', () => {
     });
   });
 
-  it('doesn`t document internal functions', () => {
+  it(`doesn't document internal functions`, () => {
     testDocumentation({
       'index.ts': `
         /**

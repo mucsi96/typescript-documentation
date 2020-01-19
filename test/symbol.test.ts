@@ -60,7 +60,7 @@ describe('symbol', () => {
     });
   });
 
-  it('doesn`t document internal dependencies ', () => {
+  it(`doesn't document internal dependencies`, () => {
     testDocumentation({
       'dependency.ts': `
         export type SimpleTypeB = {};
