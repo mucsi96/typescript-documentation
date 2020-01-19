@@ -39,7 +39,7 @@ jobs:
               tree: ['package.json', 'package-lock.json'].map(path => ({
                 path,
                 mode: '100644',
-                content: readFileSync(resolve(process.cwd(), path))
+                content: readFileSync(resolve(process.cwd(), path), 'utf8')
               }))
             });
             console.log(tree);
