@@ -33,6 +33,12 @@ jobs:
 
             const branch = `update-dependencies-${new Date().toISOString().replace(/[T:]/g,'-').split('.')[0]}`;
 
+            const latest = await github.git.getRef({
+              ...context.repo,
+              `heads/master`
+            });
+            console.log(latest);
+
             const tree = await github.git.createTree({
               ...context.repo,
               base_tree: context.sha,
