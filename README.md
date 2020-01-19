@@ -262,12 +262,11 @@ export type SimpleType = {
   /**
    * first property description
    */
-
   a: string;
+
   /**
    * second property description
    */
-
   b?: number;
 };
 ```
