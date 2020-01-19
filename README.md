@@ -260,12 +260,12 @@ _Example input:_
  */
 export type SimpleType = {
   /**
-   * first parameter description
+   * first property description
    */
 
   a: string;
   /**
-   * second parameter description
+   * second property description
    */
 
   b?: number;
@@ -281,8 +281,8 @@ line 2
 
 **PROPERTIES**
 
-- `a`: string - first parameter description
-- `b?`: number - second parameter description
+- `a`: string - first property description
+- `b?`: number - second property description
 
 **EXAMPLES**
 
