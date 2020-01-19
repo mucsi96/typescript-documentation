@@ -1,6 +1,6 @@
 {
   "name": "typescript-documentation",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Generate markdown API documentation directly from TypeScript source code",
   "license": "MIT",
   "main": "./lib/index.js",
@@ -29,6 +29,8 @@
   "keywords": [
     "typescript",
     "documentation",
+    "generator",
+    "generate",
     "markdown"
   ],
   "repository": "git@github.com:mucsi96/typescript-documentation.git",

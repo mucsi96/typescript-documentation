@@ -20,7 +20,7 @@ npm i typescript-documentation
 Options:
   -p, --project <tsconfig file>  relative or absolute path to a tsconfig.json file (default: "./tsconfig.json")
   -e, --entry <main file>        entry/main file of project (default: "./src/index.ts")
-  -o, --output <markdown file>   markdown documentation output file location (default: "./output.md")
+  -o, --output <markdown file>   markdown documentation output file location (default: "./docs/README.md")
   -h, --help                     output usage information
 ```
 
