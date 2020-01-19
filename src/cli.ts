@@ -35,7 +35,7 @@ program
   .option(
     '-o, --output <markdown file>',
     'markdown documentation output file location',
-    './output.md'
+    './docs/README.md'
   );
 
 function getCompilerOptions(cliOptions: CLIOptions): CompilerOptions {
