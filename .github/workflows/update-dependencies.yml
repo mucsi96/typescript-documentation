@@ -1,0 +1,68 @@
+name: Update dependencies
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 'master'
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: Update dependencies
+        run: npx npm-check-updates -u
+      - name: Install dependencies
+        run: npm install
+      - name: Raise pull request
+        uses: actions/github-script@0.4.0
+        with:
+          debug: true
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const { readFileSync } = require('fs');
+            const { resolve } = require('path');
+
+            const branch = `update-dependencies-${new Date().toISOString().replace(/[T:]/g,'-').split('.')[0]}`;
+
+            const tree = await github.git.createTree({
+              ...context.repo,
+              base_tree: context.sha,
+              tree: ['package.json', 'package-lock.json'].map(path => ({
+                path,
+                mode: '100644',
+                content: readFileSync(resolve(process.cwd(), path))
+              }))
+            });
+            console.log(tree);
+
+            const commit = await github.git.createCommit({
+              ...context.repo,
+              message: 'Update dependencies',
+              tree: tree.data.sha,
+              parents: [context.sha]
+            })
+            console.log(commit);
+
+            const push = await github.git.createRef({
+              ...context.repo,
+              ref: `refs/heads/${branch}`,
+              sha: commit.data.sha
+            })
+            console.log(push);
+
+            const pullRequest = await github.pulls.create({
+              ...context.repo,
+              title: branch.replace(/-/g,' '),
+              head: branch,
+              base: 'master'
+            });
+            console.log(pullRequest);
