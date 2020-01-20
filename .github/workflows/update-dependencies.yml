@@ -2,7 +2,7 @@ name: Update dependencies
 
 on:
   schedule:
-    - cron: '0 8 * * 1' # At 08:00 on Monday. https://crontab.guru/#0_8_*_*_1
+    - cron: '0 7 * * 1' # At 07:00 GTM on Monday. https://crontab.guru/#0_8_*_*_1
 
 jobs:
   build:
