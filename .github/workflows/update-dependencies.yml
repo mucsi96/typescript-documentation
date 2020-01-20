@@ -1,8 +1,16 @@
 name: Update dependencies
 
 on:
-  schedule:
-    - cron: '0 8 * * 1' # At 08:00 on Monday. https://crontab.guru/#0_8_*_*_1
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+# on:
+#   schedule:
+#     - cron: '0 8 * * 1' # At 08:00 on Monday. https://crontab.guru/#0_8_*_*_1
 
 jobs:
   build:
@@ -25,15 +33,21 @@ jobs:
           script: |
             const { readFileSync } = require('fs');
             const { resolve } = require('path');
+            const { execSync } = require('child_process');
 
-            const baseBranch = 'master';
+            const changedFiles = execSync('git diff --name-only').split('\n');
+
+            if (!changedFiles.includes('package.json')) {
+              return;
+            }
+
+            const activeBranchRegex = /^* (.*)$/;
+            const baseBranch = execSync('git branch').split('\n').map(branch => {
+              const match = activeBranchRegex.exec(branch);
+              return match && match[1];
+            }).find(Boolean);
+            const parentSha = execSync('git rev-parse HEAD');
             const branch = `update-dependencies-${new Date().toISOString().replace(/[T:]/g,'-').split('.')[0]}`;
-
-            const baseBranchRef = await github.git.getRef({
-              ...context.repo,
-              ref: `heads/${baseBranch}`
-            });
-            const parentSha = baseBranchRef.data.object.sha;
 
             const tree = await github.git.createTree({
               ...context.repo,
