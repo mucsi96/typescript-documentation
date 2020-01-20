@@ -29,6 +29,7 @@ jobs:
       - name: Raise pull request
         uses: actions/github-script@0.4.0
         with:
+          debug: true
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const { readFileSync } = require('fs');
@@ -36,6 +37,7 @@ jobs:
             const { execSync } = require('child_process');
 
             const changedFiles = execSync('git diff --name-only').split('\n');
+            console.log({ changedFiles });
 
             if (!changedFiles.includes('package.json')) {
               return;
@@ -46,8 +48,11 @@ jobs:
               const match = activeBranchRegex.exec(branch);
               return match && match[1];
             }).find(Boolean);
+            console.log({ baseBranch });
             const parentSha = execSync('git rev-parse HEAD');
+            console.log({ parentSha });
             const branch = `update-dependencies-${new Date().toISOString().replace(/[T:]/g,'-').split('.')[0]}`;
+            console.log({ branch });
 
             const tree = await github.git.createTree({
               ...context.repo,
