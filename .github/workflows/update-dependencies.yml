@@ -67,3 +67,33 @@ jobs:
                 .split('.')[0]
             }`;
             console.log({ branch });
+
+            const tree = await github.git.createTree({
+              ...context.repo,
+              base_tree: parentSha,
+              tree: ['package.json', 'package-lock.json'].map(path => ({
+                path,
+                mode: '100644',
+                content: readFileSync(resolve(process.cwd(), path), 'utf8')
+              }))
+            });
+
+            const commit = await github.git.createCommit({
+              ...context.repo,
+              message: 'Update dependencies',
+              tree: tree.data.sha,
+              parents: [parentSha]
+            });
+
+            await github.git.createRef({
+              ...context.repo,
+              ref: `refs/heads/${branch}`,
+              sha: commit.data.sha
+            });
+
+            await github.pulls.create({
+              ...context.repo,
+              title: branch.replace(/-/g,' '),
+              head: branch,
+              base: baseBranch
+            });
