@@ -36,50 +36,34 @@ jobs:
             const { resolve } = require('path');
             const { execSync } = require('child_process');
 
-            const changedFiles = execSync('git diff --name-only').split('\n');
+            const changedFiles = execSync('git diff --name-only')
+              .toString()
+              .split('\n')
+              .filter(Boolean);
             console.log({ changedFiles });
 
             if (!changedFiles.includes('package.json')) {
               return;
             }
 
-            const activeBranchRegex = /^* (.*)$/;
-            const baseBranch = execSync('git branch').split('\n').map(branch => {
-              const match = activeBranchRegex.exec(branch);
-              return match && match[1];
-            }).find(Boolean);
+            const activeBranchRegex = /^\* (.*)$/;
+            const baseBranch = execSync('git branch')
+              .toString()
+              .split('\n')
+              .map(branch => {
+                const match = activeBranchRegex.exec(branch);
+                return match && match[1];
+              })
+              .find(Boolean);
             console.log({ baseBranch });
-            const parentSha = execSync('git rev-parse HEAD');
+            const parentSha = execSync('git rev-parse HEAD')
+              .toString()
+              .trim();
             console.log({ parentSha });
-            const branch = `update-dependencies-${new Date().toISOString().replace(/[T:]/g,'-').split('.')[0]}`;
+            const branch = `update-dependencies-${
+              new Date()
+                .toISOString()
+                .replace(/[T:]/g, '-')
+                .split('.')[0]
+            }`;
             console.log({ branch });
-
-            const tree = await github.git.createTree({
-              ...context.repo,
-              base_tree: parentSha,
-              tree: ['package.json', 'package-lock.json'].map(path => ({
-                path,
-                mode: '100644',
-                content: readFileSync(resolve(process.cwd(), path), 'utf8')
-              }))
-            });
-
-            const commit = await github.git.createCommit({
-              ...context.repo,
-              message: 'Update dependencies',
-              tree: tree.data.sha,
-              parents: [parentSha]
-            });
-
-            await github.git.createRef({
-              ...context.repo,
-              ref: `refs/heads/${branch}`,
-              sha: commit.data.sha
-            });
-
-            await github.pulls.create({
-              ...context.repo,
-              title: branch.replace(/-/g,' '),
-              head: branch,
-              base: baseBranch
-            });
