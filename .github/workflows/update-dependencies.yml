@@ -1,16 +1,8 @@
 name: Update dependencies
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
-
-# on:
-#   schedule:
-#     - cron: '0 8 * * 1' # At 08:00 on Monday. https://crontab.guru/#0_8_*_*_1
+  schedule:
+    - cron: '0 7 * * 1' # At 07:00 GMT on Monday. https://crontab.guru/#0_7_*_*_1
 
 jobs:
   build:
@@ -29,7 +21,6 @@ jobs:
       - name: Raise pull request
         uses: actions/github-script@0.4.0
         with:
-          debug: true
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const { readFileSync } = require('fs');
@@ -40,7 +31,6 @@ jobs:
               .toString()
               .split('\n')
               .filter(Boolean);
-            console.log({ changedFiles });
 
             if (!changedFiles.includes('package.json')) {
               return;
@@ -55,23 +45,20 @@ jobs:
                 return match && match[1];
               })
               .find(Boolean);
-            console.log({ baseBranch });
             const parentSha = execSync('git rev-parse HEAD')
               .toString()
               .trim();
-            console.log({ parentSha });
             const branch = `update-dependencies-${
               new Date()
                 .toISOString()
                 .replace(/[T:]/g, '-')
                 .split('.')[0]
             }`;
-            console.log({ branch });
 
             const tree = await github.git.createTree({
               ...context.repo,
               base_tree: parentSha,
-              tree: ['package.json', 'package-lock.json'].map(path => ({
+              tree: changedFiles.map(path => ({
                 path,
                 mode: '100644',
                 content: readFileSync(resolve(process.cwd(), path), 'utf8')
