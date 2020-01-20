@@ -13,7 +13,7 @@ jobs:
           ref: 'master'
       - uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: '12.x'
       - name: Update dependencies
         run: npx npm-check-updates -u
       - name: Install dependencies
