@@ -36,18 +36,19 @@ jobs:
               return;
             }
 
-            const activeBranchRegex = /^\* (.*)$/;
             const baseBranch = execSync('git branch')
               .toString()
               .split('\n')
               .map(branch => {
-                const match = activeBranchRegex.exec(branch);
+                const match = /^\* (.*)$/.exec(branch);
                 return match && match[1];
               })
               .find(Boolean);
+
             const parentSha = execSync('git rev-parse HEAD')
               .toString()
               .trim();
+
             const branch = `update-dependencies-${
               new Date()
                 .toISOString()
