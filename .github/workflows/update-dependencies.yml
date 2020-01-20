@@ -33,7 +33,7 @@ jobs:
             const { resolve } = require('path');
             const { execSync } = require('child_process');
 
-            const time = new Date().toISOString().split('.')[0];
+
 
             const changedFiles = execSync('git diff --name-only')
               .toString()
@@ -43,6 +43,9 @@ jobs:
             if (!changedFiles.includes('package.json')) {
               return;
             }
+
+            const time = new Date().toISOString().split('.')[0];
+            const title = `Automated dependency update (${time.replace(/[T]/g, ' ')})`;
 
             const baseBranch = execSync('git branch')
               .toString()
@@ -71,7 +74,7 @@ jobs:
 
             const commit = await github.git.createCommit({
               ...context.repo,
-              message: `Automated dependency update (${time.replace(/[T]/g, ' ')})`,
+              message: title,
               tree: tree.data.sha,
               parents: [parentSha]
             });
@@ -84,7 +87,7 @@ jobs:
 
             await github.pulls.create({
               ...context.repo,
-              title: branch.replace(/-/g,' '),
+              title,
               head: branch,
               base: baseBranch
             });
