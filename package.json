@@ -37,33 +37,33 @@
   "author": "Igor Mucsicska <mucsi_96@yahoo.com>",
   "dependencies": {
     "commander": "^6.2.0",
-    "typescript": "^4.0.5"
+    "typescript": "^4.1.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "@babel/preset-env": "^7.12.1",
-    "@babel/preset-typescript": "^7.12.1",
+    "@babel/cli": "^7.12.8",
+    "@babel/core": "^7.12.9",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-typescript": "^7.12.7",
     "@types/expect": "^24.3.0",
-    "@types/mocha": "^8.0.3",
-    "@types/node": "^14.14.6",
-    "@typescript-eslint/eslint-plugin": "^4.6.1",
-    "@typescript-eslint/parser": "^4.6.1",
+    "@types/mocha": "^8.0.4",
+    "@types/node": "^14.14.10",
+    "@typescript-eslint/eslint-plugin": "^4.9.0",
+    "@typescript-eslint/parser": "^4.9.0",
     "cpy-cli": "^3.1.1",
     "del-cli": "^3.0.1",
-    "eslint": "^7.13.0",
-    "eslint-config-prettier": "^6.15.0",
+    "eslint": "^7.15.0",
+    "eslint-config-prettier": "^7.0.0",
     "eslint-plugin-mocha": "^8.0.0",
     "expect": "^26.6.2",
     "husky": "^4.3.0",
     "mocha": "^8.2.1",
     "nyc": "^15.1.0",
-    "prettier": "^2.1.2",
+    "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0",
     "rewiremock": "^3.14.3",
     "rimraf": "^3.0.2",
     "ts-mocha": "^8.0.0",
-    "ts-node": "^9.0.0"
+    "ts-node": "^9.1.0"
   },
   "husky": {
     "hooks": {
