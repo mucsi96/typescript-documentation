@@ -15,7 +15,7 @@ export function getClassDependencies(
 
   /* istanbul ignore else */
   if (symbol.members) {
-    symbol.members.forEach(member => {
+    symbol.members.forEach((member) => {
       if (!isInternalSymbol(member)) {
         members.push(member);
       }
@@ -25,7 +25,7 @@ export function getClassDependencies(
   return members.reduce<Symbol[]>(
     (dependencies, member) => [
       ...dependencies,
-      ...getSymbolDependencies(member, context)
+      ...getSymbolDependencies(member, context),
     ],
     []
   );
@@ -42,12 +42,12 @@ export function spreadClassProperties(
 
     const classInstanceName = [
       symbol.name.charAt(0).toLowerCase(),
-      symbol.name.slice(1)
+      symbol.name.slice(1),
     ].join('');
     const section = getSymbolSection(symbol);
     const members: Symbol[] = [];
     const memberSections = new Set<string>();
-    symbol.members.forEach(member => {
+    symbol.members.forEach((member) => {
       if (!isInternalSymbol(member)) {
         // eslint-disable-next-line @typescript-eslint/unbound-method
         member.getName = (): string => `${classInstanceName}.${member.name}`;
@@ -65,7 +65,7 @@ export function spreadClassProperties(
     const additionalMemberReferences = memberSectionsArray.map<JSDocTagInfo>(
       (section: string) => ({
         name: 'see',
-        text: `{@link ${getSectionLocation(section)}|${section}}`
+        text: `{@link ${getSectionLocation(section)}|${section}}`,
       })
     );
     // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -77,13 +77,19 @@ export function spreadClassProperties(
   }, []);
 }
 
-export function renderClass(symbol: Symbol, context: RenderContext): string {
+export function renderClass(
+  symbol: Symbol,
+  aliasedSymbol: Symbol,
+  context: RenderContext
+): string {
   const name = symbol.getName();
 
   return joinSections([
     heading(name, 2),
-    renderDescription(symbol.getDocumentationComment(context.typeChecker)),
-    renderExamples(symbol.getJsDocTags()),
-    renderAdditionalLinks(symbol.getJsDocTags())
+    renderDescription(
+      aliasedSymbol.getDocumentationComment(context.typeChecker)
+    ),
+    renderExamples(aliasedSymbol.getJsDocTags()),
+    renderAdditionalLinks(aliasedSymbol.getJsDocTags()),
   ]);
 }

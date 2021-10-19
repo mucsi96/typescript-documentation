@@ -8,7 +8,7 @@ import {
   joinLines,
   joinSections,
   listItem,
-  subSection
+  subSection,
 } from './markdown';
 import { getSymbolDependencies } from './symbol';
 import { getTypeDependencies, renderType } from './type';
@@ -26,7 +26,7 @@ export function getFunctionDependencies(
         .reduce<Symbol[]>(
           (dependencies, parameter) => [
             ...dependencies,
-            ...getSymbolDependencies(parameter, context)
+            ...getSymbolDependencies(parameter, context),
           ],
           []
         );
@@ -37,7 +37,7 @@ export function getFunctionDependencies(
       return [
         ...dependencies,
         ...getTypeDependencies(returnTypeSymbol, returnType, context),
-        ...parameterDependencies
+        ...parameterDependencies,
       ];
     }, []);
 }
@@ -49,8 +49,8 @@ function getParameterDescription(
   const paramDescriptionRegex = new RegExp(`${name} (.*)`);
   return signature
     .getJsDocTags()
-    .filter(tag => tag.name === 'param')
-    .map(tag => {
+    .filter((tag) => tag.name === 'param')
+    .map((tag) => {
       /* istanbul ignore next */
       if (!tag.text) {
         return null;
@@ -60,7 +60,7 @@ function getParameterDescription(
 
       return match && match[1];
     })
-    .find(description => description);
+    .find((description) => description);
 }
 
 function renderFunctionParameter(
@@ -75,7 +75,7 @@ function renderFunctionParameter(
     renderType(type, context, {
       name,
       nestingLevel: 2,
-      ...(description && { description })
+      ...(description && { description }),
     })
   );
 }
@@ -92,10 +92,10 @@ function renderFunctionParameters(
   return joinSections([
     subSection('Parameters'),
     joinLines(
-      parameters.map(parameter =>
+      parameters.map((parameter) =>
         renderFunctionParameter(parameter, signature, context)
       )
-    )
+    ),
   ]);
 }
 
@@ -106,7 +106,7 @@ export function renderFunctionSignature(
 ): string {
   const parameters = signature.getParameters();
   const typeParameters = (signature.getTypeParameters() || [])
-    .map(typeParameter => typeParameter.symbol.name)
+    .map((typeParameter) => typeParameter.symbol.name)
     .join(', ');
 
   return joinSections([
@@ -121,12 +121,13 @@ export function renderFunctionSignature(
     subSection('Returns'),
     renderType(signature.getReturnType(), context),
     renderExamples(signature.getJsDocTags()),
-    renderAdditionalLinks(signature.getJsDocTags())
+    renderAdditionalLinks(signature.getJsDocTags()),
   ]);
 }
 
 export function renderFunction(
   symbol: Symbol,
+  aliasedSymbol: Symbol,
   type: Type,
   context: RenderContext
 ): string {
@@ -134,7 +135,7 @@ export function renderFunction(
   return joinSections(
     type
       .getCallSignatures()
-      .map<string>(signature =>
+      .map<string>((signature) =>
         renderFunctionSignature(name, signature, context)
       )
   );
