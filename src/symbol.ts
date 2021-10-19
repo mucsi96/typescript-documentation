@@ -10,27 +10,28 @@ import {
   findExactMatchingSymbolFlags,
   getDeclarationSourceLocation,
   inspectObject,
-  SupportError
+  SupportError,
 } from './utils';
 import { renderVariable } from './variable';
 
 function renderDeclaration(
   symbol: Symbol,
+  aliasedSymbol: Symbol,
   type: Type,
   context: RenderContext
 ): string {
-  const flags = symbol.getFlags();
+  const flags = aliasedSymbol.getFlags();
 
   if (flags & SymbolFlags.BlockScopedVariable) {
-    return renderVariable(symbol, type, context);
+    return renderVariable(symbol, aliasedSymbol, type, context);
   }
 
   if (flags & SymbolFlags.Function || flags & SymbolFlags.Method) {
-    return renderFunction(symbol, type, context);
+    return renderFunction(symbol, aliasedSymbol, type, context);
   }
 
   if (flags & SymbolFlags.Class) {
-    return renderClass(symbol, context);
+    return renderClass(symbol, aliasedSymbol, context);
   }
 
   /* istanbul ignore next */
@@ -39,12 +40,12 @@ function renderDeclaration(
   }
 
   if (flags & SymbolFlags.TypeAlias || flags & SymbolFlags.Interface) {
-    return renderTypeDeclaration(symbol, type, context);
+    return renderTypeDeclaration(symbol, aliasedSymbol, type, context);
   }
 
   /* istanbul ignore else */
   if (flags & SymbolFlags.RegularEnum && type.isUnion()) {
-    return renderEnumeration(symbol, type, context);
+    return renderEnumeration(symbol, aliasedSymbol, type, context);
   }
 
   /* istanbul ignore next */
@@ -59,14 +60,20 @@ export function getSymbolDependencies(
   symbol: Symbol,
   context: DependencyContext
 ): Symbol[] {
-  if (context.resolutionPath.find(p => p === symbol)) {
+  if (context.resolutionPath.find((p) => p === symbol)) {
     return [];
   }
 
-  const flags = symbol.getFlags();
+  let flags = symbol.getFlags();
+
+  if (flags & SymbolFlags.Alias) {
+    symbol = context.typeChecker.getAliasedSymbol(symbol);
+    flags = symbol.getFlags();
+  }
+
   const newContext = {
     ...context,
-    resolutionPath: [...context.resolutionPath, symbol]
+    resolutionPath: [...context.resolutionPath, symbol],
   };
 
   const declarations =
@@ -99,7 +106,7 @@ export function getSymbolDependencies(
 
       return [
         ...dependencies,
-        ...getTypeLiteralDependencies(symbol, newContext)
+        ...getTypeLiteralDependencies(symbol, newContext),
       ];
     }
 
@@ -111,7 +118,7 @@ export function getSymbolDependencies(
     ) {
       return [
         ...dependencies,
-        ...getTypeDependencies(symbol, type, newContext)
+        ...getTypeDependencies(symbol, type, newContext),
       ];
     }
 
@@ -134,15 +141,21 @@ export function getSymbolDependencies(
 }
 
 export function renderSymbol(symbol: Symbol, context: RenderContext): string {
+  const flags = symbol.getFlags();
   const declarations = symbol.getDeclarations();
+  const aliasedSymbol =
+    flags & SymbolFlags.Alias
+      ? context.typeChecker.getAliasedSymbol(symbol)
+      : symbol;
 
   /* istanbul ignore else */
   if (declarations) {
     return joinSections(
-      declarations.map<string>(declaration => {
+      declarations.map<string>((declaration) => {
         try {
           return renderDeclaration(
             symbol,
+            aliasedSymbol,
             context.typeChecker.getTypeAtLocation(declaration),
             context
           );

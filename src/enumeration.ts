@@ -8,7 +8,7 @@ import {
   joinLines,
   joinSections,
   listItem,
-  subSection
+  subSection,
 } from './markdown';
 import { renderType } from './type';
 
@@ -18,20 +18,23 @@ function renderEnumerationItems(
 ): string {
   return joinSections([
     subSection('Possible values'),
-    joinLines(type.types.map(type => listItem(renderType(type, context))))
+    joinLines(type.types.map((type) => listItem(renderType(type, context)))),
   ]);
 }
 
 export function renderEnumeration(
   symbol: Symbol,
+  aliasedSymbol: Symbol,
   type: UnionType,
   context: RenderContext
 ): string {
   return joinSections([
     heading(symbol.getName(), 2),
-    renderDescription(symbol.getDocumentationComment(context.typeChecker)),
+    renderDescription(
+      aliasedSymbol.getDocumentationComment(context.typeChecker)
+    ),
     renderEnumerationItems(type, context),
-    renderExamples(symbol.getJsDocTags()),
-    renderAdditionalLinks(symbol.getJsDocTags())
+    renderExamples(aliasedSymbol.getJsDocTags()),
+    renderAdditionalLinks(aliasedSymbol.getJsDocTags()),
   ]);
 }

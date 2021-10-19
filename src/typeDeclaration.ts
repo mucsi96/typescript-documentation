@@ -22,15 +22,18 @@ function renderContentTitle(type: Type): string {
 
 export function renderTypeDeclaration(
   symbol: Symbol,
+  aliasedSymbol: Symbol,
   type: Type,
   context: RenderContext
 ): string {
   return joinSections([
     heading(symbol.getName(), 2),
-    renderDescription(symbol.getDocumentationComment(context.typeChecker)),
+    renderDescription(
+      aliasedSymbol.getDocumentationComment(context.typeChecker)
+    ),
     renderContentTitle(type),
     renderTypeMembers(type, context),
-    renderExamples(symbol.getJsDocTags()),
-    renderAdditionalLinks(symbol.getJsDocTags())
+    renderExamples(aliasedSymbol.getJsDocTags()),
+    renderAdditionalLinks(aliasedSymbol.getJsDocTags()),
   ]);
 }

@@ -8,15 +8,18 @@ import { renderType } from './type';
 
 export function renderVariable(
   symbol: Symbol,
+  aliasedSymbol: Symbol,
   type: Type,
   context: RenderContext
 ): string {
   return joinSections([
     heading(symbol.getName(), 2),
-    renderDescription(symbol.getDocumentationComment(context.typeChecker)),
+    renderDescription(
+      aliasedSymbol.getDocumentationComment(context.typeChecker)
+    ),
     subSection('Type'),
     renderType(type, context),
-    renderExamples(symbol.getJsDocTags()),
-    renderAdditionalLinks(symbol.getJsDocTags())
+    renderExamples(aliasedSymbol.getJsDocTags()),
+    renderAdditionalLinks(aliasedSymbol.getJsDocTags()),
   ]);
 }
