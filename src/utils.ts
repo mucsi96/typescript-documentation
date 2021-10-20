@@ -157,9 +157,12 @@ export function getDeclarationSourceLocation(declaration: Declaration): string {
   );
 }
 
-export function inspectObject(type: Record<string, unknown>): string {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function inspectObject(type: any): string {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const obj = Object.keys(type)
     .filter((key) => ['checker'].includes(key))
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     .reduce((newObj, key) => Object.assign(newObj, { [key]: type[key] }), {});
 
   return inspect(obj, false, 1, true);

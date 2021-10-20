@@ -115,7 +115,9 @@ try {
   });
 } catch (e) {
   /* istanbul ignore next */
-  console.log(e.stack);
+  if (e instanceof Error) {
+    console.log(e.stack);
+  }
   /* istanbul ignore next */
   process.exit(1);
 }
