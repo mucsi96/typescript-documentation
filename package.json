@@ -1,6 +1,6 @@
 {
   "name": "typescript-documentation",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Generate markdown API documentation directly from TypeScript source code",
   "license": "MIT",
   "main": "./lib/index.js",
@@ -10,7 +10,7 @@
     "lib"
   ],
   "engines": {
-    "node": ">= 10.0.0"
+    "node": ">= 14.0.0"
   },
   "scripts": {
     "start": "ts-node src/cli.ts",
