@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-import program from 'commander';
+
+import { program } from 'commander';
 import { mkdirSync, writeFileSync } from 'fs';
 import { basename, dirname, isAbsolute, resolve } from 'path';
 import {
   CompilerOptions,
   getParsedCommandLineOfConfigFile,
-  sys
+  sys,
 } from 'typescript';
 import { createDocumentation, Options } from '.';
 import { heading, joinSections } from './markdown';
@@ -48,10 +49,12 @@ function getCompilerOptions(cliOptions: CLIOptions): CompilerOptions {
     {},
     {
       ...sys,
-      onUnRecoverableConfigFileDiagnostic: /* istanbul ignore next */ diagnostic => {
+      onUnRecoverableConfigFileDiagnostic: /* istanbul ignore next */ (
+        diagnostic
+      ) => {
         /* istanbul ignore next */
         throw new Error(formatDiagnosticError(diagnostic));
-      }
+      },
     }
   );
 
@@ -84,12 +87,12 @@ function getOptions(cliOptions: CLIOptions): Options {
     getSectionLocation: (section: string): string =>
       section === 'default'
         ? basename(getOutput(cliOptions))
-        : `${section.toLowerCase().replace(/ /g, '-')}.md`
+        : `${section.toLowerCase().replace(/ /g, '-')}.md`,
   };
 }
 
 program.parse(process.argv);
-const cliOptions = program.opts() as CLIOptions;
+const cliOptions: CLIOptions = program.opts();
 const options = getOptions(cliOptions);
 try {
   createDocumentation(options).forEach((text: string, section: string) => {

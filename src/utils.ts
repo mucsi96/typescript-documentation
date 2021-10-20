@@ -64,7 +64,7 @@ export function getSymbolDisplayText(tag: JSDocTagInfo): string {
 
 export function findExactMatchingTypeFlag(flags: TypeFlags): string {
   const match = Object.keys(TypeFlags)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
     .map<[string, string | number]>((key) => [key, TypeFlags[key as any]])
     .filter(isNumeric)
     .find(([, value]) => Math.log2(value) % 1 === 0 && value & flags);
@@ -81,7 +81,7 @@ export function findMatchingTypeFlags(type: Type): string[] {
 
   return (
     Object.keys(TypeFlags)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
       .map<[string, string | number]>((key) => [key, TypeFlags[key as any]])
       .filter(isNumeric)
       .filter(([, value]) => value & flags)
@@ -94,7 +94,7 @@ export function findMatchingObjectsFlags(type: Type): string[] {
 
   return (
     Object.keys(ObjectFlags)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
       .map<[string, string | number]>((key) => [key, ObjectFlags[key as any]])
       .filter(isNumeric)
       .filter(([, value]) => value & flags)
@@ -107,7 +107,7 @@ export function findMatchingSymbolFlags(symbol: Symbol): string[] {
 
   return (
     Object.keys(SymbolFlags)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
       .map<[string, string | number]>((key) => [key, SymbolFlags[key as any]])
       .filter(isNumeric)
       .filter(([, value]) => value & flags)
@@ -117,7 +117,7 @@ export function findMatchingSymbolFlags(symbol: Symbol): string[] {
 
 export function findExactMatchingSymbolFlags(flags: SymbolFlags): string {
   const match = Object.keys(SymbolFlags)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
     .map<[string, string | number]>((key) => [key, SymbolFlags[key as any]])
     .filter(isNumeric)
     .find(([, value]) => Math.log2(value) % 1 === 0 && value & flags);
@@ -157,8 +157,7 @@ export function getDeclarationSourceLocation(declaration: Declaration): string {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function inspectObject(type: any): string {
+export function inspectObject(type: Record<string, unknown>): string {
   const obj = Object.keys(type)
     .filter((key) => ['checker'].includes(key))
     .reduce((newObj, key) => Object.assign(newObj, { [key]: type[key] }), {});
