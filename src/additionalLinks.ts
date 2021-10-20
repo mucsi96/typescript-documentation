@@ -4,8 +4,9 @@ import {
   listItem,
   link,
   joinLines,
-  joinSections
+  joinSections,
 } from './markdown';
+import { getSymbolDisplayText } from './utils';
 
 function isLink(
   value?: RegExpExecArray | null | undefined
@@ -17,8 +18,8 @@ function getAdditionalLinks(
   tags: JSDocTagInfo[]
 ): { href: string; text: string }[] {
   return tags
-    .filter(tag => tag.name === 'see')
-    .map(tag => /{@link (.*?)\|(.*?)}/.exec(tag.text as string))
+    .filter((tag) => tag.name === 'see')
+    .map((tag) => /{@link (.*?)\|(.*?)}/.exec(getSymbolDisplayText(tag)))
     .filter(isLink)
     .map(([, href, text]) => ({ href, text }));
 }
@@ -33,7 +34,9 @@ export function renderAdditionalLinks(tags: JSDocTagInfo[]): string {
   return joinSections([
     subSection('See also'),
     joinLines(
-      additionalLinks.map(({ href, text }) => listItem(link(text, href)))
-    )
+      additionalLinks.map(({ href, text }) =>
+        listItem(link(text, href.replace(/ :\/\//g, '://')))
+      )
+    ),
   ]);
 }

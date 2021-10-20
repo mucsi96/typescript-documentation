@@ -135,7 +135,7 @@ export function getSymbolDependencies(
     throw new SupportError(
       `Unsupported symbol ${inspectObject(
         symbol
-      )} with flags "${findExactMatchingSymbolFlags(flags)}"`
+      )} with flags "${findExactMatchingSymbolFlags(flags)}"\n${getDeclarationSourceLocation(declaration)}`
     );
   }, []);
 }
