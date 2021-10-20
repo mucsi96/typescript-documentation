@@ -13,6 +13,7 @@ import {
 import { getSymbolDependencies } from './symbol';
 import { getTypeDependencies, renderType } from './type';
 import { getSymbolsType } from './type/utils';
+import { getSymbolDisplayText } from './utils';
 
 export function getFunctionDependencies(
   type: Type,
@@ -56,7 +57,7 @@ function getParameterDescription(
         return null;
       }
 
-      const match = paramDescriptionRegex.exec(tag.text);
+      const match = paramDescriptionRegex.exec(getSymbolDisplayText(tag));
 
       return match && match[1];
     })

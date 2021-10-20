@@ -1,8 +1,9 @@
 import { JSDocTagInfo } from 'typescript';
 import { subSection, code, joinSections } from './markdown';
+import { getSymbolDisplayText } from './utils';
 
 export function renderExamples(tags: JSDocTagInfo[]): string {
-  const examples = tags.filter(tag => tag.name === 'example');
+  const examples = tags.filter((tag) => tag.name === 'example');
 
   if (!examples.length) {
     return '';
@@ -11,9 +12,9 @@ export function renderExamples(tags: JSDocTagInfo[]): string {
   return joinSections([
     subSection('Examples'),
     joinSections(
-      examples.map(example =>
-        code(example.text ? example.text.trim() : /* istanbul ignore next */ '')
+      examples.map((example: JSDocTagInfo) =>
+        code(getSymbolDisplayText(example).trim())
       )
-    )
+    ),
   ]);
 }

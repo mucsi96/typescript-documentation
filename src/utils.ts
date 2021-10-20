@@ -4,25 +4,29 @@ import {
   Declaration,
   Diagnostic,
   formatDiagnostic,
+  JSDocTagInfo,
   ObjectFlags,
   ScriptTarget,
   SourceFile,
   Symbol,
+  SymbolDisplayPart,
   SymbolFlags,
   Type,
   TypeFlags,
-  TypeReference
+  TypeReference,
 } from 'typescript';
 import { inspect } from 'util';
 
 export function isInternalSymbol(symbol: Symbol): boolean {
-  return symbol.getJsDocTags().some(tag => tag.name === 'internal');
+  return symbol.getJsDocTags().some((tag) => tag.name === 'internal');
 }
 
 export function getSymbolSection(symbol: Symbol): string {
-  const sectionTag = symbol.getJsDocTags().find(tag => tag.name === 'section');
+  const sectionTag = symbol
+    .getJsDocTags()
+    .find((tag) => tag.name === 'section');
 
-  return (sectionTag && sectionTag.text) || 'default';
+  return (sectionTag && getSymbolDisplayText(sectionTag)) || 'default';
 }
 
 export function createCompilerHost(sourceCode: {
@@ -44,7 +48,7 @@ export function createCompilerHost(sourceCode: {
     getNewLine: (): string => '\n',
     getDirectories: (): string[] => [],
     fileExists: (): boolean => true,
-    readFile: (): string => ''
+    readFile: (): string => '',
   };
 }
 
@@ -54,10 +58,14 @@ function isNumeric(
   return typeof value[1] === 'number';
 }
 
+export function getSymbolDisplayText(tag: JSDocTagInfo): string {
+  return tag.text?.map(({ text }: SymbolDisplayPart) => text).join('') || '';
+}
+
 export function findExactMatchingTypeFlag(flags: TypeFlags): string {
   const match = Object.keys(TypeFlags)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .map<[string, string | number]>(key => [key, TypeFlags[key as any]])
+    .map<[string, string | number]>((key) => [key, TypeFlags[key as any]])
     .filter(isNumeric)
     .find(([, value]) => Math.log2(value) % 1 === 0 && value & flags);
 
@@ -74,7 +82,7 @@ export function findMatchingTypeFlags(type: Type): string[] {
   return (
     Object.keys(TypeFlags)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .map<[string, string | number]>(key => [key, TypeFlags[key as any]])
+      .map<[string, string | number]>((key) => [key, TypeFlags[key as any]])
       .filter(isNumeric)
       .filter(([, value]) => value & flags)
       .map(([key]) => key)
@@ -87,7 +95,7 @@ export function findMatchingObjectsFlags(type: Type): string[] {
   return (
     Object.keys(ObjectFlags)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .map<[string, string | number]>(key => [key, ObjectFlags[key as any]])
+      .map<[string, string | number]>((key) => [key, ObjectFlags[key as any]])
       .filter(isNumeric)
       .filter(([, value]) => value & flags)
       .map(([key]) => key)
@@ -100,7 +108,7 @@ export function findMatchingSymbolFlags(symbol: Symbol): string[] {
   return (
     Object.keys(SymbolFlags)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .map<[string, string | number]>(key => [key, SymbolFlags[key as any]])
+      .map<[string, string | number]>((key) => [key, SymbolFlags[key as any]])
       .filter(isNumeric)
       .filter(([, value]) => value & flags)
       .map(([key]) => key)
@@ -110,7 +118,7 @@ export function findMatchingSymbolFlags(symbol: Symbol): string[] {
 export function findExactMatchingSymbolFlags(flags: SymbolFlags): string {
   const match = Object.keys(SymbolFlags)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .map<[string, string | number]>(key => [key, SymbolFlags[key as any]])
+    .map<[string, string | number]>((key) => [key, SymbolFlags[key as any]])
     .filter(isNumeric)
     .find(([, value]) => Math.log2(value) % 1 === 0 && value & flags);
 
@@ -125,7 +133,7 @@ export function formatDiagnosticError(diagnostic: Diagnostic): string {
   return formatDiagnostic(diagnostic, {
     getCurrentDirectory: (): string => process.cwd(),
     getCanonicalFileName: (fileName: string): string => fileName,
-    getNewLine: (): string => '\n'
+    getNewLine: (): string => '\n',
   });
 }
 
@@ -135,7 +143,7 @@ export function getDeclarationSourceLocation(declaration: Declaration): string {
   const fileNameWithPosition = [
     sourceFile.fileName,
     pos.line,
-    pos.character
+    pos.character,
   ].join(':');
   const line = sourceFile.getFullText().split('\n')[pos.line];
   const indentationMatch = /^([ \t]*)(?=\S)/.exec(line);
@@ -152,7 +160,7 @@ export function getDeclarationSourceLocation(declaration: Declaration): string {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function inspectObject(type: any): string {
   const obj = Object.keys(type)
-    .filter(key => ['checker'].includes(key))
+    .filter((key) => ['checker'].includes(key))
     .reduce((newObj, key) => Object.assign(newObj, { [key]: type[key] }), {});
 
   return inspect(obj, false, 1, true);

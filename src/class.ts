@@ -65,7 +65,12 @@ export function spreadClassProperties(
     const additionalMemberReferences = memberSectionsArray.map<JSDocTagInfo>(
       (section: string) => ({
         name: 'see',
-        text: `{@link ${getSectionLocation(section)}|${section}}`,
+        text: [
+          {
+            text: `{@link ${getSectionLocation(section)}|${section}}`,
+            kind: 'text',
+          },
+        ],
       })
     );
     // eslint-disable-next-line @typescript-eslint/unbound-method
