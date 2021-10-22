@@ -123,6 +123,21 @@ describe('type', () => {
     });
   });
 
+  it('documents unknown', () => {
+    testDocumentation({
+      'index.ts': `
+        export let testVariable: unknown;
+      `,
+      markdown: `
+        ## testVariable
+
+        **TYPE**
+
+        unknown
+      `
+    });
+  });
+
   it('documents interfaces', () => {
     testDocumentation({
       'index.ts': `

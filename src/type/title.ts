@@ -37,6 +37,10 @@ export function getTypeTitle(type: Type, context: RenderContext): string {
     return 'any';
   }
 
+  if (flags & TypeFlags.Unknown) {
+    return 'unknown';
+  }
+
   if (flags & TypeFlags.Null) {
     return 'null';
   }

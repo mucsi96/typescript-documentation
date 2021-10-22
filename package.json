@@ -1,6 +1,6 @@
 {
   "name": "typescript-documentation",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Generate markdown API documentation directly from TypeScript source code",
   "license": "MIT",
   "main": "./lib/index.js",
