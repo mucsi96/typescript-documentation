@@ -315,6 +315,21 @@ describe('type', () => {
     });
   });
 
+  it('doesn`t documents members of non anonymous type', () => {
+    testDocumentation({
+      'index.ts': `
+        export let testVariable: Buffer;
+      `,
+      markdown: `
+        ## testVariable
+
+        **TYPE**
+
+        Buffer
+      `
+    });
+  });
+
   it('documents nested anonymous types', () => {
     testDocumentation({
       'index.ts': `

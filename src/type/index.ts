@@ -3,7 +3,7 @@ import {
   Symbol,
   SymbolFlags,
   Type,
-  TypeReference
+  TypeReference,
 } from 'typescript';
 import { DependencyContext, RenderContext } from '../context';
 import { joinLines } from '../markdown';
@@ -19,7 +19,7 @@ function hasMembers(type: Type): boolean {
   return (
     !type.aliasSymbol &&
     !!(
-      objectFlags & ObjectFlags.Anonymous || objectFlags & ObjectFlags.Interface
+      objectFlags & ObjectFlags.Anonymous
     )
   );
 }
@@ -32,7 +32,7 @@ export function getTypeLiteralDependencies(
 
   /* istanbul ignore else */
   if (symbol.members) {
-    symbol.members.forEach(member => {
+    symbol.members.forEach((member) => {
       members.push(member);
     });
   }
@@ -40,7 +40,7 @@ export function getTypeLiteralDependencies(
   return members.reduce<Symbol[]>(
     (dependencies, member) => [
       ...dependencies,
-      ...getSymbolDependencies(member, context)
+      ...getSymbolDependencies(member, context),
     ],
     []
   );
@@ -63,7 +63,7 @@ export function getTypeDependencies(
       ...(context.exportedSymbols.includes(type.aliasSymbol)
         ? [type.aliasSymbol]
         : []),
-      ...getSymbolDependencies(type.aliasSymbol, context)
+      ...getSymbolDependencies(type.aliasSymbol, context),
     ];
   }
 
@@ -71,7 +71,7 @@ export function getTypeDependencies(
     return type.types.reduce<Symbol[]>(
       (dependencies, type) => [
         ...dependencies,
-        ...getTypeDependencies(undefined, type, context)
+        ...getTypeDependencies(undefined, type, context),
       ],
       []
     );
@@ -89,7 +89,7 @@ export function getTypeDependencies(
 
       return [
         ...dependencies,
-        ...getTypeDependencies(symbol, typeArgument, context)
+        ...getTypeDependencies(symbol, typeArgument, context),
       ];
     },
     []
@@ -98,7 +98,7 @@ export function getTypeDependencies(
   return [
     ...(context.exportedSymbols.includes(typeSymbol) ? [typeSymbol] : []),
     ...getSymbolDependencies(typeSymbol, context),
-    ...typeArgumentDependencies
+    ...typeArgumentDependencies,
   ];
 }
 
@@ -113,6 +113,6 @@ export function renderType(
     renderTypeDeclaration(type, context, typeContext),
     hasMembers(nonOptionalType)
       ? renderTypeMembers(nonOptionalType, context, typeContext.nestingLevel)
-      : ''
+      : '',
   ]);
 }

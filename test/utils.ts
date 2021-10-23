@@ -14,6 +14,11 @@ export function createTestDocumentation(sourceCode: {
       'lib.d.ts': `
       interface Array<T> {}
       interface Promise<T> {}
+      interface Buffer {
+        write(string: string, encoding?: BufferEncoding): number;
+        write(string: string, offset: number, encoding?: BufferEncoding): number;
+        write(string: string, offset: number, length: number, encoding?: BufferEncoding): number;
+      }
     `
     },
     compilerOptions: {
